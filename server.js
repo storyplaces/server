@@ -91,7 +91,6 @@ router.get('/', function(req, res) {
 
 
 // REGISTER OUR ROUTES -------------------------------
-// all of our routes will be prefixed with /api
 app.use('/storyplaces', router);
 
 // START THE SERVER
