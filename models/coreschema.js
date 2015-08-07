@@ -1,23 +1,31 @@
 var mongoose     = require('mongoose');
 var Schema       = mongoose.Schema;
 
-var CardSchema = new Schema({
+var Card = new Schema({
 	content: String
 });
 
-//var DeckSchema = new Schema({
-//	cards: [CardSchema]
-//});
-
-var StorySchema = new Schema({
+var Story = new Schema({
 	name: String,
-	deck: [CardSchema]
+	deck: [Card]
+});
+
+var Variable = new Schema({
+	key: String,
+	value: Mixed
+});
+
+var Reading = new Schema({
+	name: String,
+	story: String,
+	variables: [Variable]
 });
 
 
 module.exports = {
-	Card: mongoose.model('Card', CardSchema),
-	//Deck: mongoose.model('Deck', DeckSchema),
-	Story: mongoose.model('Story', StorySchema)
+	Card: mongoose.model('Card', Card),
+	Story: mongoose.model('Story', Story),
+	Variable: mongoose.model('Variable', Variable)
+	Reading: mongoose.model('Reading', Reading)
 }
 

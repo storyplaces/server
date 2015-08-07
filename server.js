@@ -13,7 +13,9 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var port = process.env.PORT || 8080;        // set our port
+app.use(express.static('../StoryPlacesClient'));
+
+var port = process.env.PORT || 5000;        // set our port
 
 var mongoose   = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/storyplaces'); // connect to our database
@@ -42,12 +44,7 @@ router.get('/', function(req, res) {
 	router.route('/story')
 	
 	.post(function(req, res) {
-        //console.log('Json '+req.body);
-        /*var story = new CoreSchema.Story({
-			name: req.body.name,
-			deck: req.body.deck
-		});*/      
-		
+        
 		var story = new CoreSchema.Story(req.body)
         
         story.save(function(err) {
@@ -78,7 +75,6 @@ router.get('/', function(req, res) {
         });
     });
 	
-	
 	router.route('/deck/:story_id')
 	
 	.get(function(req, res) {
@@ -86,6 +82,40 @@ router.get('/', function(req, res) {
             if (err)
                 res.send(err);
             res.json(story.deck);
+        });
+    });
+	
+	router.route('/reading')
+	
+	.post(function(req, res) {
+        
+		var reading = new CoreSchema.Reading(req.body)
+        
+        reading.save(function(err) {
+            if (err)
+                res.send(err);
+
+            res.json({ message: 'Reading created!' });
+        });
+        
+    })
+	
+	.get(function(req, res) {
+        CoreSchema.Reading.find(function(err, readings) {
+            if (err)
+                res.send(err);
+
+            res.json(readings);
+        });
+    });
+	
+	router.route('/reading/:reading_id')
+	
+	.get(function(req, res) {
+        CoreSchema.Reading.findById(req.params.reading_id, function(err, reading) {
+            if (err)
+                res.send(err);
+            res.json(reading);
         });
     });
 
