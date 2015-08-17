@@ -12,7 +12,7 @@ var Story = new Schema({
 
 var Variable = new Schema({
 	key: String,
-	value: Mixed
+	value: Schema.Types.Mixed
 });
 
 var Reading = new Schema({
@@ -25,7 +25,7 @@ var Reading = new Schema({
 module.exports = {
 	Card: mongoose.model('Card', Card),
 	Story: mongoose.model('Story', Story),
-	Variable: mongoose.model('Variable', Variable)
+	Variable: mongoose.model('Variable', Variable),
 	Reading: mongoose.model('Reading', Reading)
 }
 
