@@ -30,7 +30,7 @@ var router = express.Router();              // get an instance of the express Ro
 // middleware to use for all requests
 router.use(function(req, res, next) {
     // do logging
-    console.log('Request Made '+req);
+    console.log('Request Made '+req.method);
     next(); // make sure we go to the next routes and don't stop here
 });
 
@@ -100,6 +100,19 @@ router.get('/', function(req, res) {
         
     })
 	
+	.put(function(req, res) {
+        
+		var reading = new CoreSchema.Reading(req.body)
+        
+        reading.save(function(err) {
+            if (err)
+                res.send(err);
+
+            res.json({ message: 'Reading Updated!' });
+        });
+        
+    })
+	
 	.get(function(req, res) {
         CoreSchema.Reading.find(function(err, readings) {
             if (err)
@@ -116,6 +129,34 @@ router.get('/', function(req, res) {
             if (err)
                 res.send(err);
             res.json(reading);
+        });
+    });
+	
+	router.route('/user')
+	
+	.post(function(req, res) {
+        
+		var user = new CoreSchema.User()
+        
+		console.log("NEW USER")
+		
+		user.creationDate = new Date();
+		
+        user.save(function(err) {
+            if (err)
+                res.send(err);
+
+            res.json(user);
+        });
+        
+    })
+	
+	.get(function(req, res) {
+        CoreSchema.User.find(function(err, users) {
+            if (err)
+                res.send(err);
+
+            res.json(users);
         });
     });
 
