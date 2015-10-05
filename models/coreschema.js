@@ -13,7 +13,8 @@ User.set('toJSON', {
 
 var Card = new Schema({
 	content: String,
-	label: String
+	label: String,
+	footerButtonMode: String
 });
 Card.virtual('id').get(function(){
     return this._id.toHexString();
