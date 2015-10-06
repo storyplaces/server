@@ -132,6 +132,16 @@ router.get('/', function(req, res) {
         });
     });
 	
+	router.route('/storyreading/:story_id')
+	
+	.get(function(req, res) {
+        CoreSchema.Reading.find({"story":req.params.story_id}, function(err, readings) {
+            if (err)
+                res.send(err);
+            res.json(readings);
+        });
+    });
+	
 	router.route('/user')
 	
 	.post(function(req, res) {
