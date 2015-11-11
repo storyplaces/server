@@ -85,6 +85,16 @@ router.get('/', function(req, res) {
         });
     });
 	
+	router.route('/story/:story_id/readings/:user_id')
+	
+	.get(function(req, res) {
+        CoreSchema.Reading.find({"story":req.params.story_id,"user":req.params.user_id}, function(err, readings) {
+            if (err)
+                res.send(err);
+            res.json(readings);
+        });
+    });
+	
 	router.route('/deck/:story_id')
 	
 	.get(function(req, res) {

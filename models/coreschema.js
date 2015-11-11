@@ -14,7 +14,9 @@ User.set('toJSON', {
 var Card = new Schema({
 	content: String,
 	label: String,
-	footerButtonMode: String
+	footerButtonMode: String,
+	conditions:[String],
+	functions:[String]
 });
 Card.virtual('id').get(function(){
     return this._id.toHexString();
@@ -25,7 +27,9 @@ Card.set('toJSON', {
 
 var Story = new Schema({
 	name: String,
-	deck: [Card]
+	deck: [Card],
+	conditions: [Schema.Types.Mixed],
+	functions: [Function]
 });
 Story.virtual('id').get(function(){
     return this._id.toHexString();
@@ -58,12 +62,43 @@ Reading.set('toJSON', {
     virtuals: true
 });
 
+var Function = new Schema({
+	name: String,
+	type: String,
+	arguments: [String]
+});
+Function.virtual('id').get(function(){
+    return this._id.toHexString();
+});
+Function.set('toJSON', {
+    virtuals: true
+});
+
+var ComparissonCondition = new Schema({
+	name: String,
+	comparisson: String,
+	a: String,
+	aType: String,
+	b: String,
+	bType: String
+});
+ComparissonCondition.virtual('id').get(function(){
+    return this._id.toHexString();
+});
+ComparissonCondition.set('toJSON', {
+    virtuals: true
+});
+
+
+
 
 module.exports = {
 	User: mongoose.model('User', User),
 	Card: mongoose.model('Card', Card),
 	Story: mongoose.model('Story', Story),
 	Variable: mongoose.model('Variable', Variable),
-	Reading: mongoose.model('Reading', Reading)
+	Reading: mongoose.model('Reading', Reading),
+	Function: mongoose.model('Function', Function),
+	ComparissonCondition: mongoose.model('ComparissonCondition', ComparissonCondition),
 }
 
