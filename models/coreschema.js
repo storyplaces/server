@@ -76,7 +76,8 @@ Function.set('toJSON', {
 
 var ComparissonCondition = new Schema({
 	name: String,
-	comparisson: String,
+	type: {type: String, default: "comparisson"},
+	operand: String,
 	a: String,
 	aType: String,
 	b: String,
@@ -90,6 +91,19 @@ ComparissonCondition.set('toJSON', {
 });
 
 
+var LogicalCondition = new Schema({
+	name: String,
+	type: {type: String, default: "logical"},
+	operand: String,
+	conditions: [String]
+});
+LogicalCondition.virtual('id').get(function(){
+    return this._id.toHexString();
+});
+LogicalCondition.set('toJSON', {
+    virtuals: true
+});
+
 
 
 module.exports = {
@@ -100,5 +114,6 @@ module.exports = {
 	Reading: mongoose.model('Reading', Reading),
 	Function: mongoose.model('Function', Function),
 	ComparissonCondition: mongoose.model('ComparissonCondition', ComparissonCondition),
+	LogicalCondition: mongoose.model('LogicalCondition', LogicalCondition)
 }
 
