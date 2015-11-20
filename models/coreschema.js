@@ -65,7 +65,8 @@ Reading.set('toJSON', {
 var Function = new Schema({
 	name: String,
 	type: String,
-	arguments: [String]
+	arguments: [String],
+	conditions: [String]
 });
 Function.virtual('id').get(function(){
     return this._id.toHexString();

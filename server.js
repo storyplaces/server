@@ -30,7 +30,7 @@ var router = express.Router();              // get an instance of the express Ro
 // middleware to use for all requests
 router.use(function(req, res, next) {
     // do logging
-    console.log('Request Made '+req.method);
+    console.log('Request Made '+req.method+' '+req.path);
     next(); // make sure we go to the next routes and don't stop here
 });
 
@@ -149,6 +149,14 @@ router.get('/', function(req, res) {
             if (err)
                 res.send(err);
             res.json(reading);
+        });
+    })
+	
+	.put(function(req, res) {
+        CoreSchema.Reading.findByIdAndUpdate(req.params.reading_id, req.body, function(err, reading) {
+			if (err)
+				res.send(err);
+			res.json({ message: 'Reading updated!' });
         });
     });
 		
