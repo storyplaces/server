@@ -106,6 +106,20 @@ LogicalCondition.set('toJSON', {
 });
 
 
+var LocationCondition = new Schema({
+	name: String,
+	type: {type: String, default: "location"},
+	bool: Boolean,
+	locationType: String,
+	locationData: Schema.Types.Mixed
+});
+LocationCondition.virtual('id').get(function(){
+    return this._id.toHexString();
+});
+LocationCondition.set('toJSON', {
+    virtuals: true
+});
+
 
 module.exports = {
 	User: mongoose.model('User', User),
@@ -115,6 +129,7 @@ module.exports = {
 	Reading: mongoose.model('Reading', Reading),
 	Function: mongoose.model('Function', Function),
 	ComparissonCondition: mongoose.model('ComparissonCondition', ComparissonCondition),
-	LogicalCondition: mongoose.model('LogicalCondition', LogicalCondition)
+	LogicalCondition: mongoose.model('LogicalCondition', LogicalCondition),
+	LocationCondition: mongoose.model('LocationCondition', LocationCondition)
 }
 
