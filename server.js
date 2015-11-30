@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 
 app.use(express.static('../StoryPlacesClient'));
 
-var port = process.env.PORT || 5000;        // set our port
+var port = process.env.PORT || 8085;        // set our port
 
 var mongoose   = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/storyplaces'); // connect to our database
@@ -72,6 +72,17 @@ router.get('/', function(req, res) {
             if (err)
                 res.send(err);
             res.json(story);
+        });
+    })
+	
+	.delete(function(req, res) {
+        CoreSchema.Story.remove({
+            _id: req.params.story_id
+        }, function(err, story) {
+            if (err)
+                res.send(err);
+
+            res.json({ message: 'Successfully deleted' });
         });
     });
 	
@@ -153,7 +164,7 @@ router.get('/', function(req, res) {
     })
 	
 	.put(function(req, res) {
-        CoreSchema.Reading.findByIdAndUpdate(req.params.reading_id, req.body, function(err, reading) {
+        CoreSchema.Reading.findByIdAndUpdate(req.params.reading_id, {variables: req.body.variables}, function(err, reading) {
 			if (err)
 				res.send(err);
 			res.json({ message: 'Reading updated!' });
