@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 
 app.use(express.static('../StoryPlacesClient'));
 
-var port = process.env.PORT || 8085;        // set our port
+var port = process.env.PORT || 8080;        // set our port
 
 var mongoose   = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/storyplaces'); // connect to our database
