@@ -16,7 +16,8 @@ var Card = new Schema({
 	label: String,
 	footerButtonMode: String,
 	conditions:[String],
-	functions:[String]
+	functions:[String],
+	direction: String
 });
 Card.virtual('id').get(function(){
     return this._id.toHexString();
@@ -29,7 +30,8 @@ var Story = new Schema({
 	name: String,
 	deck: [Card],
 	conditions: [Schema.Types.Mixed],
-	functions: [Function]
+	functions: [Function],
+	deckviewmode: String
 });
 Story.virtual('id').get(function(){
     return this._id.toHexString();
