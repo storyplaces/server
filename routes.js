@@ -14,9 +14,13 @@ var Reading = require('./controllers/reading.js');
 var StaticPages = require('./controllers/staticPages.js');
 
 var LoggingMiddleware = require('./middleware/logging.js');
+var Auth = require('./middleware/authentication.js');
 
 // middleware to use for all requests
 router.use(LoggingMiddleware.logRequest);
+router.post('*', Auth.tokenAuth);
+router.put('*', Auth.tokenAuth);
+router.delete('*', Auth.tokenAuth);
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/storyplaces)
 router.get('/', StaticPages.rootPage);
