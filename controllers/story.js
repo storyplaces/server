@@ -10,6 +10,9 @@ exports.create = create;
 exports.index = index;
 exports.fetch = fetch;
 exports.destroy = destroy;
+exports.allReadings = allReadings;
+exports.readingsForUser = readingsForUser;
+
 
 
 function create(req, res) {
@@ -53,5 +56,23 @@ function destroy(req, res) {
         }
 
         res.json({message: 'Successfully deleted'});
+    });
+}
+
+function allReadings(req, res) {
+    CoreSchema.Reading.find({"story": req.params.story_id}, function (err, readings) {
+        if (err) {
+            res.send(err);
+        }
+        res.json(readings);
+    });
+}
+
+function readingsForUser(req, res) {
+    CoreSchema.Reading.find({"story": req.params.story_id, "user": req.params.user_id}, function (err, readings) {
+        if (err) {
+            res.send(err);
+        }
+        res.json(readings);
     });
 }
