@@ -1,5 +1,10 @@
 // server.js
 
+// Load config files
+var secrets = require('./config/secrets.json');
+var settings = require('./config/settings.json');
+
+
 // BASE SETUP
 // =============================================================================
 //
@@ -13,12 +18,12 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(express.static('../StoryPlacesClient'));
+app.use(express.static(settings.client.source_path));
 
 var port = process.env.PORT || 8080;        // set our port
 
 var mongoose   = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/storyplaces'); // connect to our database
+mongoose.connect(secrets.database.connection); // connect to our database
 
 var CoreSchema = require('./models/coreschema');
 
