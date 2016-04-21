@@ -6,8 +6,9 @@
 
 module.exports = logRequest;
 
+var Logger = require('../utilities/Logger.js')
+
 function logRequest(req, res, next) {
-    // do logging
-    console.log('Request Made ' + req.method + ' ' + req.path);
-    next(); // make sure we go to the next routes and don't stop here
+    Logger.log('Request made: ' + req.method + ' ' + req.path);
+    next();
 }

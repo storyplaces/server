@@ -4,14 +4,28 @@
 
 "use strict";
 
-module.exports = logErrors;
+exports.replyWithErrors = replyWithError;
+exports.logToConsole = logErrorToConsole;
 
-function logErrors(err, req, res, next) {
-    console.error(err.stack);
+var Logger = require('../utilities/Logger.js')
 
-    if (req.xhr) {
-        res.status(500).send({error: 'Something failed!'});
-    } else {
-        res.status(500).render('error', {error: err});
+function logErrorToConsole(err, req, res, next) {
+    Logger.error(err.clientMessage);
+    Logger.error(err.stack);
+    next(err);
+}
+
+function replyWithError(err, req, res, next) {
+    var status = 500;
+    var message = "Internal Server Error";
+
+    if (err.status) {
+        status = err.status;
     }
+
+    if (err.clientMessage) {
+        message = err.clientMessage;
+    }
+
+    res.status(status).send({error: message});
 }

@@ -10,14 +10,10 @@ var settings = require('./config/settings.json');
 // =============================================================================
 //
 // call the packages we need
-var express = require('express');        // call express
-var app = express();                 // define our app using express
-var bodyParser = require('body-parser');
+var Logger = require('./utilities/Logger.js');
 
-// configure app to use bodyParser()
-// this will let us get the data from a POST
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
+var Express = require('express');        // call express
+var App = Express();                 // define our app using express
 
 var port = process.env.PORT || 8080;        // set our port
 
@@ -27,11 +23,11 @@ mongoose.connect(secrets.database.connection); // connect to our database
 
 // REGISTER OUR ROUTES -------------------------------
 var Routes = require('./routes.js');
-app.use(settings.api.url, Routes);
-app.use(settings.client.url, express.static(settings.client.source_path));
+App.use(settings.api.url,       Routes);
+App.use(settings.client.url,    Express.static(settings.client.source_path));
 
 
 // START THE SERVER
 // =============================================================================
-app.listen(port);
-console.log('Serving on port ' + port);
+App.listen(port);
+Logger.log('Serving on port ' + port);

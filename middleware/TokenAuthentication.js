@@ -10,12 +10,14 @@ module.exports = tokenAuth;
 
 function tokenAuth(req, res, next) {
 
-    if (req.header(secrets.auth.token) !== secrets.auth.value) {
-        console.log('Bad Token');
-        res.status(403).json({'Error' : 'Permission denied'});
-        return;
+    if (req.header(secrets.auth.token) === secrets.auth.value) {
+        return next();
     }
 
-    console.log('Token OK');
-    next();
+    var error = Error()
+    error.status = 403;
+    error.stack = "Bad token provided during: " + req.method + ' ' + req.path;
+    error.clientMessage = "Permission Denied";
+
+    next(error);
 }

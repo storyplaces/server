@@ -11,68 +11,83 @@ exports.index = index;
 exports.fetch = fetch;
 exports.destroy = destroy;
 exports.allReadings = allReadings;
-exports.readingsForUser = readingsForUser;
+exports.readingsForUser = allReadingsForUser;
 
-
-
-function create(req, res) {
+function create(req, res, next) {
 
     var story = new CoreSchema.Story(req.body);
 
     story.save(function (err) {
         if (err) {
-            res.send(err);
+            err.status = 400;
+            err.clientMessage = "Unable To save story";
+            return next(err);
         }
 
         res.json({message: 'Story created!'});
     });
 }
 
-function index(req, res) {
+function index(req, res, next) {
     CoreSchema.Story.find(function (err, stories) {
         if (err) {
-            res.send(err);
+            return next(err);
         }
 
         res.json(stories);
     });
 }
 
-function fetch(req, res) {
+function fetch(req, res, next) {
     CoreSchema.Story.findById(req.params.story_id, function (err, story) {
-        if (err) {
-            res.send(err);
+        if (!story) {
+            err.status = 404;
+            err.clientMessage = "Story not found";
+            return next(err);
         }
+
+        if (err) {
+            return next(err);
+        }
+
         res.json(story);
     });
 }
 
-function destroy(req, res) {
-    CoreSchema.Story.remove({
-        _id: req.params.story_id
-    }, function (err, story) {
-        if (err) {
-            res.send(err);
-        }
+function destroy(req, res, next) {
+    CoreSchema.Story.remove(
+        { _id: req.params.story_id },
+        function (err, story) {
+            if (!story) {
+                err.status = 400;
+                err.clientMessage = "Unable to delete story";
+                return next(err);
+            }
 
-        res.json({message: 'Successfully deleted'});
-    });
+            if (err) {
+                return next(err);
+            }
+
+            res.json({message: 'Successfully deleted'});
+        });
 }
 
-function allReadings(req, res) {
+function allReadings(req, res, next) {
     CoreSchema.Reading.find({"story": req.params.story_id}, function (err, readings) {
         if (err) {
-            res.send(err);
+            return next(err);
         }
+
         res.json(readings);
     });
 }
 
-function readingsForUser(req, res) {
+function allReadingsForUser(req, res, next) {
     CoreSchema.Reading.find({"story": req.params.story_id, "user": req.params.user_id}, function (err, readings) {
         if (err) {
-            res.send(err);
+            return next(err);
         }
+
         res.json(readings);
     });
 }

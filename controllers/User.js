@@ -9,27 +9,27 @@ var CoreSchema = require('../models/coreschema');
 exports.create = create;
 exports.index = index;
 
-function create(req, res) {
+function create(req, res, next) {
 
     var user = new CoreSchema.User();
-
-    console.log("NEW USER");
+    var Logger = require('../utilities/Logger.js');
 
     user.creationDate = new Date();
 
     user.save(function (err) {
         if (err) {
-            res.send(err);
+            return next(err);
         }
 
+        Logger.log("Create new user");
         res.json(user);
     });
 }
 
-function index(req, res) {
+function index(req, res, next) {
     CoreSchema.User.find(function (err, users) {
         if (err) {
-            res.send(err);
+            return next(err);
         }
 
         res.json(users);

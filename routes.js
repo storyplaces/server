@@ -4,8 +4,9 @@
 
 "use strict";
 
-var express = require('express');
-var router = express.Router();              // get an instance of the express Router
+var Express = require('express');
+var Router = Express.Router();              // get an instance of the express Router
+var BodyParser = require('body-parser');
 
 var User = require('./controllers/User.js');
 var Story = require('./controllers/Story.js');
@@ -17,48 +18,50 @@ var RequestLoggingMiddleware = require('./middleware/RequestLogging.js');
 var TokenAuthMiddleware = require('./middleware/TokenAuthentication.js');
 var ErrorLoggingMiddleware = require('./middleware/ErrorLogging.js');
 
-// middleware to use for all requests
-router.use(RequestLoggingMiddleware);
-router.post('*', TokenAuthMiddleware);
-router.put('*', TokenAuthMiddleware);
-router.delete('*', TokenAuthMiddleware);
-router.use(ErrorLoggingMiddleware);
+// Configure app to use BodyParser(), this will let us get the data from a POST
+Router.use(BodyParser.urlencoded({extended: true}));
+Router.use(BodyParser.json());
 
+// Request logging
+Router.use(RequestLoggingMiddleware);
 
-// test route to make sure everything is working (accessed at GET http://localhost:8080/storyplaces)
-router.get('/', StaticPages.rootPage);
+// Test route
+Router.get('/', StaticPages.rootPage);
 
-// more routes for our API will happen here
+// Routes for API
 
-router.route('/story')
-    .post(Story.create)
-    .get(Story.index);
+Router.route('/story')
+    .get(Story.index)
+    .post([TokenAuthMiddleware, Story.create]);
 
-router.route('/story/:story_id')
+Router.route('/story/:story_id')
     .get(Story.fetch)
-    .delete(Story.destroy);
+    .delete([TokenAuthMiddleware, Story.destroy]);
 
-router.route('/story/:story_id/readings')
+Router.route('/story/:story_id/readings')
     .get(Story.allReadings);
 
-router.route('/story/:story_id/readings/:user_id')
+Router.route('/story/:story_id/readings/:user_id')
     .get(Story.readingsForUser);
 
-router.route('/deck/:story_id')
+Router.route('/deck/:story_id')
     .get(Deck.fetch);
 
-router.route('/reading')
+Router.route('/reading')
     .post(Reading.create)
     .get(Reading.index);
 
-router.route('/reading/:reading_id')
+Router.route('/reading/:reading_id')
     .get(Reading.fetch)
     .put(Reading.update);
 
-router.route('/user')
+Router.route('/user')
     .post(User.create)
     .get(User.index);
 
+// Error logging
+Router.use(ErrorLoggingMiddleware.logToConsole);
+Router.use(ErrorLoggingMiddleware.replyWithErrors);
 
-module.exports = router;
+module.exports = Router;
 
