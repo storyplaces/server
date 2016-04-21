@@ -6,7 +6,6 @@
 var secrets = require('./config/secrets.json');
 var settings = require('./config/settings.json');
 
-
 // BASE SETUP
 // =============================================================================
 //
@@ -20,14 +19,17 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.use(express.static(settings.client.source_path));
-
 var port = process.env.PORT || 8080;        // set our port
 
 var mongoose = require('mongoose');
 mongoose.connect(secrets.database.connection); // connect to our database
 
 var CoreSchema = require('./models/coreschema');
+
+var User = require('./controllers/user.js');
+var Story = require('./controllers/story.js');
+var Deck = require('./controllers/deck.js');
+var Reading = require('./controllers/reading.js');
 
 
 // ROUTES FOR OUR API
@@ -49,56 +51,14 @@ router.get('/', function (req, res) {
 // more routes for our API will happen here
 
 router.route('/story')
-
-    .post(function (req, res) {
-
-        var story = new CoreSchema.Story(req.body);
-
-        story.save(function (err) {
-            if (err) {
-                res.send(err);
-            }
-
-            res.json({message: 'Story created!'});
-        });
-
-    })
-
-    .get(function (req, res) {
-        CoreSchema.Story.find(function (err, stories) {
-            if (err) {
-                res.send(err);
-            }
-
-            res.json(stories);
-        });
-    });
+    .post(Story.create)
+    .get(Story.index);
 
 router.route('/story/:story_id')
-
-    .get(function (req, res) {
-        CoreSchema.Story.findById(req.params.story_id, function (err, story) {
-            if (err) {
-                res.send(err);
-            }
-            res.json(story);
-        });
-    })
-
-    .delete(function (req, res) {
-        CoreSchema.Story.remove({
-            _id: req.params.story_id
-        }, function (err, story) {
-            if (err) {
-                res.send(err);
-            }
-
-            res.json({message: 'Successfully deleted'});
-        });
-    });
+    .get(Story.fetch)
+    .delete(Story.destroy);
 
 router.route('/story/:story_id/readings')
-
     .get(function (req, res) {
         CoreSchema.Reading.find({"story": req.params.story_id}, function (err, readings) {
             if (err) {
@@ -109,7 +69,6 @@ router.route('/story/:story_id/readings')
     });
 
 router.route('/story/:story_id/readings/:user_id')
-
     .get(function (req, res) {
         CoreSchema.Reading.find({"story": req.params.story_id, "user": req.params.user_id}, function (err, readings) {
             if (err) {
@@ -120,109 +79,24 @@ router.route('/story/:story_id/readings/:user_id')
     });
 
 router.route('/deck/:story_id')
-
-    .get(function (req, res) {
-        CoreSchema.Story.findById(req.params.story_id, function (err, story) {
-            if (err) {
-                res.send(err);
-            }
-            res.json(story.deck);
-        });
-    });
+    .get(Deck.fetch);
 
 router.route('/reading')
-
-    .post(function (req, res) {
-
-        var reading = new CoreSchema.Reading(req.body);
-
-        reading.save(function (err) {
-            if (err) {
-                res.send(err);
-            }
-
-            res.json({message: 'Reading created!'});
-        });
-
-    })
-
-    .put(function (req, res) {
-
-        var reading = new CoreSchema.Reading(req.body);
-
-        reading.save(function (err) {
-            if (err) {
-                res.send(err);
-            }
-
-            res.json({message: 'Reading Updated!'});
-        });
-
-    })
-
-    .get(function (req, res) {
-        CoreSchema.Reading.find(function (err, readings) {
-            if (err) {
-                res.send(err);
-            }
-
-            res.json(readings);
-        });
-    });
+    .post(Reading.create)
+    .get(Reading.index);
 
 router.route('/reading/:reading_id')
-
-    .get(function (req, res) {
-        CoreSchema.Reading.findById(req.params.reading_id, function (err, reading) {
-            if (err) {
-                res.send(err);
-            }
-            res.json(reading);
-        });
-    })
-
-    .put(function (req, res) {
-        CoreSchema.Reading.findByIdAndUpdate(req.params.reading_id, {variables: req.body.variables}, function (err, reading) {
-            if (err) {
-                res.send(err);
-            }
-            res.json({message: 'Reading updated!'});
-        });
-    });
+    .get(Reading.fetch)
+    .put(Reading.update);
 
 router.route('/user')
-
-    .post(function (req, res) {
-
-        var user = new CoreSchema.User();
-
-        console.log("NEW USER");
-
-        user.creationDate = new Date();
-
-        user.save(function (err) {
-            if (err) {
-                res.send(err);
-            }
-
-            res.json(user);
-        });
-
-    })
-
-    .get(function (req, res) {
-        CoreSchema.User.find(function (err, users) {
-            if (err) {
-                res.send(err);
-            }
-
-            res.json(users);
-        });
-    });
-
+    .post(User.create)
+    .get(User.index);
 
 // REGISTER OUR ROUTES -------------------------------
 app.use('/storyplaces', router);
+app.use(express.static(settings.client.source_path));
+
 
 // START THE SERVER
 // =============================================================================
