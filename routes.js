@@ -7,20 +7,23 @@
 var express = require('express');
 var router = express.Router();              // get an instance of the express Router
 
-var User = require('./controllers/user.js');
-var Story = require('./controllers/story.js');
-var Deck = require('./controllers/deck.js');
-var Reading = require('./controllers/reading.js');
-var StaticPages = require('./controllers/staticPages.js');
+var User = require('./controllers/User.js');
+var Story = require('./controllers/Story.js');
+var Deck = require('./controllers/Deck.js');
+var Reading = require('./controllers/Reading.js');
+var StaticPages = require('./controllers/StaticPages.js');
 
-var LoggingMiddleware = require('./middleware/logging.js');
-var Auth = require('./middleware/authentication.js');
+var RequestLoggingMiddleware = require('./middleware/RequestLogging.js');
+var TokenAuthMiddleware = require('./middleware/TokenAuthentication.js');
+var ErrorLoggingMiddleware = require('./middleware/ErrorLogging.js');
 
 // middleware to use for all requests
-router.use(LoggingMiddleware.logRequest);
-router.post('*', Auth.tokenAuth);
-router.put('*', Auth.tokenAuth);
-router.delete('*', Auth.tokenAuth);
+router.use(RequestLoggingMiddleware);
+router.post('*', TokenAuthMiddleware);
+router.put('*', TokenAuthMiddleware);
+router.delete('*', TokenAuthMiddleware);
+router.use(ErrorLoggingMiddleware);
+
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/storyplaces)
 router.get('/', StaticPages.rootPage);
@@ -55,6 +58,7 @@ router.route('/reading/:reading_id')
 router.route('/user')
     .post(User.create)
     .get(User.index);
+
 
 module.exports = router;
 

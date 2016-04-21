@@ -6,7 +6,7 @@
 
 var secrets = require('../config/secrets');
 
-exports.tokenAuth = tokenAuth;
+module.exports = tokenAuth;
 
 function tokenAuth(req, res, next) {
 
