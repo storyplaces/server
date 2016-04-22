@@ -66,4 +66,4 @@ function update(req, res, next) {
 
         res.json({message: 'Reading updated!'});
     });
-};
+}
