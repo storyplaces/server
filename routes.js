@@ -16,7 +16,8 @@ var StaticPages = require('./controllers/StaticPages.js');
 
 var RequestLoggingMiddleware = require('./middleware/RequestLogging.js');
 var TokenAuthMiddleware = require('./middleware/TokenAuthentication.js');
-var ErrorLoggingMiddleware = require('./middleware/ErrorLogging.js');
+var LogErrorToConsole = require('./middleware/LogErrorToConsole.js');
+var LogErrorToClient = require('./middleware/LogErrorToClient.js');
 
 // Configure app to use BodyParser(), this will let us get the data from a POST
 Router.use(BodyParser.urlencoded({extended: true}));
@@ -60,8 +61,8 @@ Router.route('/user')
     .get(User.index);
 
 // Error logging
-Router.use(ErrorLoggingMiddleware.logToConsole);
-Router.use(ErrorLoggingMiddleware.replyWithErrors);
+Router.use(LogErrorToConsole);
+Router.use(LogErrorToClient);
 
 module.exports = Router;
 
