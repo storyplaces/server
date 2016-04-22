@@ -8,4 +8,4 @@ exports.rootPage = rootPage;
 
 function rootPage(req, res) {
     res.json({message: 'This is the storyplaces api'});
-};
+}

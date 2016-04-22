@@ -14,7 +14,7 @@ function tokenAuth(req, res, next) {
         return next();
     }
 
-    var error = Error()
+    var error = Error();
     error.status = 403;
     error.stack = "Bad token provided during: " + req.method + ' ' + req.path;
     error.clientMessage = "Permission Denied";
