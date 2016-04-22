@@ -9,6 +9,6 @@ module.exports = logRequest;
 var Logger = require('../utilities/Logger.js')
 
 function logRequest(req, res, next) {
-    Logger.log('Request made: ' + req.method + ' ' + req.path);
+    Logger.log('Request: [' + req.ip + '] ' + req.method + ' ' + req.path);
     next();
 }

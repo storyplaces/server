@@ -14,8 +14,8 @@ var Deck = require('./controllers/Deck.js');
 var Reading = require('./controllers/Reading.js');
 var StaticPages = require('./controllers/StaticPages.js');
 
-var RequestLoggingMiddleware = require('./middleware/RequestLogging.js');
-var TokenAuthMiddleware = require('./middleware/TokenAuthentication.js');
+var LogRequestToConsole = require('./middleware/LogRequestToConsole.js');
+var AuthenticateUsingToken = require('./middleware/TokenAuthentication.js');
 var LogErrorToConsole = require('./middleware/LogErrorToConsole.js');
 var LogErrorToClient = require('./middleware/LogErrorToClient.js');
 
@@ -24,7 +24,7 @@ Router.use(BodyParser.urlencoded({extended: true}));
 Router.use(BodyParser.json());
 
 // Request logging
-Router.use(RequestLoggingMiddleware);
+Router.use(LogRequestToConsole);
 
 // Test route
 Router.get('/', StaticPages.rootPage);
@@ -33,11 +33,11 @@ Router.get('/', StaticPages.rootPage);
 
 Router.route('/story')
     .get(Story.index)
-    .post([TokenAuthMiddleware, Story.create]);
+    .post([AuthenticateUsingToken, Story.create]);
 
 Router.route('/story/:story_id')
     .get(Story.fetch)
-    .delete([TokenAuthMiddleware, Story.destroy]);
+    .delete([AuthenticateUsingToken, Story.destroy]);
 
 Router.route('/story/:story_id/readings')
     .get(Story.allReadings);

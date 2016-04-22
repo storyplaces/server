@@ -2,32 +2,27 @@
 
 "use strict";
 
-// Load config files
+// Get configuration ----------------------------------------------------------
 var secrets = require('./config/secrets.json');
 var settings = require('./config/settings.json');
+var port = process.env.PORT || 8080;
 
-// BASE SETUP
-// =============================================================================
-//
-// call the packages we need
+// Load dependencies ----------------------------------------------------------
 var Logger = require('./utilities/Logger.js');
-
-var Express = require('express');        // call express
-var App = Express();                 // define our app using express
-
-var port = process.env.PORT || 8080;        // set our port
-
-var mongoose = require('mongoose');
-mongoose.connect(secrets.database.connection); // connect to our database
-
-
-// REGISTER OUR ROUTES -------------------------------
+var Express = require('express');
+var Mongoose = require('mongoose');
 var Routes = require('./routes.js');
+
+// Build our express app ------------------------------------------------------
+var App = Express();
+
+// Connect to the database ----------------------------------------------------
+Mongoose.connect(secrets.database.connection); // connect to our database
+
+// Register the routes --------------------------------------------------------
 App.use(settings.api.url,       Routes);
 App.use(settings.client.url,    Express.static(settings.client.source_path));
 
-
-// START THE SERVER
-// =============================================================================
+// Start the server -----------------------------------------------------------
 App.listen(port);
 Logger.log('Serving on port ' + port);
