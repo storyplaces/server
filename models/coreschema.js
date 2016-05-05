@@ -17,12 +17,6 @@ User.set('toJSON', {
     virtuals: true
 });
 
-
-var Hint = new Schema({
-    direction: String,
-    location: [Schema.Types.Mixed],
-});
-
 // Card -----------------------------------------------------------------------
 
 var Card = new Schema({
@@ -32,7 +26,10 @@ var Card = new Schema({
     conditions: [String],
     functions: [String],
     teaser: String,
-    hint: [Hint],
+    hint: {
+        direction: String,
+        location: [Schema.Types.Mixed],
+    }
 });
 
 Card.virtual('id').get(function () {
@@ -172,7 +169,6 @@ module.exports = {
     User: mongoose.model('User', User),
     Card: mongoose.model('Card', Card),
     Story: mongoose.model('Story', Story),
-    Hint: mongoose.model('Hint', Hint),
     Variable: mongoose.model('Variable', Variable),
     Reading: mongoose.model('Reading', Reading),
     Function: mongoose.model('Function', Function),
