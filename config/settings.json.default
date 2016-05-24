@@ -1,5 +1,10 @@
 {
   "client": {
-    "source_path": "../StoryPlacesClient"
+    "source_path": "../StoryPlacesClient",
+    "url" : "/"
+  },
+
+  "api": {
+    "url" : "/storyplaces"
   }
 }
