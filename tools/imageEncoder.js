@@ -1,79 +1,92 @@
 // Searches the specified directory for files with an image type extension (see imageExtensions below), converts images to base64 encoding and saves back out as originalFileName.txt
 
+"use strict";
+
 var fs = require("fs");
 var util = require("util");
-var fileExtension = require("file-extension");
+var File = require('../utilities/File.js');
+
+var Media = require('../models/Media.js');
 
 var imageExtensions = ['gif', 'jpg', 'jpeg', 'png'];
 
-var displayHelp = function () {
-    console.log("USAGE: node imageEncoder.js pathToImagesFolder");
-};
+function displayHelp() {
+    console.log("USAGE: node imageEncoder.js storyId");
+}
 
-var pathIsValid = function (path) {
-    if (!fs.existsSync(path)) {
-        var message = util.format('The specified path "%s" does not exist.', path);
-        console.log(message);
-        return false;
+
+function validateStoryId(storyId) {
+    storyId = Media.validateId(storyId);
+
+    if (!storyId) {
+        return undefined;
     }
 
-    return true;
-};
-
-var getAllFiles = function (path, results) {
-    results = results || [];
-    var files = fs.readdirSync(path);
-    for (var i in files) {
-        var name = path + '\\' + files[i];
-        if (fs.statSync(name).isDirectory()) {
-            getAllFiles(name, results);
-        } else {
-            results.push(name);
-        }
+    if (!File.fileExistsAndIsReadable(Media.fullPath(storyId))) {
+        return undefined;
     }
-    return results;
-};
 
-var base64EncodeFile = function (filePath) {
-    var data = fs.readFileSync(filePath);
-    var base64data = new Buffer(data).toString('base64');
-    return base64data;
-};
+    return storyId;
 
-var createFile = function(filePath, fileContents) {
-    var result = fs.writeFileSync(filePath, fileContents);    
-};
+}
 
-var processImages = function () {
+function jsonEncodeFile (file) {
+    return {
+        "Content-Type" : getContentType(file),
+        "Content" : File.base64EncodeFile(file)
+    };
+}
+
+function getContentType(file) {
+    var extension = File.fileExtension(file);
+
+    if (isImageExtension(extension)) {
+        extension = (extension === "jpg") ? "jpeg" : extension;
+        return "image/" + extension;
+    }
+
+    return undefined;
+}
+
+function isImageExtension(extension) {
+    return (imageExtensions.indexOf(extension) !== -1);
+}
+
+function processImages() {
 
     // check path is supplied
-    if (process.argv.length != 3) {
+    if (process.argv.length !== 3) {
         displayHelp();
-    }
-
-    var path = process.argv[2];
-    if (!pathIsValid(path)) {
         return;
     }
 
-    var files = getAllFiles(path);
+    var storyId = process.argv[2];
+    storyId = validateStoryId(storyId);
+
+    if (!storyId) {
+        var message = util.format('The specified story "%s" does not exist.', process.argv[2]);
+        console.log(message);
+        return;
+    }
+
+    var files = File.getAllFiles(Media.fullPath(storyId));
     
     files.forEach(function (filePath) {
         // get the file extension
-        var extension = fileExtension(filePath).toLowerCase();
+        var extension = File.fileExtension(filePath).toLowerCase();
 
-        if (imageExtensions.indexOf(extension) > -1) {
+        if (isImageExtension(extension)) {
             // is there already an equivalent txt version?
-            var filePathWithoutExtension = filePath.slice(0, extension.length * -1);
-            var filePathWithTextExtension = filePathWithoutExtension + "txt"; 
-            if (!fs.existsSync(filePathWithTextExtension)) {
-                console.log("create base64 of " + filePath);
-                var encoded = base64EncodeFile(filePath);
-                createFile(filePathWithTextExtension, encoded);                
+            var filePathWithJsonExtension = File.fileWithoutExtension(filePath) + ".json";
+
+            if ( ! File.fileExistsAndIsReadable(filePathWithJsonExtension)) {
+                console.log("JSON encoding " + filePath);
+                var encoded = jsonEncodeFile(filePath);
+                File.createFile(filePathWithJsonExtension, JSON.stringify(encoded));
             }
         }
     });
-};
+}
 
 processImages();
 console.log("Done");
