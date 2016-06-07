@@ -6,5 +6,19 @@
     "express": "~4.0.0",
     "file-extension": "^2.0.1",
     "mongoose": "~3.6.13"
+  },
+  "jshintConfig": {
+    "jshint mocha": true,
+    "strict": true,
+    "node": true,
+    "noempty": true,
+    "noarg": true,
+    "eqeqeq": true,
+    "browser": true,
+    "bitwise": true,
+    "curly": true,
+    "undef": true,
+    "nonew": true,
+    "forin": true
   }
 }
