@@ -32,8 +32,8 @@ function validateStoryId(storyId) {
 
 function jsonEncodeFile (file) {
     return {
-        "Content-Type" : getContentType(file),
-        "Content" : File.base64EncodeFile(file)
+        "contentType" : getContentType(file),
+        "content" : File.base64EncodeFile(file)
     };
 }
 
