@@ -13,6 +13,7 @@ var Story = require('./controllers/Story.js');
 var Deck = require('./controllers/Deck.js');
 var Reading = require('./controllers/Reading.js');
 var StaticPages = require('./controllers/StaticPages.js');
+var Media = require('./controllers/Media.js');
 
 var LogRequestToConsole = require('./middleware/LogRequestToConsole.js');
 var AuthenticateUsingToken = require('./middleware/TokenAuthentication.js');
@@ -38,6 +39,9 @@ Router.route('/story')
 Router.route('/story/:story_id')
     .get(Story.fetch)
     .delete([AuthenticateUsingToken, Story.destroy]);
+
+Router.route('/story/:story_id/media/:media_id')
+    .get(Media.fetch);
 
 Router.route('/story/:story_id/readings')
     .get(Story.allReadings);

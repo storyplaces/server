@@ -6,5 +6,9 @@
 
   "api": {
     "url" : "/storyplaces"
+  },
+
+  "server": {
+    "mediaPath": "media"
   }
 }
