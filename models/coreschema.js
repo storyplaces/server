@@ -47,7 +47,8 @@ var Story = new Schema({
     deck: [Card],
     conditions: [Schema.Types.Mixed],
     functions: [Function],
-    deckviewmode: String
+    deckviewmode: String,
+    cachedMediaIds: [Number]
 });
 
 Story.virtual('id').get(function () {
