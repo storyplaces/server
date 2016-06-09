@@ -22,7 +22,7 @@ function create(req, res, next) {
             return next(err);
         }
 
-        res.json({message: 'Reading created!'});
+        res.json(reading);
     });
 }
 
@@ -64,6 +64,6 @@ function update(req, res, next) {
             return next(err);
         }
 
-        res.json({message: 'Reading updated!'});
+        res.json(reading);
     });
 }
