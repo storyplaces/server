@@ -23,14 +23,14 @@ function getFileNameFromRequest(req) {
     }
 
     if (req.accepts("image")) {
-        return buildImageFilePath(base);
+        return buildMediaFilePath(base);
     }
 
     return buildJsonFilePath(base);
 }
 
-function buildImageFilePath(base) {
-    return findFileWithPossibleExtension(base, ['jpg', 'jpeg', 'png', 'gif']);
+function buildMediaFilePath(base) {
+    return findFileWithPossibleExtension(base, ['jpg', 'jpeg', 'png', 'gif', 'mp3']);
 }
 
 function buildJsonFilePath(base) {
