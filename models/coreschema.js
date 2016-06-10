@@ -48,6 +48,7 @@ var Story = new Schema({
     conditions: [Schema.Types.Mixed],
     functions: [Function],
     deckviewmode: String,
+    description: String,
     cachedMediaIds: [Number]
 });
 
