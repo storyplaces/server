@@ -49,6 +49,7 @@ var Story = new Schema({
     functions: [Function],
     deckviewmode: String,
     description: String,
+    author: String,
     cachedMediaIds: [Number]
 });
 
