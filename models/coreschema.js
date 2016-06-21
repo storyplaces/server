@@ -93,6 +93,23 @@ Reading.set('toJSON', {
     virtuals: true
 });
 
+// LogEvent --------------------------------------------------------------------
+
+var LogEvent = new Schema({
+    user: String,
+	date: Date,
+    type: String,
+	data: Schema.Types.Mixed
+});
+
+LogEvent.virtual('id').get(function () {
+    return this._id.toHexString();
+});
+
+LogEvent.set('toJSON', {
+    virtuals: true
+});
+
 // Function -------------------------------------------------------------------
 
 var Function = new Schema({
@@ -174,6 +191,7 @@ module.exports = {
     Story: mongoose.model('Story', Story),
     Variable: mongoose.model('Variable', Variable),
     Reading: mongoose.model('Reading', Reading),
+	LogEvent: mongoose.model('LogEvent', LogEvent),
     Function: mongoose.model('Function', Function),
     ComparissonCondition: mongoose.model('ComparissonCondition', ComparissonCondition),
     LogicalCondition: mongoose.model('LogicalCondition', LogicalCondition),

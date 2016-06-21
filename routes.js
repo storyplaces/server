@@ -12,6 +12,7 @@ var User = require('./controllers/User.js');
 var Story = require('./controllers/Story.js');
 var Deck = require('./controllers/Deck.js');
 var Reading = require('./controllers/Reading.js');
+var LogEvent = require('./controllers/LogEvent.js');
 var StaticPages = require('./controllers/StaticPages.js');
 var Media = require('./controllers/Media.js');
 
@@ -59,6 +60,14 @@ Router.route('/reading')
 Router.route('/reading/:reading_id')
     .get(Reading.fetch)
     .put(Reading.update);
+	
+Router.route('/logevent')
+    .post(LogEvent.create)
+    .get(LogEvent.index);
+
+Router.route('/logevent/:logevent_id')
+    .get(LogEvent.fetch)
+    .put(LogEvent.update);
 
 Router.route('/user')
     .post(User.create)
