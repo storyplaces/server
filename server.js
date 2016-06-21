@@ -16,11 +16,15 @@ var https = require('https');
 var fs = require('fs');
 
 // Set up SSL ------------------------------------------------------
-var key = fs.readFileSync('../storyplaces-key.pem');
-var cert = fs.readFileSync('../storyplaces-cert.pem')
+var key = fs.readFileSync('../key.nopass.pem');
+var cert = fs.readFileSync('../waisvm-cah07r-2_ecs_soton_ac_uk.crt')
+var ca = [
+            fs.readFileSync('../quovadischain.pem', 'utf8')
+        ]
 var https_options = {
     key: key,
-    cert: cert
+    cert: cert,
+	ca: ca
 };
 
 // Build our express app ------------------------------------------------------

@@ -17,13 +17,13 @@ function displayHelp() {
 
 function validateStoryId(storyId) {
     storyId = Media.validateId(storyId);
-
+	
     if (!storyId) {
         return undefined;
     }
 
     if (!File.fileExistsAndIsReadable(Media.fullPath(storyId))) {
-        return undefined;
+    //    return undefined;
     }
 
     return storyId;
