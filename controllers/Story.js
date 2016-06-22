@@ -40,7 +40,7 @@ function index(req, res, next) {
 
 function fetch(req, res, next) {
     CoreSchema.Story.findById(req.params.story_id, function (err, story) {
-        if (!story) {
+        if (!story&&err) {
             err.status = 404;
             err.clientMessage = "Story not found";
             return next(err);
