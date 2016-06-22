@@ -10,6 +10,7 @@ exports.create = create;
 exports.index = index;
 exports.update = update;
 exports.fetch = fetch;
+exports.userFetch = userFetch;
 
 function create(req, res, next) {
 
@@ -44,6 +45,16 @@ function fetch(req, res, next) {
             return next(err);
         }
 
+        if (err) {
+            return next(err);
+        }
+
+        res.json(logevent);
+    });
+}
+
+function userFetch(req, res, next) {
+	CoreSchema.LogEvent.find({"user": req.params.user_id}, function (err, logevent) {
         if (err) {
             return next(err);
         }

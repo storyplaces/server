@@ -68,6 +68,9 @@ Router.route('/logevent')
 Router.route('/logevent/:logevent_id')
     .get(LogEvent.fetch)
     .put(LogEvent.update);
+	
+Router.route('/logevent/user/:user_id')
+    .get(LogEvent.userFetch);
 
 Router.route('/user')
     .post(User.create)
