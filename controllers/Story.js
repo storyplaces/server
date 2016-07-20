@@ -12,6 +12,7 @@ exports.fetch = fetch;
 exports.destroy = destroy;
 exports.allReadings = allReadings;
 exports.readingsForUser = allReadingsForUser;
+exports.update = update;
 
 function create(req, res, next) {
 
@@ -89,5 +90,21 @@ function allReadingsForUser(req, res, next) {
         }
 
         res.json(readings);
+    });
+}
+
+function update(req, res, next) {
+    CoreSchema.Story.findByIdAndUpdate(req.params.story_id, req.body, function (err, story) {
+        if (!story) {
+            err.status = 400;
+            err.clientMessage = "Unable To update story";
+            return next(err);
+        }
+
+        if (err) {
+            return next(err);
+        }
+
+        res.json(story);
     });
 }

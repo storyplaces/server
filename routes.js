@@ -39,6 +39,7 @@ Router.route('/story')
 
 Router.route('/story/:story_id')
     .get(Story.fetch)
+	.put(Story.update)
     .delete([AuthenticateUsingToken, Story.destroy]);
 
 Router.route('/story/:story_id/media/:media_id')

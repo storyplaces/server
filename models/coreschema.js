@@ -50,7 +50,10 @@ var Story = new Schema({
     deckviewmode: String,
     description: String,
     author: String,
-    cachedMediaIds: [Number]
+    cachedMediaIds: [Number],
+	publishState: String,
+	tags:[String],
+	deckMapViewSettings:Schema.Types.Mixed
 });
 
 Story.virtual('id').get(function () {
