@@ -22,8 +22,8 @@ var LogErrorToConsole = require('./middleware/LogErrorToConsole.js');
 var LogErrorToClient = require('./middleware/LogErrorToClient.js');
 
 // Configure app to use BodyParser(), this will let us get the data from a POST
-Router.use(BodyParser.urlencoded({extended: true}));
-Router.use(BodyParser.json());
+Router.use(BodyParser.urlencoded({extended: true,limit: '3mb'}));
+Router.use(BodyParser.json({limit: '3mb'}));
 
 // Request logging
 Router.use(LogRequestToConsole);
