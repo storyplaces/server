@@ -57,26 +57,26 @@ User.set('toJSON', {
     virtuals: true
 });
 
-// Card -----------------------------------------------------------------------
+// Page -----------------------------------------------------------------------
 
-var Card = new Schema({
+var Page = new Schema({
     content: String,
-    label: String,
-    footerButtonMode: String,
+    name: String,
+    pageTransition: String,
     conditions: [String],
     functions: [String],
     teaser: String,
     hint: {
         direction: String,
-        location: [Schema.Types.Mixed],
+        locations: [Location],
     }
 });
 
-Card.virtual('id').get(function () {
+Page.virtual('id').get(function () {
     return this._id.toHexString();
 });
 
-Card.set('toJSON', {
+Page.set('toJSON', {
     virtuals: true
 });
 
@@ -84,16 +84,18 @@ Card.set('toJSON', {
 
 var Story = new Schema({
     name: String,
-    deck: [Card],
+    pages: [Page],
     conditions: [Schema.Types.Mixed],
     functions: [Function],
-    deckviewmode: String,
+    pagesviewmode: String,
     description: String,
     author: String,
     cachedMediaIds: [Number],
 	publishState: String,
 	tags:[String],
-	deckMapViewSettings:Schema.Types.Mixed
+	pagesMapViewSettings:Schema.Types.Mixed,
+    schemaVersion: Number,
+
 });
 
 Story.virtual('id').get(function () {
@@ -170,11 +172,29 @@ Function.set('toJSON', {
     virtuals: true
 });
 
+// Location -------------------------------------------------------------------
+
+var Location = new Schema({
+    name: String,
+    type: String,
+    lat: Number,
+    lo: Number,
+    radius: Number
+});
+
+Location.virtual('id').get(function () {
+    return this._id.toHexString();
+});
+
+Location.set('toJSON', {
+    virtuals: true
+});
+
 // Comparison Condition -------------------------------------------------------
 
-var ComparissonCondition = new Schema({
+var ComparisonCondition = new Schema({
     name: String,
-    type: {type: String, default: "comparisson"},
+    type: {type: String, default: "comparison"},
     operand: String,
     a: String,
     aType: String,
@@ -182,11 +202,11 @@ var ComparissonCondition = new Schema({
     bType: String
 });
 
-ComparissonCondition.virtual('id').get(function () {
+ComparisonCondition.virtual('id').get(function () {
     return this._id.toHexString();
 });
 
-ComparissonCondition.set('toJSON', {
+ComparisonCondition.set('toJSON', {
     virtuals: true
 });
 
@@ -214,8 +234,7 @@ var LocationCondition = new Schema({
     name: String,
     type: {type: String, default: "location"},
     bool: Boolean,
-    locationType: String,
-    locationData: Schema.Types.Mixed
+    location: Location,
 });
 
 LocationCondition.virtual('id').get(function () {
@@ -226,18 +245,37 @@ LocationCondition.set('toJSON', {
     virtuals: true
 });
 
+// Check Condition ---------------------------------------------------------
+
+var CheckCondition = new Schema({
+    name: String,
+    type: {type: String, default: "check"},
+    variable: Variable,
+});
+
+CheckCondition.virtual('id').get(function () {
+    return this._id.toHexString();
+});
+
+CheckCondition.set('toJSON', {
+    virtuals: true
+});
+
 // Exports --------------------------------------------------------------------
 
 module.exports = {
     User: mongoose.model('User', User),
-    Card: mongoose.model('Card', Card),
+    Page: mongoose.model('Page', Page),
     Story: mongoose.model('Story', Story),
     Variable: mongoose.model('Variable', Variable),
     Reading: mongoose.model('Reading', Reading),
 	LogEvent: mongoose.model('LogEvent', LogEvent),
     Function: mongoose.model('Function', Function),
-    ComparissonCondition: mongoose.model('ComparissonCondition', ComparissonCondition),
+    Location: mongoose.model('Location', Location),
+    ComparisonCondition: mongoose.model('ComparisonCondition', ComparisonCondition),
     LogicalCondition: mongoose.model('LogicalCondition', LogicalCondition),
-    LocationCondition: mongoose.model('LocationCondition', LocationCondition)
+    LocationCondition: mongoose.model('LocationCondition', LocationCondition),
+    CheckCondition: mongoose.model('CheckCondition', CheckCondition)
+
 };
 
