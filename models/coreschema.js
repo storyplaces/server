@@ -234,7 +234,7 @@ var LocationCondition = new Schema({
     name: String,
     type: {type: String, default: "location"},
     bool: Boolean,
-    location: Location,
+    location: { type: String, ref: 'Location' },
 });
 
 LocationCondition.virtual('id').get(function () {
@@ -250,7 +250,7 @@ LocationCondition.set('toJSON', {
 var CheckCondition = new Schema({
     name: String,
     type: {type: String, default: "check"},
-    variable: Variable,
+    variable: { type: String, ref: 'Variable' },
 });
 
 CheckCondition.virtual('id').get(function () {
