@@ -63,12 +63,12 @@ var Page = new Schema({
     content: String,
     name: String,
     pageTransition: String,
-    conditions: [String],
-    functions: [String],
+    conditions: [{ type: String, ref: 'Schema.Types.Mixed' }],
+    functions: [{ type: String, ref: 'Function' }],
     teaser: String,
     hint: {
         direction: String,
-        locations: [Location],
+        locations: [{ type: String, ref: 'Location' }]
     }
 });
 
@@ -85,6 +85,7 @@ Page.set('toJSON', {
 var Story = new Schema({
     name: String,
     pages: [Page],
+    locations: [Location],
     conditions: [Schema.Types.Mixed],
     functions: [Function],
     pagesviewmode: String,
@@ -94,7 +95,7 @@ var Story = new Schema({
 	publishState: String,
 	tags:[String],
 	pagesMapViewSettings:Schema.Types.Mixed,
-    schemaVersion: Number,
+    schemaVersion: String
 
 });
 
@@ -161,7 +162,7 @@ var Function = new Schema({
     name: String,
     type: String,
     arguments: [String],
-    conditions: [String]
+    conditions: [{ type: String, ref: 'Condition' }]
 });
 
 Function.virtual('id').get(function () {
@@ -178,7 +179,7 @@ var Location = new Schema({
     name: String,
     type: String,
     lat: Number,
-    lo: Number,
+    lon: Number,
     radius: Number
 });
 
@@ -234,7 +235,7 @@ var LocationCondition = new Schema({
     name: String,
     type: {type: String, default: "location"},
     bool: Boolean,
-    location: { type: String, ref: 'Location' },
+    location: { type: String, ref: 'Location' }
 });
 
 LocationCondition.virtual('id').get(function () {
@@ -250,7 +251,7 @@ LocationCondition.set('toJSON', {
 var CheckCondition = new Schema({
     name: String,
     type: {type: String, default: "check"},
-    variable: { type: String, ref: 'Variable' },
+    variable: { type: String, ref: 'Variable' }
 });
 
 CheckCondition.virtual('id').get(function () {
