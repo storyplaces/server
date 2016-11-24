@@ -1,4 +1,4 @@
 .idea
 settings.json
 secrets.json
-node_modules
+node_modules/
