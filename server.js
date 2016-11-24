@@ -43,7 +43,11 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 "use strict";
 
 // Get configuration ----------------------------------------------------------
-var secrets = require('./config/secrets.json');
+if (process.env.NODE_ENV !== 'test') {
+    var secrets = require('./config/secrets.json');
+} else {
+    var secrets = require('./config/secrets-test.json');
+}
 var settings = require('./config/settings.json');
 var port = process.env.PORT || 8080;
 
@@ -82,3 +86,5 @@ App.use(settings.client.url,    Express.static(settings.client.source_path));
 https.createServer(https_options, App).listen(port);
 
 Logger.log('Serving on port ' + port);
+
+module.exports = App; //For testing

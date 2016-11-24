@@ -60,15 +60,18 @@ User.set('toJSON', {
 // Page -----------------------------------------------------------------------
 
 var Page = new Schema({
-    content: String,
-    name: String,
-    pageTransition: String,
+    content: { type: String, required: true },
+    name: { type: String, required: true },
+    pageTransition: { type: String, required: true },
     conditions: [{ type: String, ref: 'Schema.Types.Mixed' }],
     functions: [{ type: String, ref: 'Function' }],
     teaser: String,
     hint: {
+        type: {
         direction: String,
-        locations: [{ type: String, ref: 'Location' }]
+        locations: [{type: String, ref: 'Location'}]
+        },
+        required: true
     }
 });
 
@@ -83,7 +86,7 @@ Page.set('toJSON', {
 // Story ----------------------------------------------------------------------
 
 var Story = new Schema({
-    name: String,
+    name: { type: String, required: true },
     pages: [Page],
     locations: [Location],
     conditions: [Schema.Types.Mixed],
@@ -92,9 +95,13 @@ var Story = new Schema({
     description: String,
     author: String,
     cachedMediaIds: [Number],
-	publishState: String,
+	publishState: { type: String, required: true },
 	tags:[String],
-	pagesMapViewSettings:Schema.Types.Mixed,
+	pagesMapViewSettings: {
+        map: Boolean,
+        pageArrows: Boolean,
+        pageDistance: Boolean
+    },
     schemaVersion: String
 
 });
@@ -159,10 +166,10 @@ LogEvent.set('toJSON', {
 // Function -------------------------------------------------------------------
 
 var Function = new Schema({
-    name: String,
-    type: String,
+    name: { type: String, required: true },
+    type: { type: String, required: true },
     arguments: [String],
-    conditions: [{ type: String, ref: 'Condition' }]
+    conditions: [{ type: String, ref: 'Condition' }],
 });
 
 Function.virtual('id').get(function () {
@@ -194,13 +201,13 @@ Location.set('toJSON', {
 // Comparison Condition -------------------------------------------------------
 
 var ComparisonCondition = new Schema({
-    name: String,
-    type: {type: String, default: "comparison"},
-    operand: String,
-    a: String,
-    aType: String,
-    b: String,
-    bType: String
+    name: { type: String, required: true },
+    type: {type: String, default: "comparison", required: true},
+    operand: { type: String, required: true },
+    a: { type: String, required: true },
+    aType: { type: String, required: true },
+    b: { type: String, required: true },
+    bType: { type: String, required: true }
 });
 
 ComparisonCondition.virtual('id').get(function () {
@@ -214,10 +221,10 @@ ComparisonCondition.set('toJSON', {
 // Logical Condition ----------------------------------------------------------
 
 var LogicalCondition = new Schema({
-    name: String,
+    name: { type: String, required: true },
     type: {type: String, default: "logical"},
-    operand: String,
-    conditions: [String]
+    operand: { type: String, required: true },
+    conditions: [{ type: String, ref: 'Condition' }],
 });
 
 LogicalCondition.virtual('id').get(function () {
@@ -232,10 +239,10 @@ LogicalCondition.set('toJSON', {
 // Location Condition ---------------------------------------------------------
 
 var LocationCondition = new Schema({
-    name: String,
-    type: {type: String, default: "location"},
-    bool: Boolean,
-    location: { type: String, ref: 'Location' }
+    name: { type: String, required: true },
+    type: {type: String, default: "location", required: true },
+    bool: { type: Boolean, required: true },
+    location: { type: String, ref: 'Location', required: true }
 });
 
 LocationCondition.virtual('id').get(function () {
@@ -249,7 +256,7 @@ LocationCondition.set('toJSON', {
 // Check Condition ---------------------------------------------------------
 
 var CheckCondition = new Schema({
-    name: String,
+    name: { type: String, required: true },
     type: {type: String, default: "check"},
     variable: { type: String, ref: 'Variable' }
 });

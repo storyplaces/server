@@ -44,14 +44,18 @@ exports.log = log;
 exports.error = error;
 
 function log(message) {
-    if (message) {
-        console.log("%s %s", formattedDate(), message);
+    if (process.env.NODE_ENV !== 'test') {
+        if (message) {
+            console.log("%s %s", formattedDate(), message);
+        }
     }
 }
 
 function error(message) {
-    if (message) {
-        console.error("%s %s", formattedDate(), message);
+    if (process.env.NODE_ENV !== 'test') {
+        if (message) {
+            console.error("%s %s", formattedDate(), message);
+        }
     }
 }
 

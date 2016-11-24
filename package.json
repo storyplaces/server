@@ -3,9 +3,22 @@
   "main": "server.js",
   "dependencies": {
     "body-parser": "~1.0.1",
+    "chai": "^3.5.0",
     "express": "~4.0.0",
     "file-extension": "^2.0.1",
-    "mongoose": "~3.6.13"
+    "mocha": "^3.1.2",
+    "mongoose": "~3.6.13",
+    "postman": "^0.2.0"
+  },
+  "dev-dependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.5.0",
+    "mocha": "^3.1.2",
+    "postman": "^0.2.0"
+  },
+  "scripts": {
+    "start": "SET NODE_ENV=dev && nodemon server.js",
+    "test": "mocha --timeout 10000"
   },
   "jshintConfig": {
     "jshint mocha": true,
