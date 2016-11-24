@@ -83,7 +83,7 @@ describe('Stories', function () {
 
     });
 
-    describe('/POST story then /GET story', function () {
+    describe('/POST story then /GET/:id story', function () {
         it('it should retrieve a POSTed story', function (done) {
             var story = JSON.parse(fs.readFileSync('test/resources/the_destitute_and_the_alien.json'));
             chai.request(server)
