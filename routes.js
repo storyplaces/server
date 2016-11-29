@@ -61,6 +61,12 @@ var LogErrorToClient = require('./middleware/LogErrorToClient.js');
 Router.use(BodyParser.urlencoded({extended: true,limit: '3mb'}));
 Router.use(BodyParser.json({limit: '3mb'}));
 
+Router.use(function(req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, X-Auth-Token");
+	next();
+});
+
 // Request logging
 Router.use(LogRequestToConsole);
 
