@@ -102,8 +102,8 @@ var Story = new Schema({
         pageArrows: Boolean,
         pageDistance: Boolean
     },
-    schemaVersion: String
-
+    schemaVersion: String,
+    audience: {type: String, required: true}
 });
 
 Story.virtual('id').get(function () {
