@@ -168,7 +168,8 @@ LogEvent.set('toJSON', {
 var Function = new Schema({
     name: { type: String, required: true },
     type: { type: String, required: true },
-    arguments: [String],
+    variable: {type: String, required: true},
+    value: {type: String, required: false},
     conditions: [{ type: String, ref: 'Condition' }],
 });
 
