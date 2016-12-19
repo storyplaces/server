@@ -102,8 +102,8 @@ var Story = new Schema({
         pageArrows: Boolean,
         pageDistance: Boolean
     },
-    schemaVersion: String
-
+    schemaVersion: String,
+    audience: {type: String, required: true}
 });
 
 Story.virtual('id').get(function () {
@@ -168,7 +168,8 @@ LogEvent.set('toJSON', {
 var Function = new Schema({
     name: { type: String, required: true },
     type: { type: String, required: true },
-    arguments: [String],
+    variable: {type: String, required: true},
+    value: {type: String, required: false},
     conditions: [{ type: String, ref: 'Condition' }],
 });
 
