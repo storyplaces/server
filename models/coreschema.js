@@ -133,8 +133,8 @@ Variable.set('toJSON', {
 
 var Reading = new Schema({
     name: String,
-    story: String,
-    user: String,
+    storyId: String,
+    userId: String,
     variables: [Variable]
 });
 
