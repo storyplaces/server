@@ -100,6 +100,12 @@ Router.route('/reading')
     .post(Reading.create)
     .get(Reading.index);
 
+Router.route('/reading/story/:story_id/user/:user_id')
+    .get(Story.readingsForUser);
+
+Router.route('/reading/story/:story_id')
+    .get(Story.allReadings);
+
 Router.route('/reading/:reading_id')
     .get(Reading.fetch)
     .put(Reading.update);

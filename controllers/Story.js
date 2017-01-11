@@ -110,7 +110,7 @@ function destroy(req, res, next) {
 }
 
 function allReadings(req, res, next) {
-    CoreSchema.Reading.find({"story": req.params.story_id}, function (err, readings) {
+    CoreSchema.Reading.find({"storyId": req.params.story_id}, function (err, readings) {
         if (err) {
             return next(err);
         }
@@ -120,7 +120,7 @@ function allReadings(req, res, next) {
 }
 
 function allReadingsForUser(req, res, next) {
-    CoreSchema.Reading.find({"story": req.params.story_id, "user": req.params.user_id}, function (err, readings) {
+    CoreSchema.Reading.find({"storyId": req.params.story_id, "userId": req.params.user_id}, function (err, readings) {
         if (err) {
             return next(err);
         }
