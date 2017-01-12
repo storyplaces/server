@@ -89,7 +89,7 @@ function fetch(req, res, next) {
 }
 
 function update(req, res, next) {
-    CoreSchema.Reading.findByIdAndUpdate(req.params.reading_id, {variables: req.body.variables}, function (err, reading) {
+    CoreSchema.Reading.findByIdAndUpdate(req.params.reading_id, {variables: req.body.variables, state: req.body.state, timestamp: req.body.timestamp}, function (err, reading) {
         if (!reading) {
             err.status = 400;
             err.clientMessage = "Unable To update reading";

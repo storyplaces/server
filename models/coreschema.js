@@ -117,16 +117,9 @@ Story.set('toJSON', {
 // Variable -------------------------------------------------------------------
 
 var Variable = new Schema({
+    id: String,
     key: String,
     value: Schema.Types.Mixed
-});
-
-Variable.virtual('id').get(function () {
-    return this._id.toHexString();
-});
-
-Variable.set('toJSON', {
-    virtuals: true
 });
 
 // Reading --------------------------------------------------------------------
@@ -135,7 +128,9 @@ var Reading = new Schema({
     name: String,
     storyId: String,
     userId: String,
-    variables: [Variable]
+    variables: [Variable],
+    state: String,
+    timestamp: Number
 });
 
 Reading.virtual('id').get(function () {
