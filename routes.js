@@ -149,7 +149,7 @@ Router.route('/authoring/story/:story_id/publish')
 
 // Get stories for AuthoringUser
 Router.route('/authoring/story/user/:user_id')
-	.get(AuthoringUser.userFetch);
+	.get(AuthoringStory.userFetch);
 
 // Create AuthoringUser
 // Get list of AuthoringUsers

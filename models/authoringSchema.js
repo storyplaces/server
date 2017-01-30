@@ -43,35 +43,37 @@ var Schema = mongoose.Schema;
 // AuthoringUser -----------------------------------------------------------------------
 
 var AuthoringUser = new Schema({
-    email: String,
-    name: String,
+    email: {type: String, required: true},
+    name: {type: String, required: true},
     bio: String,
     role: {
         type: String,
-        enum: ['writer', 'publisher', 'researcher', 'admin']
+        enum: ['writer', 'publisher', 'researcher', 'admin'],
+        required: true
     }
 });
 
-User.virtual('id').get(function () {
+AuthoringUser.virtual('id').get(function () {
     return this._id.toHexString();
 });
 
-User.set('toJSON', {
+AuthoringUser.set('toJSON', {
     virtuals: true
 });
 
 // AuthoringPage -----------------------------------------------------------------------
 
 var AuthoringPage = new Schema({
-    name: String,
-    content: String,
-    pageHint: String,
+    name: {type: String, required: true},
+    content: {type: String, required: true},
+    pageHint: {type: String, required: true},
     locationId: String,
-    allowMultipleReadings: Boolean,
+    allowMultipleReadings: {type: Boolean, required: true},
     unlockedByPageIds: [{type: String, ref: 'AuthoringPage'}],
     unlockedByPagesOperator: {
         type: String,
-        enum: ['and', 'or']
+        enum: ['and', 'or'],
+        required: true
     }
 });
 
@@ -86,19 +88,35 @@ AuthoringPage.set('toJSON', {
 // AuthoringStory ----------------------------------------------------------------------
 
 var AuthoringStory = new Schema({
-    title: String,
-    description: String,
-    createdDate: Date,
-    modifiedDate: Date,
+    title: {type: String, required: true},
+    description: {type: String, required: true},
+    createdDate: {type: Date, required: true},
+    modifiedDate: {type: Date, required: true},
     audience: {
         type: String,
-        enum: ['general', 'advisory', 'family']
+        enum: ['general', 'advisory', 'family'],
+        required: true
     },
-    authorIds: [{type: String, ref: 'AuthoringUser'}],
-    chapters: [AuthoringChapter],
-    pages: [AuthoringPage],
-    locations: [AuthoringCircleLocation],
-    tags: [String]
+    authorIds: {
+        type: [{type: String, ref: 'AuthoringUser'}],
+        required: true
+    },
+    chapters: {
+        type: [AuthoringChapter],
+        required: true
+    },
+    pages: {
+        type: [AuthoringPage],
+        required: true
+    },
+    locations: {
+        type: [AuthoringCircleLocation],
+        required: true
+    },
+    tags: {
+        type: [String],
+        required: true
+    },
 });
 
 AuthoringStory.virtual('id').get(function () {
@@ -112,9 +130,9 @@ AuthoringStory.set('toJSON', {
 // AuthoringCircleLocation -------------------------------------------------------------------
 
 var AuthoringCircleLocation = new Schema({
-    lat: Number,
-    long: Number,
-    radius: Number
+    lat: {type: Number, required: true},
+    long: {type: Number, required: true},
+    radius: {type: Number, required: true}
 });
 
 AuthoringCircleLocation.virtual('id').get(function () {
@@ -128,27 +146,35 @@ AuthoringCircleLocation.set('toJSON', {
 // AuthoringChapter ---------------------------------------------------------
 
 var AuthoringChapter = new Schema({
-    name: String,
+    name: {type: String, required: true},
     colour: {
         type: String,
-        enum: ['aqua', 'black', 'blue', 'fuchsia', 'gray', 'green', 'lime', 'maroon', 'navy', 'olive', 'purple', 'red', 'silver', 'teal', 'white', 'yellow']
+        enum: ['aqua', 'black', 'blue', 'fuchsia', 'gray', 'green', 'lime', 'maroon', 'navy', 'olive', 'purple', 'red', 'silver', 'teal', 'white', 'yellow'],
+        required: true
     },
-    pageIds: [{
-        type: String,
-        ref: 'AuthoringPage'
-    }],
-    unlockedByPageIds: [{
-        type: String,
-        ref: 'AuthoringPage'
-    }],
+    pageIds: {
+        type: [{
+            type: String,
+            ref: 'AuthoringPage'
+        }], required: true
+    },
+    unlockedByPageIds: {
+        type: [{
+            type: String,
+            ref: 'AuthoringPage'
+        }], required: true
+    },
     unlockedByPagesOperator: {
         type: String,
-        enum: ['and', 'or']
+        enum: ['and', 'or'],
+        required: true
     },
-    locksAllOtherChapters: Boolean,
+    locksAllOtherChapters: {type: Boolean, required: true},
     locksChapters: {
-        type: String,
-        ref: 'AuthoringChapter'
+        type: [{
+            type: String,
+            ref: 'AuthoringChapter'
+        }], required: true
     }
 });
 
