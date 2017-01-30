@@ -52,6 +52,9 @@ var LogEvent = require('./controllers/LogEvent.js');
 var StaticPages = require('./controllers/StaticPages.js');
 var Media = require('./controllers/Media.js');
 
+var AuthoringStory = require('./controllers/AuthoringStory.js');
+var AuthoringUser = require('./controllers/AuthoringUser.js');
+
 var LogRequestToConsole = require('./middleware/LogRequestToConsole.js');
 var AuthenticateUsingToken = require('./middleware/TokenAuthentication.js');
 var LogErrorToConsole = require('./middleware/LogErrorToConsole.js');
@@ -74,7 +77,7 @@ Router.use(LogRequestToConsole);
 // Test route
 Router.get('/', StaticPages.rootPage);
 
-// Routes for API
+// Routes for Reading API
 
 Router.route('/story')
     .get(Story.index)
@@ -125,6 +128,40 @@ Router.route('/logevent/user/:user_id')
 Router.route('/user')
     .post(User.create)
     .get(User.index);
+
+// Routes for Authoring Tool API
+
+// Get a list of stories
+// Create a new story
+Router.route('/authoring/story')
+	.get(AuthoringStory.index)
+	.post(AuthoringStory.create);
+
+// Get an individual story
+// Update a story
+Router.route('/authoring/story/:story_id')
+	.get(AuthoringStory.fetch)
+	.put(AuthoringStory.update);
+
+// Publish a story
+Router.route('/authoring/story/:story_id/publish')
+	.get(AuthoringStory.publish);
+
+// Get stories for AuthoringUser
+Router.route('/authoring/story/user/:user_id')
+	.get(AuthoringStory.userFetch);
+
+// Create AuthoringUser
+// Get list of AuthoringUsers
+Router.route('/authoring/user')
+	.post(AuthoringUser.create)
+	.get(AuthoringUser.index);
+
+// Get AuthoringUser
+// Update AuthoringUser
+Router.route('/authoring/user/:user_id')
+    .put(AuthoringUser.update)
+    .get(AuthoringUser.fetch);
 
 // Error logging
 Router.use(LogErrorToConsole);
