@@ -67,7 +67,8 @@ Mongoose.connect(secrets.database.connection); // connect to our database
 
 // Register the routes --------------------------------------------------------
 App.use(settings.api.url, Routes);
-App.use(settings.client.url, Express.static(settings.client.source_path));
+App.use(settings.readingTool.url, Express.static(settings.readingTool.sourcePath));
+App.use(settings.authoringTool.url, Express.static(settings.authoringTool.sourcePath));
 
 // Start the server -----------------------------------------------------------
 if (settings.server.useHttps) {

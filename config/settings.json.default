@@ -1,7 +1,12 @@
 {
-  "client": {
-    "source_path": "../StoryPlacesClient",
+  "readingTool": {
+    "sourcePath": "../StoryPlacesReadingTool",
     "url" : "/"
+  },
+
+  "authoringTool": {
+    "sourcePath": "../StoryPlacesAuthoringTool",
+    "url" : "/authoring"
   },
 
   "api": {
