@@ -170,7 +170,7 @@ var AuthoringChapter = new Schema({
         required: true
     },
     locksAllOtherChapters: {type: Boolean, required: true},
-    locksChapters: {
+    locksChapterIds: {
         type: [{
             type: String,
             ref: 'AuthoringChapter'
