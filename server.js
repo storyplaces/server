@@ -6,7 +6,7 @@
  This application was developed as part of the Leverhulme Trust funded
  StoryPlaces Project. For more information, please visit storyplaces.soton.ac.uk
 
- Copyright (c) 2016
+ Copyright (c) 2017
  University of Southampton
  Charlie Hargood, cah07r.ecs.soton.ac.uk
  Kevin Puplett, k.e.puplett.soton.ac.uk
@@ -43,12 +43,14 @@
 "use strict";
 
 // Get configuration ----------------------------------------------------------
+var settings = require('./config/settings.json');
+
 if (process.env.NODE_ENV !== 'test') {
     var secrets = require('./config/secrets.json');
 } else {
     var secrets = require('./config/secrets-test.json');
 }
-var settings = require('./config/settings.json');
+
 var port = process.env.PORT || 8080;
 
 // Load dependencies ----------------------------------------------------------
@@ -56,39 +58,55 @@ var Logger = require('./utilities/Logger.js');
 var Express = require('express');
 var Mongoose = require('mongoose');
 var Routes = require('./routes.js');
-var https = require('https');
-var fs = require('fs');
-
-// Set up SSL ------------------------------------------------------
-if (process.env.NODE_ENV !== 'test') {
-    var key = fs.readFileSync(secrets.ssl.keypath);
-    var cert = fs.readFileSync(secrets.ssl.certpath)
-    var ca = [
-        fs.readFileSync(secrets.ssl.capath, 'utf8')
-    ]
-    var https_options = {
-        key: key,
-        cert: cert,
-        ca: ca
-    }
-} else {
-        var https_options = {};
-}
 
 // Build our express app ------------------------------------------------------
-    var App = Express();
+var App = Express();
 
 // Connect to the database ----------------------------------------------------
-    Mongoose.connect(secrets.database.connection); // connect to our database
+Mongoose.connect(secrets.database.connection); // connect to our database
 
 // Register the routes --------------------------------------------------------
-    App.use(settings.api.url, Routes);
-    App.use(settings.client.url, Express.static(settings.client.source_path));
+App.use(settings.api.url, Routes);
+App.use(settings.client.url, Express.static(settings.client.source_path));
 
 // Start the server -----------------------------------------------------------
-//App.listen(port);
-    https.createServer(https_options, App).listen(port);
+if (settings.server.useHttps) {
+    startHttpsServer();
+}  else{
+    startHttpServer();
+}
 
-    Logger.log('Serving on port ' + port);
+module.exports = App; //For testing
 
-    module.exports = App; //For testing
+/**
+ * Server start functions below here
+ */
+
+function startHttpServer() {
+    var server = require('http');
+    server.createServer(App).listen(port);
+    Logger.log('Serving over http on port ' + port);
+};
+
+function startHttpsServer() {
+    var https_options;
+    var fs = require('fs');
+
+    if (process.env.NODE_ENV !== 'test') {
+
+        https_options = {
+            key: fs.readFileSync(secrets.ssl.keypath),
+            cert: fs.readFileSync(secrets.ssl.certpath)
+        }
+
+        if (secrets.ssl.capath) {
+            https_options.ca = fs.readFileSync(secrets.ssl.capath, 'utf8');
+        }
+    } else {
+        https_options = {}
+    }
+
+    var server = require('https');
+    server.createServer(https_options, App).listen(port);
+    Logger.log('Serving over https on port ' + port);
+}
