@@ -67,7 +67,7 @@ var AuthoringPage = new Schema({
     name: {type: String, required: true},
     content: {type: String, required: true},
     pageHint: {type: String, required: true},
-    locationId: String,
+    locationId: {type: String, ref: 'AuthoringCircleLocation'},
     allowMultipleReadings: {type: Boolean, required: true},
     unlockedByPageIds: [{type: String, ref: 'AuthoringPage'}],
     unlockedByPagesOperator: {
