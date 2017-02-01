@@ -55,7 +55,7 @@ var should = chai.should();
 chai.use(chaiHttp);
 
 // Setup - Empty the database before each test
-describe('AuthoringStories', function () {
+describe('AuthoringUser', function () {
     beforeEach(function (done) {
         AuthoringSchema.AuthoringUser.remove({}, function (err) {
             done();
