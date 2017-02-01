@@ -46,13 +46,15 @@
       "id": "123456",
       "lat": 50.906262,
       "long": -1.402531,
-      "radius": 30
+      "radius": 30,
+      "type": "circle"
     },
     {
       "id": "654321",
       "lat": 50.908177,
       "long": -1.402877,
-      "radius": 30
+      "radius": 30,
+      "type": "circle"
     }
   ],
   "tags": [

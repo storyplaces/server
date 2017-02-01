@@ -64,6 +64,7 @@ AuthoringUser.set('toJSON', {
 // AuthoringPage -----------------------------------------------------------------------
 
 var AuthoringPage = new Schema({
+    id: {type: String, required: true},
     name: {type: String, required: true},
     content: {type: String, required: true},
     pageHint: {type: String, required: true},
@@ -75,14 +76,6 @@ var AuthoringPage = new Schema({
         enum: ['and', 'or'],
         required: true
     }
-});
-
-AuthoringPage.virtual('id').get(function () {
-    return this._id.toHexString();
-});
-
-AuthoringPage.set('toJSON', {
-    virtuals: true
 });
 
 // AuthoringStory ----------------------------------------------------------------------
@@ -130,22 +123,18 @@ AuthoringStory.set('toJSON', {
 // AuthoringCircleLocation -------------------------------------------------------------------
 
 var AuthoringCircleLocation = new Schema({
+    id: {type: String, required: true},
     lat: {type: Number, required: true},
     long: {type: Number, required: true},
-    radius: {type: Number, required: true}
+    radius: {type: Number, required: true},
+    type: {type: String, required: true, enum: ['circle']}
 });
 
-AuthoringCircleLocation.virtual('id').get(function () {
-    return this._id.toHexString();
-});
-
-AuthoringCircleLocation.set('toJSON', {
-    virtuals: true
-});
 
 // AuthoringChapter ---------------------------------------------------------
 
 var AuthoringChapter = new Schema({
+    id: {type: String, required: true},
     name: {type: String, required: true},
     colour: {
         type: String,
@@ -176,14 +165,6 @@ var AuthoringChapter = new Schema({
             ref: 'AuthoringChapter'
         }], required: true
     }
-});
-
-AuthoringChapter.virtual('id').get(function () {
-    return this._id.toHexString();
-});
-
-AuthoringChapter.set('toJSON', {
-    virtuals: true
 });
 
 // Exports --------------------------------------------------------------------

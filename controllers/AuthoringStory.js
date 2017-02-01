@@ -60,7 +60,11 @@ function create(req, res, next) {
             return next(err);
         }
 
-        res.json({message: 'Authoring Story created!'});
+        res.statusCode = 201;
+        res.json({
+            message: 'Authoring Story created',
+            object: authoringStory
+        });
     });
 }
 
@@ -102,7 +106,10 @@ function update(req, res, next) {
             return next(err);
         }
 
-        res.json(authoringStory);
+        res.json({
+            message: 'Authoring Story updated',
+            object: authoringStory
+        });
     });
 }
 

@@ -41,6 +41,8 @@
 process.env.NODE_ENV = 'test';
 
 var mongoose = require("mongoose");
+var mongoDb = require('mongodb');
+var ObjectId = mongoDb.ObjectID;
 var AuthoringSchema = require('../models/authoringSchema');
 
 // Misc requires
@@ -102,19 +104,21 @@ describe('AuthoringStories', function () {
     });
 
     describe('/POST valid story', function () {
-        xit('it should POST a valid story', function (done) {
-            var story = JSON.parse(fs.readFileSync('test/resources/authoring_the_destitute_and_the_alien.json'));
+        it('it should POST a valid story', function (done) {
+            var story = JSON.parse(fs.readFileSync('test/resources/sample_authoring_story.json'));
             chai.request(server)
                 .post('/storyplaces/authoring/story')
                 .set("Content-Type", "application/json")
                 .set("X-Auth-Token", "thisisadefaultpass")
                 .send(story)
                 .end(function (err, res) {
-                    res.should.have.status(200);
+                    res.should.have.status(201);
                     res.body.should.be.a('object');
-                    res.body.should.have.property('message').eql('Authoring Story created!');
-                    CoreSchema.Story.findOne({'_id': 'TODO: FILL THIS IN'}, function (err, res) {
-                        res.should.not.be.null;
+                    res.body.should.have.property('message').eql('Authoring Story created');
+                    res.body.should.have.property('object');
+                    res.body.object.should.have.property('id');
+                    AuthoringSchema.AuthoringStory.findOne({'_id': (new ObjectId(res.body.object.id))}, function (err, storyRes) {
+                        storyRes.should.not.be.null;
                         done();
                     });
                 });
@@ -123,24 +127,30 @@ describe('AuthoringStories', function () {
     });
 
     describe('/POST story then /GET/:id story', function () {
-        xit('it should retrieve a POSTed story', function (done) {
-            var story = JSON.parse(fs.readFileSync('test/resources/the_destitute_and_the_alien.json'));
+        it('it should retrieve a POSTed story', function (done) {
+            var story = JSON.parse(fs.readFileSync('test/resources/sample_authoring_story.json'));
+            var postedId = "";
             chai.request(server)
-                .post('/storyplaces/story')
+                .post('/storyplaces/authoring/story')
                 .set("Content-Type", "application/json")
                 .set("X-Auth-Token", "thisisadefaultpass")
                 .send(story)
                 .end(function (err, res) {
-                    res.should.have.status(200);
+                    res.should.have.status(201);
                     res.body.should.be.a('object');
-                    res.body.should.have.property('message').eql('Story created!');
+                    res.body.should.have.property('message').eql('Authoring Story created');
+                    res.body.should.have.property('object');
+                    res.body.object.should.have.property('id');
+                    postedId = res.body.object.id;
                 });
             chai.request(server)
-                .get('/storyplaces/story/579b8de189ed4ed46600005f')
+                .get('/storyplaces/authoring/story/' + postedId)
                 .end(function (err, res) {
                     res.should.have.status(200);
-                    res.body.should.be.a('object');
-                    res.body.should.eql(story);
+                    res.body.should.be.a('Array');
+                    res.body[0].should.be.a('object');
+                    res.body[0].should.have.property('title').eql(story.title);
+                    res.body[0].should.have.property('audience').eql(story.audience);
                     done();
                 });
         });
