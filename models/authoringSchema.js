@@ -81,6 +81,7 @@ var AuthoringPage = new Schema({
 // AuthoringStory ----------------------------------------------------------------------
 
 var AuthoringStory = new Schema({
+    version: {type: Number, required: true, default: 1},
     title: {type: String, required: true},
     description: {type: String, required: true},
     createdDate: {type: Date, required: true},
