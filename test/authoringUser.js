@@ -94,7 +94,7 @@ describe('AuthoringUser', function () {
                     res.should.have.status(400);
                     res.body.should.be.a('object');
                     res.body.should.have.property('error');
-                    res.body.error.should.equal('Unable To save authoring user');
+                    res.body.error.should.equal('Unable To save Authoring User');
                     done();
                 });
         });
@@ -110,9 +110,9 @@ describe('AuthoringUser', function () {
                 .set("X-Auth-Token", "thisisadefaultpass")
                 .send(authoringUser)
                 .end(function (err, res) {
-                    res.should.have.status(200);
+                    res.should.have.status(201);
                     res.body.should.be.a('object');
-                    res.body.should.have.property('message').eql('Authoring User created!');
+                    res.body.should.have.property('message').eql('Authoring User Created');
                     AuthoringSchema.AuthoringUser.findOne({'name': 'Testy McTest'}, function (err, res) {
                         res.should.not.be.null;
                         res.should.have.property('name', 'Testy McTest');
@@ -129,30 +129,28 @@ describe('AuthoringUser', function () {
     describe('/POST authoringUser then /GET/:id authoringUser', function () {
         it('it should retrieve a POSTed authoringUser', function (done) {
             var authoringUser = JSON.parse(fs.readFileSync('test/resources/sample_authoring_user.json'));
+
             chai.request(server)
                 .post('/storyplaces/authoring/user')
                 .set("Content-Type", "application/json")
                 .set("X-Auth-Token", "thisisadefaultpass")
                 .send(authoringUser)
                 .end(function (err, res) {
-                    res.should.have.status(200);
+                    res.should.have.status(201);
                     res.body.should.be.a('object');
-                    res.body.should.have.property('message').eql('Authoring User created!');
-                    AuthoringSchema.AuthoringUser.findOne({'name': 'Testy McTest'}, function (err, res) {
-                        res.should.not.be.null;
-                        chai.request(server)
-                            .get('/storyplaces/authoring/user/' + res._id)
-                            .end(function (err, res) {
-                                res.should.have.status(200);
-                                res.body.should.be.a('object');
-                                res.body.should.include(authoringUser);
-                                done();
-                            });
-                    });
+                    res.body.should.have.property('message').eql('Authoring User Created');
+                    res.body.should.have.property('object');
+                    res.body.object.should.have.property('id');
 
+                    chai.request(server)
+                        .get('/storyplaces/authoring/user/' + res.body.object.id)
+                        .end(function (err, res) {
+                            res.should.have.status(200);
+                            res.body.should.be.a('object');
+                            res.body.should.include(authoringUser);
+                            done();
+                        });
                 });
-
         });
-
     });
 });
