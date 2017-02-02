@@ -41,6 +41,8 @@
 process.env.NODE_ENV = 'test';
 
 var mongoose = require("mongoose");
+var mongoDb = require('mongodb');
+var ObjectId = mongoDb.ObjectID;
 var AuthoringSchema = require('../models/authoringSchema');
 
 // Misc requires
@@ -102,48 +104,121 @@ describe('AuthoringStories', function () {
     });
 
     describe('/POST valid story', function () {
-        xit('it should POST a valid story', function (done) {
-            var story = JSON.parse(fs.readFileSync('test/resources/authoring_the_destitute_and_the_alien.json'));
+        it('it should POST a valid story', function (done) {
+            var story = JSON.parse(fs.readFileSync('test/resources/sample_authoring_story.json'));
             chai.request(server)
                 .post('/storyplaces/authoring/story')
                 .set("Content-Type", "application/json")
                 .set("X-Auth-Token", "thisisadefaultpass")
                 .send(story)
                 .end(function (err, res) {
-                    res.should.have.status(200);
+                    res.should.have.status(201);
                     res.body.should.be.a('object');
-                    res.body.should.have.property('message').eql('Authoring Story created!');
-                    CoreSchema.Story.findOne({'_id': 'TODO: FILL THIS IN'}, function (err, res) {
-                        res.should.not.be.null;
+                    res.body.should.have.property('message').eql('Authoring Story created');
+                    res.body.should.have.property('object');
+                    res.body.object.should.have.property('id');
+                    AuthoringSchema.AuthoringStory.findOne({'_id': (new ObjectId(res.body.object.id))}, function (err, storyRes) {
+                        storyRes.should.not.be.null;
                         done();
                     });
                 });
         });
-
     });
 
-    describe('/POST story then /GET/:id story', function () {
-        xit('it should retrieve a POSTed story', function (done) {
-            var story = JSON.parse(fs.readFileSync('test/resources/the_destitute_and_the_alien.json'));
+    describe('/PUT valid story', function () {
+
+        it('it wont allow a story to be updated if its modified date is earlier than what is on the server', function (done) {
+            var story = JSON.parse(fs.readFileSync('test/resources/sample_authoring_story.json'));
             chai.request(server)
-                .post('/storyplaces/story')
+                .post('/storyplaces/authoring/story')
                 .set("Content-Type", "application/json")
                 .set("X-Auth-Token", "thisisadefaultpass")
                 .send(story)
                 .end(function (err, res) {
-                    res.should.have.status(200);
+                    res.should.have.status(201);
                     res.body.should.be.a('object');
-                    res.body.should.have.property('message').eql('Story created!');
-                });
-            chai.request(server)
-                .get('/storyplaces/story/579b8de189ed4ed46600005f')
-                .end(function (err, res) {
-                    res.should.have.status(200);
-                    res.body.should.be.a('object');
-                    res.body.should.eql(story);
-                    done();
+                    res.body.should.have.property('message').eql('Authoring Story created');
+                    res.body.should.have.property('object');
+                    res.body.object.should.have.property('id');
+
+                    chai.request(server)
+                        .put('/storyplaces/authoring/story/' + res.body.object.id)
+                        .set("Content-Type", "application/json")
+                        .set("X-Auth-Token", "thisisadefaultpass")
+                        .send(story)
+                        .end(function (err, res) {
+                            res.should.have.status(409);
+                            res.body.should.be.a('object');
+                            res.body.should.have.property('error').eql('The Authoring Story on the server is newer or the same age as the one submitted');
+                            done();
+                        });
                 });
         });
 
+        it('it will allow a story to be updated if its modified date is later than that of the story on the server', function (done) {
+            var firstStory = JSON.parse(fs.readFileSync('test/resources/sample_authoring_story.json'));
+            var laterStory = JSON.parse(fs.readFileSync('test/resources/later_sample_authoring_story.json'));
+            chai.request(server)
+                .post('/storyplaces/authoring/story')
+                .set("Content-Type", "application/json")
+                .set("X-Auth-Token", "thisisadefaultpass")
+                .send(firstStory)
+                .end(function (err, res) {
+                    res.should.have.status(201);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('message').eql('Authoring Story created');
+                    res.body.should.have.property('object');
+                    res.body.object.should.have.property('id');
+
+                    chai.request(server)
+                        .put('/storyplaces/authoring/story/' + res.body.object.id)
+                        .set("Content-Type", "application/json")
+                        .set("X-Auth-Token", "thisisadefaultpass")
+                        .send(laterStory)
+                        .end(function (err, res) {
+                            res.should.have.status(200);
+                            res.body.should.be.a('object');
+                            res.body.should.have.property('message').eql('Authoring Story updated');
+
+                            chai.request(server)
+                                .get('/storyplaces/authoring/story/' + res.body.object.id)
+                                .end(function (err, res) {
+                                    res.should.have.status(200);
+                                    res.body.should.be.a('object');
+                                    res.body.modifiedDate.should.eql(laterStory.modifiedDate);
+                                    done();
+                                });
+                        });
+                });
+        });
+    });
+
+    describe('/POST story then /GET/:id story', function () {
+        it('it should retrieve a POSTed story', function (done) {
+            var authoringStory = JSON.parse(fs.readFileSync('test/resources/sample_authoring_story.json'));
+
+            chai.request(server)
+                .post('/storyplaces/authoring/story')
+                .set("Content-Type", "application/json")
+                .set("X-Auth-Token", "thisisadefaultpass")
+                .send(authoringStory)
+                .end(function (err, res) {
+                    res.should.have.status(201);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('message').eql('Authoring Story created');
+                    res.body.should.have.property('object');
+                    res.body.object.should.have.property('id');
+
+                    chai.request(server)
+                        .get('/storyplaces/authoring/story/' + res.body.object.id)
+                        .end(function (err, res) {
+                            res.should.have.status(200);
+                            res.body.should.be.a('object');
+                            res.body.title.should.eql(authoringStory.title);
+                            res.body.tags.should.eql(authoringStory.tags);
+                            done();
+                        });
+                });
+        });
     });
 });

@@ -40,6 +40,8 @@
 "use strict";
 
 var AuthoringSchema = require('../models/authoringSchema');
+var helpers = require('./helpers.js');
+
 
 exports.create = create;
 exports.index = index;
@@ -53,34 +55,47 @@ function create(req, res, next) {
     authoringUser.save(function (err) {
         if (err) {
             err.status = 400;
-            err.clientMessage = "Unable To save authoring user";
+            err.clientMessage = "Unable To save Authoring User";
             return next(err);
         }
 
-        res.json({message: 'Authoring User created!'});
+        res.statusCode = 201;
+        res.json({
+            message: 'Authoring User Created',
+            object: authoringUser
+        });
     });
 }
 
 function index(req, res, next) {
-    AuthoringSchema.AuthoringUser.find(function (err, authoringUser) {
+    AuthoringSchema.AuthoringUser.find(function (err, authoringUsers) {
         if (err) {
             return next(err);
         }
 
-        res.json(authoringUser);
+        res.json(authoringUsers);
     });
 }
 
 function fetch(req, res, next) {
-    AuthoringSchema.AuthoringUser.findById(req.params.user_id, function (err, authoringUser) {
-        if (!authoringUser&&err) {
-            err.status = 404;
-            err.clientMessage = "User not found";
+    try {
+        var userId = helpers.validateId(req.params.user_id);
+    } catch (error) {
+        return next(error);
+    }
+
+    AuthoringSchema.AuthoringUser.findById(userId, function (err, authoringUser) {
+        if (err) {
             return next(err);
         }
 
-        if (err) {
-            return next(err);
+        var error = new Error();
+
+        if (!authoringUser) {
+            error.message = "Authoring User id " + userId + " not found";
+            error.status = 404;
+            error.clientMessage = "Authoring User not found";
+            return next(error);
         }
 
         res.json(authoringUser);
@@ -88,17 +103,27 @@ function fetch(req, res, next) {
 }
 
 function update(req, res, next) {
-    AuthoringSchema.AuthoringUser.findByIdAndUpdate(req.params.user_id, req.body, function (err, authoringUser) {
-        if (!authoringUser) {
-            err.status = 400;
-            err.clientMessage = "Unable To update user";
-            return next(err);
-        }
+    try {
+        var userId = helpers.validateId(req.params.user_id);
+    } catch (error) {
+        return next(error);
+    }
 
+    AuthoringSchema.AuthoringUser.findByIdAndUpdate(req.params.user_id, req.body, function (err, authoringUser) {
         if (err) {
             return next(err);
         }
 
-        res.json(authoringUser);
+        if (!authoringUser) {
+            error.message = "Authoring User id " + userId + " not found";
+            error.status = 404;
+            error.clientMessage = "Authoring User not found";
+            return next(error);
+        }
+
+        res.json({
+            message: "Authoring User created",
+            object: authoringUser
+        });
     });
 }
