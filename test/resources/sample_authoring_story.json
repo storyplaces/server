@@ -12,7 +12,7 @@
       "id": "1",
       "name": "Loose Pages",
       "colour": "blue",
-      "pageIds": [],
+      "pageIds": ["1", "2"],
       "unlockedByPageIds": [],
       "unlockedByPageOperator": "and",
       "locksAllOtherChapters": true,
