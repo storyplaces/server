@@ -8,14 +8,21 @@ mongo
 
 
 ## Installation
-* Create an install folder and cd to it.
-* Clone this repository to `StoryPlacesServer`
-* Clone client repository to `StoryPlacesClient`
-* cd into `StoryPlacesServer`
-* run `npm install`
+* Install Node.js
+* Open CMD/terminal and run "npm install npm -g", because the version of npm that ships with Node.js is out of date
+* Run "npm install mongodb -g"
+* Make a new directory for StoryPlaces
+* Clone the "storyplaces/server" repo into a folder called "StoryPlacesServer" within the folder created previously.
+* Clone the "storyplaces/reading-tool" repo into a folder called "StoryPlacesReadingTool" into the same folder as above.
+* You should now have two folders.
+* Enter the StoryPlacesReadingTool directory and run "npm install"
+* Create a folder in this directory called "db"
+* Navigate to StoryPlacesServer and run "npm install" here as well
 
 ## Server setup
-* run `node server.js`
+* Open a new CMD/terminal and run "mongodb --dbpath [path_to_db_folder_created_earlier]"
+* Open another CMD/terminal and run "mongo"
+* Open yet another CMD/terminal, navigate to StoryPlacesServer, and run "node server.js"
 * Point your browser at `<server>:8080` and you will see the client
 
 ## Installing test data
