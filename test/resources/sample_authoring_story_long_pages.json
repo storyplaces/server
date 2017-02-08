@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "title": "Story number 1",
+  "description": "The first story",
+  "createdDate": "2017-01-30T14:22:54.460Z",
+  "modifiedDate": "2017-01-30T14:22:54.460Z",
+  "audience": "general",
+  "authorIds": [
+    "1"
+  ],
+  "chapters": [
+    {
+      "id": "1",
+      "name": "Loose Pages",
+      "colour": "blue",
+      "pageIds": [],
+      "unlockedByPageIds": [],
+      "unlockedByPageOperator": "and",
+      "locksAllOtherChapters": true,
+      "locksChapterIds": []
+    }
+  ],
+  "pages": [
+    {
+      "id": "1",
+      "name": "Page 1",
+      "content": "This is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some contentThis is some content",
+      "pageHint": "East Park",
+      "locationId": "123456",
+      "allowMultipleReadings": false,
+      "unlockedByPageIds": [],
+      "unlockedByPagesOperator": "and"
+    },
+    {
+      "id": "2",
+      "name": "Page 2",
+      "content": "This is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second pageThis is the second page",
+      "pageHint": "East Park, a bit further north",
+      "locationId": "654321",
+      "allowMultipleReadings": false,
+      "unlockedByPageIds": ["1"],
+      "unlockedByPagesOperator": "and"
+    }
+  ],
+  "locations": [
+    {
+      "id": "123456",
+      "lat": 50.906262,
+      "long": -1.402531,
+      "radius": 30,
+      "type": "circle"
+    },
+    {
+      "id": "654321",
+      "lat": 50.908177,
+      "long": -1.402877,
+      "radius": 30,
+      "type": "circle"
+    }
+  ],
+  "tags": [
+    "southampton"
+  ]
+}

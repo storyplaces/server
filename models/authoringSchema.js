@@ -68,7 +68,7 @@ var AuthoringPage = new Schema({
     name: {type: String, required: true},
     content: {type: String, required: true},
     pageHint: {type: String, required: true},
-    locationId: String,
+    locationId: {type: String, ref: 'AuthoringCircleLocation'},
     allowMultipleReadings: {type: Boolean, required: true},
     unlockedByPageIds: [{type: String, ref: 'AuthoringPage'}],
     unlockedByPagesOperator: {
@@ -81,6 +81,7 @@ var AuthoringPage = new Schema({
 // AuthoringStory ----------------------------------------------------------------------
 
 var AuthoringStory = new Schema({
+    version: {type: Number, required: true, default: 1},
     title: {type: String, required: true},
     description: {type: String, required: true},
     createdDate: {type: Date, required: true},

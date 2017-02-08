@@ -116,7 +116,7 @@ describe('AuthoringUser', function () {
                     AuthoringSchema.AuthoringUser.findOne({'name': 'Testy McTest'}, function (err, res) {
                         res.should.not.be.null;
                         res.should.have.property('name', 'Testy McTest');
-                        res.should.have.property('email', 'test@email.com');
+                        res.should.have.property('email', 'test@content.com');
                         res.should.have.property('bio', 'Born and died in 2017');
                         res.should.have.property('role', 'writer');
                         done();
