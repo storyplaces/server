@@ -83,7 +83,7 @@ var AuthoringPage = new Schema({
 var AuthoringStory = new Schema({
     version: {type: Number, required: true, default: 1},
     title: {type: String, required: true},
-    description: {type: String, required: true},
+    description: {type: String},
     createdDate: {type: Date, required: true},
     modifiedDate: {type: Date, required: true},
     audience: {
@@ -92,24 +92,19 @@ var AuthoringStory = new Schema({
         required: true
     },
     authorIds: {
-        type: [{type: String, ref: 'AuthoringUser'}],
-        required: true
+        type: [{type: String, ref: 'AuthoringUser'}]
     },
     chapters: {
-        type: [AuthoringChapter],
-        required: true
+        type: [AuthoringChapter]
     },
     pages: {
-        type: [AuthoringPage],
-        required: true
+        type: [AuthoringPage]
     },
     locations: {
-        type: [AuthoringCircleLocation],
-        required: true
+        type: [AuthoringCircleLocation]
     },
     tags: {
-        type: [String],
-        required: true
+        type: [String]
     },
 });
 
