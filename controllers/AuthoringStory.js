@@ -207,15 +207,13 @@ function publish(req, res, next) {
         // Create Locations
 
         // Create variables, functions, conditions
-        var conditions = [];
-        var functions = [];
+        readingStory.conditions = [];
+        readingStory.functions = [];
 
-        // Conditions and variables for chapters
-        authoringStory.chapters.forEach(function (chapter){
-            var newCondition = {};
-            newCondition.id = "chapter" + chapter.id;
-            newCondition.name = "chapter" + chapter.id;
-
+        // Conditions and functions for chapters
+        authoringStory.chapters.forEach(function (chapter) {
+            createChapterCondition(chapter, readingStory);
+            createChapterFunctions(chapter, readingStory);
         });
 
         // Create and add pages
@@ -234,9 +232,11 @@ function publish(req, res, next) {
         });
 
         // Add conditions for chapters
+        authoringStory.chapters.forEach(function (chapter) {
+            // TODO - Add conditions to pages
+        });
 
         readingStory.pages = pages;
-        readingStory.chapters = chapters;
 
         readingStory.locations.forEach(function (location) {
             createLocationCondition(location, readingStory);
@@ -252,6 +252,32 @@ function publish(req, res, next) {
             location: location.id,
             bool: "true",
             type: "location"
+        });
+    }
+
+    function createChapterCondition(chapter, readingStory) {
+        readingStory.conditions.push({
+            id: makeChapterConditionId(chapter.id),
+            name: makeChapterConditionId(chapter.id),
+            type: "check",
+            variable: "chapter-" + chapter.id + "-variable"
+        });
+    }
+
+    function createChapterFunctions(chapter, readingStory) {
+        readingStory.functions.push({
+            id: makeChapterFunctionId(chapter.id, true),
+            name: makeChapterFunctionId(chapter.name, true),
+            type: "set",
+            variable: "chapter-" + chapter.id + "-variable",
+            value: "true"
+        });
+        readingStory.functions.push({
+            id: makeChapterFunctionId(chapter.id, false),
+            name: makeChapterFunctionId(chapter.name, false),
+            type: "set",
+            variable: "chapter-" + chapter.id + "-variable",
+            value: "false"
         });
     }
 
@@ -305,5 +331,24 @@ function publish(req, res, next) {
         }
 
         return "location-" + locationId;
+    }
+
+    function makeChapterFunctionId(chapterId, enter) {
+        if (!chapterId) {
+            return undefined;
+        }
+
+        if (enter) {
+            return "chapter-" + chapterId + "-enter";
+        }
+        return "chapter-" + chapterId + "-enter";
+    }
+
+    function makeChapterConditionId(chapterId) {
+        if (!chapterId) {
+            return undefined;
+        }
+
+        return "chapter-" + chapterId;
     }
 }
