@@ -201,6 +201,8 @@ function publish(req, res, next) {
         readingStory.audience = authoringStory.audience;
         readingStory.tags = authoringStory.tags;
         readingStory.publishState = "pending";
+        readingStory.locations = [];
+        readingStory.conditions = [];
 
         // Create Locations
 
@@ -219,12 +221,15 @@ function publish(req, res, next) {
         // Create and add pages
         var pages = [];
         authoringStory.pages.forEach(function (page) {
+            var locationId = findAndCopyLocation(page.locationId, authoringStory, readingStory);
+            var locationConditionId = makeLocationConditionId(locationId);
+
             var newPage = {};
             newPage.id = page.id;
             newPage.content = page.content;
             newPage.name = page.name;
             newPage.pageTransition = page.finishesStory ? "finish" : "next";
-            newPage.hint = {direction: page.pageHint, locations: [page.locationId]};
+            newPage.hint = {direction: page.pageHint, locations: locationId ? [locationId] : []};
             pages.push(newPage);
         });
 
@@ -233,7 +238,72 @@ function publish(req, res, next) {
         readingStory.pages = pages;
         readingStory.chapters = chapters;
 
+        readingStory.locations.forEach(function (location) {
+            createLocationCondition(location, readingStory);
+        });
+
         res.statusCode = 400;
         res.json(readingStory);
     });
+
+    function createLocationCondition(location, readingStory) {
+        readingStory.conditions.push({
+            id: makeLocationConditionId(location.id),
+            location: location.id,
+            bool: "true",
+            type: "location"
+        });
+    }
+
+    function findAndCopyLocation(locationId, authoringStory, readingStory) {
+        if (!locationId) {
+            return undefined;
+        }
+
+        var location = authoringStory.locations.filter(function (location) {
+            return location.id == locationId
+        }).pop();
+
+        switch (location.type) {
+            case "circle":
+                return copyCircleLocation(location, readingStory);
+            default:
+                return undefined;
+        }
+    }
+
+    function copyCircleLocation(location, readingStory) {
+        var existingLocation = readingStory.locations.filter(function (readingLocation) {
+            if (readingLocation.type != "circle") {
+                return undefined;
+            }
+
+            var latMatches = readingLocation.lat == location.lat;
+            var lonMatches = readingLocation.lon == location.long;
+            var radiusMatches = readingLocation.radius == location.radius;
+            return latMatches && lonMatches && radiusMatches;
+        });
+
+        if (existingLocation.length != 0) {
+            return existingLocation.pop().id;
+        }
+
+        readingStory.locations.push({
+            id: location.id,
+            lat: location.lat,
+            lon: location.long,
+            radius: location.radius,
+            type: "circle"
+        });
+
+        return location.id;
+    }
+
+    function makeLocationConditionId(locationId) {
+        if (!locationId) {
+            return undefined;
+        }
+
+        return "location-" + locationId;
+    }
 }
