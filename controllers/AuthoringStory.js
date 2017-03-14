@@ -208,8 +208,7 @@ function publish(req, res, next) {
             newPage.content = page.content;
             newPage.name = page.name;
             newPage.pageTransition = page.finishesStory ? "finish" : "next";
-            newPage.teaser = page.pageHint;
-            newPage.hint = {direction: "something", locations: [page.locationId]};
+            newPage.hint = {direction: page.pageHint, locations: [page.locationId]};
             pages.push(newPage);
         });
 

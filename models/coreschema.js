@@ -66,7 +66,6 @@ var Page = new Schema({
     pageTransition: {type: String, required: true},
     conditions: [{type: String, ref: 'Schema.Types.Mixed'}],
     functions: [{type: String, ref: 'Function'}],
-    teaser: String,
     hint: {
         type: {
             direction: String,
