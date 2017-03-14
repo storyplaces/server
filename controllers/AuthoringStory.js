@@ -194,6 +194,7 @@ function publish(req, res, next) {
             return next(error);
         }
 
+        // Create basic story
         var readingStory = {};
         readingStory.name = authoringStory.title;
         readingStory.description = authoringStory.description;
@@ -201,6 +202,21 @@ function publish(req, res, next) {
         readingStory.tags = authoringStory.tags;
         readingStory.publishState = "pending";
 
+        // Create Locations
+
+        // Create variables, functions, conditions
+        var conditions = [];
+        var functions = [];
+
+        // Conditions and variables for chapters
+        authoringStory.chapters.forEach(function (chapter){
+            var newCondition = {};
+            newCondition.id = "chapter" + chapter.id;
+            newCondition.name = "chapter" + chapter.id;
+
+        });
+
+        // Create and add pages
         var pages = [];
         authoringStory.pages.forEach(function (page) {
             var newPage = {};
@@ -212,7 +228,10 @@ function publish(req, res, next) {
             pages.push(newPage);
         });
 
+        // Add conditions for chapters
+
         readingStory.pages = pages;
+        readingStory.chapters = chapters;
 
         res.statusCode = 400;
         res.json(readingStory);
