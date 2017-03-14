@@ -174,5 +174,34 @@ function userFetch(req, res, next) {
 }
 
 function publish(req, res, next) {
-    // TODO: Implement Publishing!
+    try {
+        var storyId = helpers.validateId(req.params.story_id);
+    } catch (error) {
+        return next(error);
+    }
+
+    AuthoringSchema.AuthoringStory.findById(storyId, function (err, authoringStory) {
+        if (err) {
+            return next(err);
+        }
+
+        var error = new Error();
+
+        if (!authoringStory) {
+            error.message = "Authoring Story id " + storyId + " not found";
+            error.status = 404;
+            error.clientMessage = "Authoring Story not found";
+            return next(error);
+        }
+
+        var readingStory = {};
+        readingStory.name = authoringStory.title;
+        readingStory.description = authoringStory.description;
+        readingStory.audience = authoringStory.audience;
+        readingStory.tags = authoringStory.tags;
+        readingStory.publishState = "pending";
+
+        res.statusCode = 400;
+        res.json(readingStory);
+    });
 }

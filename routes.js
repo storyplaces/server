@@ -107,7 +107,7 @@ Router.route('/authoring/story/:story_id')
 
 // Publish a story
 Router.route('/authoring/story/:story_id/publish')
-    .get(AuthoringStory.publish);
+    .post(AuthoringStory.publish);
 
 // Get stories for AuthoringUser
 Router.route('/authoring/story/user/:user_id')
