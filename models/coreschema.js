@@ -3,40 +3,40 @@
  * StoryPlaces
  *
 
-This application was developed as part of the Leverhulme Trust funded 
-StoryPlaces Project. For more information, please visit storyplaces.soton.ac.uk
+ This application was developed as part of the Leverhulme Trust funded
+ StoryPlaces Project. For more information, please visit storyplaces.soton.ac.uk
 
-Copyright (c) 2016
-  University of Southampton
-    Charlie Hargood, cah07r.ecs.soton.ac.uk
-    Kevin Puplett, k.e.puplett.soton.ac.uk
-	David Pepper, d.pepper.soton.ac.uk
+ Copyright (c) 2016
+ University of Southampton
+ Charlie Hargood, cah07r.ecs.soton.ac.uk
+ Kevin Puplett, k.e.puplett.soton.ac.uk
+ David Pepper, d.pepper.soton.ac.uk
 
-All rights reserved.
+ All rights reserved.
 
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-    * Redistributions of source code must retain the above copyright
-      notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright
-      notice, this list of conditions and the following disclaimer in the
-      documentation and/or other materials provided with the distribution.
-    * The name of the Universities of Southampton nor the name of its 
-	  contributors may be used to endorse or promote products derived from 
-	  this software without specific prior written permission.
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions are met:
+ * Redistributions of source code must retain the above copyright
+ notice, this list of conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright
+ notice, this list of conditions and the following disclaimer in the
+ documentation and/or other materials provided with the distribution.
+ * The name of the Universities of Southampton nor the name of its
+ contributors may be used to endorse or promote products derived from
+ this software without specific prior written permission.
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-ARE DISCLAIMED. IN NO EVENT SHALL THE ABOVE COPYRIGHT HOLDERS BE LIABLE FOR ANY
-DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
-THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ ARE DISCLAIMED. IN NO EVENT SHALL THE ABOVE COPYRIGHT HOLDERS BE LIABLE FOR ANY
+ DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-***************************************************************************** */
+ ***************************************************************************** */
 
 "use strict";
 
@@ -60,23 +60,20 @@ User.set('toJSON', {
 // Page -----------------------------------------------------------------------
 
 var Page = new Schema({
-    content: { type: String, required: true },
-    name: { type: String, required: true },
-    pageTransition: { type: String, required: true },
-    conditions: [{ type: String, ref: 'Schema.Types.Mixed' }],
-    functions: [{ type: String, ref: 'Function' }],
+    id: {type: String, required: true},
+    content: {type: String, required: true},
+    name: {type: String, required: true},
+    pageTransition: {type: String, required: true},
+    conditions: [{type: String, ref: 'Schema.Types.Mixed'}],
+    functions: [{type: String, ref: 'Function'}],
     teaser: String,
     hint: {
         type: {
-        direction: String,
-        locations: [{type: String, ref: 'Location'}]
+            direction: String,
+            locations: [{type: String, ref: 'Location'}]
         },
         required: true
     }
-});
-
-Page.virtual('id').get(function () {
-    return this._id.toHexString();
 });
 
 Page.set('toJSON', {
@@ -86,7 +83,7 @@ Page.set('toJSON', {
 // Story ----------------------------------------------------------------------
 
 var Story = new Schema({
-    name: { type: String, required: true },
+    name: {type: String, required: true},
     pages: [Page],
     locations: [Location],
     conditions: [Schema.Types.Mixed],
@@ -95,9 +92,9 @@ var Story = new Schema({
     description: String,
     author: String,
     cachedMediaIds: [String],
-	publishState: { type: String, required: true },
-	tags:[String],
-	pagesMapViewSettings: {
+    publishState: {type: String, required: true},
+    tags: [String],
+    pagesMapViewSettings: {
         map: Boolean,
         pageArrows: Boolean,
         pageDistance: Boolean
@@ -145,9 +142,9 @@ Reading.set('toJSON', {
 
 var LogEvent = new Schema({
     user: String,
-	date: Date,
+    date: Date,
     type: String,
-	data: Schema.Types.Mixed
+    data: Schema.Types.Mixed
 });
 
 LogEvent.virtual('id').get(function () {
@@ -161,15 +158,12 @@ LogEvent.set('toJSON', {
 // Function -------------------------------------------------------------------
 
 var Function = new Schema({
-    name: { type: String, required: true },
-    type: { type: String, required: true },
+    id: {type: String, required: true},
+    name: {type: String, required: true},
+    type: {type: String, required: true},
     variable: {type: String, required: true},
     value: {type: String, required: false},
-    conditions: [{ type: String, ref: 'Condition' }],
-});
-
-Function.virtual('id').get(function () {
-    return this._id.toHexString();
+    conditions: [{type: String, ref: 'Condition'}],
 });
 
 Function.set('toJSON', {
@@ -179,15 +173,12 @@ Function.set('toJSON', {
 // Location -------------------------------------------------------------------
 
 var Location = new Schema({
+    id: {type: String, required: true},
     name: String,
     type: String,
     lat: Number,
     lon: Number,
     radius: Number
-});
-
-Location.virtual('id').get(function () {
-    return this._id.toHexString();
 });
 
 Location.set('toJSON', {
@@ -197,17 +188,14 @@ Location.set('toJSON', {
 // Comparison Condition -------------------------------------------------------
 
 var ComparisonCondition = new Schema({
-    name: { type: String, required: true },
+    id: {type: String, required: true},
+    name: {type: String, required: true},
     type: {type: String, default: "comparison", required: true},
-    operand: { type: String, required: true },
-    a: { type: String, required: true },
-    aType: { type: String, required: true },
-    b: { type: String, required: true },
-    bType: { type: String, required: true }
-});
-
-ComparisonCondition.virtual('id').get(function () {
-    return this._id.toHexString();
+    operand: {type: String, required: true},
+    a: {type: String, required: true},
+    aType: {type: String, required: true},
+    b: {type: String, required: true},
+    bType: {type: String, required: true}
 });
 
 ComparisonCondition.set('toJSON', {
@@ -217,14 +205,11 @@ ComparisonCondition.set('toJSON', {
 // Logical Condition ----------------------------------------------------------
 
 var LogicalCondition = new Schema({
-    name: { type: String, required: true },
+    id: {type: String, required: true},
+    name: {type: String, required: true},
     type: {type: String, default: "logical"},
-    operand: { type: String, required: true },
-    conditions: [{ type: String, ref: 'Condition' }],
-});
-
-LogicalCondition.virtual('id').get(function () {
-    return this._id.toHexString();
+    operand: {type: String, required: true},
+    conditions: [{type: String, ref: 'Condition'}],
 });
 
 LogicalCondition.set('toJSON', {
@@ -235,14 +220,11 @@ LogicalCondition.set('toJSON', {
 // Location Condition ---------------------------------------------------------
 
 var LocationCondition = new Schema({
-    name: { type: String, required: true },
-    type: {type: String, default: "location", required: true },
-    bool: { type: Boolean, required: true },
-    location: { type: String, ref: 'Location', required: true }
-});
-
-LocationCondition.virtual('id').get(function () {
-    return this._id.toHexString();
+    id: {type: String, required: true},
+    name: {type: String, required: true},
+    type: {type: String, default: "location", required: true},
+    bool: {type: Boolean, required: true},
+    location: {type: String, ref: 'Location', required: true}
 });
 
 LocationCondition.set('toJSON', {
@@ -252,13 +234,10 @@ LocationCondition.set('toJSON', {
 // Check Condition ---------------------------------------------------------
 
 var CheckCondition = new Schema({
-    name: { type: String, required: true },
+    id: {type: String, required: true},
+    name: {type: String, required: true},
     type: {type: String, default: "check"},
-    variable: { type: String, ref: 'Variable' }
-});
-
-CheckCondition.virtual('id').get(function () {
-    return this._id.toHexString();
+    variable: {type: String, ref: 'Variable'}
 });
 
 CheckCondition.set('toJSON', {
@@ -273,7 +252,7 @@ module.exports = {
     Story: mongoose.model('Story', Story),
     Variable: mongoose.model('Variable', Variable),
     Reading: mongoose.model('Reading', Reading),
-	LogEvent: mongoose.model('LogEvent', LogEvent),
+    LogEvent: mongoose.model('LogEvent', LogEvent),
     Function: mongoose.model('Function', Function),
     Location: mongoose.model('Location', Location),
     ComparisonCondition: mongoose.model('ComparisonCondition', ComparisonCondition),

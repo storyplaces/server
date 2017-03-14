@@ -201,6 +201,20 @@ function publish(req, res, next) {
         readingStory.tags = authoringStory.tags;
         readingStory.publishState = "pending";
 
+        var pages = [];
+        authoringStory.pages.forEach(function (page) {
+            var newPage = {};
+            newPage.id = page.id;
+            newPage.content = page.content;
+            newPage.name = page.name;
+            newPage.pageTransition = page.finishesStory ? "finish" : "next";
+            newPage.teaser = page.pageHint;
+            newPage.hint = {direction: "something", locations: [page.locationId]};
+            pages.push(newPage);
+        });
+
+        readingStory.pages = pages;
+
         res.statusCode = 400;
         res.json(readingStory);
     });
