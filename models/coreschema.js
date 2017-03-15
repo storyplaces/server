@@ -75,9 +75,6 @@ var Page = new Schema({
     }
 });
 
-Page.set('toJSON', {
-    virtuals: true
-});
 
 // Story ----------------------------------------------------------------------
 
@@ -158,16 +155,19 @@ LogEvent.set('toJSON', {
 
 var Function = new Schema({
     id: {type: String, required: true},
-    name: {type: String, required: true},
     type: {type: String, required: true},
     variable: {type: String, required: true},
     value: {type: String, required: false},
     conditions: [{type: String, ref: 'Condition'}],
 });
 
-Function.set('toJSON', {
-    virtuals: true
+var ChainFunction = new Schema({
+    id: {type: String, required: true},
+    type: {type: String, required: true, enum: ['chain']},
+    functions: [{type: String, ref: 'Function'}],
+    conditions: [{type: String, ref: 'Condition'}],
 });
+
 
 // Location -------------------------------------------------------------------
 
@@ -180,9 +180,7 @@ var Location = new Schema({
     radius: Number
 });
 
-Location.set('toJSON', {
-    virtuals: true
-});
+
 
 // Comparison Condition -------------------------------------------------------
 
@@ -197,9 +195,6 @@ var ComparisonCondition = new Schema({
     bType: {type: String, required: true}
 });
 
-ComparisonCondition.set('toJSON', {
-    virtuals: true
-});
 
 // Logical Condition ----------------------------------------------------------
 
@@ -209,10 +204,6 @@ var LogicalCondition = new Schema({
     type: {type: String, default: "logical"},
     operand: {type: String, required: true},
     conditions: [{type: String, ref: 'Condition'}],
-});
-
-LogicalCondition.set('toJSON', {
-    virtuals: true
 });
 
 
@@ -226,10 +217,6 @@ var LocationCondition = new Schema({
     location: {type: String, ref: 'Location', required: true}
 });
 
-LocationCondition.set('toJSON', {
-    virtuals: true
-});
-
 // Check Condition ---------------------------------------------------------
 
 var CheckCondition = new Schema({
@@ -239,9 +226,6 @@ var CheckCondition = new Schema({
     variable: {type: String, ref: 'Variable'}
 });
 
-CheckCondition.set('toJSON', {
-    virtuals: true
-});
 
 // Exports --------------------------------------------------------------------
 

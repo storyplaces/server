@@ -93,8 +93,7 @@ var AuthoringStory = new Schema({
         required: true
     },
     authorIds: {
-        type: [{type: String, ref: 'AuthoringUser'}]
-    },
+        type: [{type: String, ref: 'AuthoringUser'}]    },
     chapters: {
         type: [AuthoringChapter]
     },

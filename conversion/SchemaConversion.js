@@ -5,14 +5,16 @@ exports.convert = convert;
 
 var errors = require('./SchemaConversionErrors');
 
+
 function convert(authoringStory) {
     // Create basic story
     var readingStory = createReadingStory(authoringStory);
 
     // Conditions and functions for chapters
     authoringStory.chapters.forEach(function (chapter) {
-        var chapterConditionId = createChapterCondition(chapter, readingStory);
-        var chapterFunctionId = createChapterFunctions(chapter, readingStory);
+        createChapterLockCondition(chapter, readingStory);
+        createChapterLockFunctions(chapter, readingStory);
+        createChapterChainFunction(chapter, readingStory, authoringStory);
     });
 
     // Create and add pages
@@ -35,15 +37,12 @@ function convert(authoringStory) {
 //endregion
 
 //region Page
-
-function createChapterMembershipCondition(page, readingStory, authoringStory) {
-    var chapterConditionIds = authoringStory.chapters.filter(function (chapter) {
-        return chapter.pageIds.indexOf(page.id) != -1;
+function getChapterUnlockChainFunctionIds(page, authoringStory) {
+    return authoringStory.chapters.filter(function (chapter) {
+        return chapter.unlockedByPageIds.indexOf(page.id) != -1;
     }).map(function (chapter) {
-        return makeChapterConditionId(chapter.id);
+        return makeChapterChainFunctionId(chapter.id);
     });
-
-    return createOrCondition('page-chapters-' + page.id, chapterConditionIds, readingStory);
 }
 
 function processPage(page, authoringStory, readingStory) {
@@ -51,34 +50,35 @@ function processPage(page, authoringStory, readingStory) {
         throw new errors.SchemaConversionError("Unable to process page as it doesn't have an ID")
     }
 
+    createPageReadCondition(page, readingStory);
+
     // Pre Processing
     var locationId = createLocation(page.locationId, authoringStory, readingStory);
-    var locationConditionId = makeLocationConditionId(locationId);
 
-    var allowMultipleReadingsConditionId = createAllowMultipleReadingsCondition(page, readingStory);
     var markPageAsReadFunctionId = createMarkPageAsReadFunction(page, readingStory);
-    var chapterMembershipConditionId = createChapterMembershipCondition(page, readingStory, authoringStory);
+    var unlockChapterFunctionIds = getChapterUnlockChainFunctionIds(page, authoringStory);
 
-    var functions = [markPageAsReadFunctionId];
+    var locationConditionId = makeLocationConditionId(locationId);
+    var allowMultipleReadingsConditionId = createAllowMultipleReadingsCondition(page, readingStory);
+    var chapterMembershipConditionId = createChapterMembershipCondition(page, readingStory, authoringStory);
+    var pageUnlockedByConditionId = createUnlockedByPagesCondition(page, readingStory);
+
+    var functions = [];
     var conditions = [];
 
-    if (locationConditionId) {
-        conditions.push(locationConditionId);
-    }
+    addFunction(markPageAsReadFunctionId, functions);
+    functions = functions.concat(unlockChapterFunctionIds);
 
-    if (allowMultipleReadingsConditionId) {
-        conditions.push(allowMultipleReadingsConditionId);
-    }
-
-    if (chapterMembershipConditionId) {
-        conditions.push(chapterMembershipConditionId);
-    }
+    addCondition(locationConditionId, conditions);
+    addCondition(allowMultipleReadingsConditionId, conditions);
+    addCondition(chapterMembershipConditionId, conditions);
+    addCondition(pageUnlockedByConditionId, conditions);
 
     return {
         id: page.id,
         content: page.content,
         name: page.name,
-        pageTransition: page.finishesStory ? "finish" : "next",
+        pageTransition: page.finishesStory ? "end" : "next",
         hint: {
             direction: page.pageHint,
             locations: locationId ? [locationId] : []
@@ -87,7 +87,48 @@ function processPage(page, authoringStory, readingStory) {
         functions: functions
     };
 }
+
+function createUnlockedByPagesCondition(page, readingStory) {
+
+    var id = 'page-unlocked-' + page.id;
+
+    var conditionIds = page.unlockedByPageIds.map(makePageReadConditionId);
+
+    if (page.unlockedByPagesOperator == 'and') {
+        return createAndCondition(id, conditionIds, readingStory);
+    }
+
+    return createOrCondition(id, conditionIds, readingStory);
+}
+
+function createPageReadCondition(page, readingStory) {
+    var id = makePageReadConditionId(page.id);
+    checkIdDoesNotExist(id, readingStory.conditions);
+    createConditionVariableIsTrue(id, makePageReadVariableId(page.id), readingStory);
+    return id;
+}
+
+function makePageReadConditionId(pageId) {
+    return 'page-read-' + pageId;
+}
+
 //endregion
+
+function addCondition(conditionId, conditions) {
+    if (!conditionId) {
+        return;
+    }
+
+    conditions.push(conditionId);
+}
+
+function addFunction(functionId, functions) {
+    if (!functionId) {
+        return;
+    }
+
+    functions.push(functionId);
+}
 
 //region Story
 function createReadingStory(authoringStory) {
@@ -95,7 +136,7 @@ function createReadingStory(authoringStory) {
         name: authoringStory.title,
         description: authoringStory.description,
         audience: authoringStory.audience,
-        tags: authoringStory.tags,
+        tags: authoringStory.tags.length != 0 ? authoringStory.tags : ["untagged"],
         publishState: "pending",
         locations: [],
         conditions: [],
@@ -105,7 +146,7 @@ function createReadingStory(authoringStory) {
 }
 //endregion
 
-//region Page Read
+//region PageRead
 function createMarkPageAsReadFunction(page, readingStory) {
     var id = makePageReadFunctionId(page.id);
     var variableId = makePageReadVariableId(page.id);
@@ -224,17 +265,32 @@ function makeSetFunction(id, variableId, value, conditions) {
         conditions: conditions
     }
 }
+
+function createChainFunction(id, conditions, functions, readingStory) {
+    checkIdDoesNotExist(id, readingStory.functions);
+    readingStory.functions.push(makeChainFunction(id, conditions, functions));
+    return id;
+}
+
+function makeChainFunction(id, conditions, functions) {
+    return {
+        id: id,
+        conditions: conditions,
+        functions: functions,
+        type: "chain"
+    }
+}
 //endregion
 
 function createOrCondition(id, conditionIds, readingStory) {
     checkIdDoesNotExist(id, readingStory.conditions);
-    readingStory.conditions.push(makeLogicalCondition(id, "or", conditionIds));
+    readingStory.conditions.push(makeLogicalCondition(id, "OR", conditionIds));
     return id;
 }
 
 function createAndCondition(id, conditionIds, readingStory) {
     checkIdDoesNotExist(id, readingStory.conditions);
-    readingStory.conditions.push(makeLogicalCondition(id, "and", conditionIds));
+    readingStory.conditions.push(makeLogicalCondition(id, "AND", conditionIds));
     return id;
 }
 
@@ -249,27 +305,93 @@ function makeLogicalCondition(id, operand, conditionIds) {
 
 //region Chapter
 
-function createChapterCondition(chapter, readingStory) {
-    var id = makeChapterConditionId(chapter.id);
-    var variableId = "chapter-" + chapter.id + "-variable";
-    return createConditionVariableIsTrue(id, variableId, readingStory);
-}
+function makeChapterChainCondition(chapter, readingStory) {
+    var id = makeChapterChainConditionId(chapter.id);
+    checkIdDoesNotExist(id, readingStory.conditions);
 
-function createChapterFunctions(chapter, readingStory) {
-    var variable = "chapter-" + chapter.id + "-variable";
-    createSetFunction(makeChapterFunctionId(chapter.id, true), variable, "true", [], readingStory);
-    createSetFunction(makeChapterFunctionId(chapter.id, false), variable, "false", [], readingStory);
-}
+    var conditionIds = chapter.unlockedByPageIds.map(function (pageId) {
+        return makePageReadConditionId(pageId);
+    });
 
-function makeChapterFunctionId(chapterId, enter) {
-    if (!chapterId) {
+    if (conditionIds.length == 0) {
         return undefined;
     }
 
-    if (enter) {
-        return "chapter-" + chapterId + "-enter";
+    if (chapter.unlockedByPagesOperator == "and") {
+        return createAndCondition(id, conditionIds, readingStory);
     }
-    return "chapter-" + chapterId + "-leave";
+
+    return createOrCondition(id, conditionIds, readingStory);
+}
+
+function getAllOtherChapterIds(currentChapterId, chapters) {
+    return chapters.map(function (chapter) {
+        return chapter.id
+    }).filter(function (chapterId) {
+        return chapterId != currentChapterId
+    });
+}
+
+function createChapterChainFunction(chapter, readingStory, authoringStory) {
+    var id = makeChapterChainFunctionId(chapter.id);
+    checkIdDoesNotExist(id, readingStory.functions);
+
+    var conditionId = makeChapterChainCondition(chapter, readingStory);
+    var chaptersToLock = chapter.locksAllOtherChapters ? getAllOtherChapterIds(chapter.id, authoringStory.chapters) : chapter.locksChapterIds;
+    var functionsIds = [makeChapterUnlockFunctionId(chapter.id)].concat(chaptersToLock.map(makeChapterLockFunctionId));
+
+    var conditions = conditionId ? [conditionId] : [];
+    return createChainFunction(id, conditions, functionsIds, readingStory);
+}
+
+function makeChapterChainFunctionId(chapterId) {
+    return "chapter-chain-function-" + chapterId;
+}
+
+function makeChapterChainConditionId(chapterId) {
+    return "chapter-chain-condition-" + chapterId;
+}
+
+function createChapterMembershipCondition(page, readingStory, authoringStory) {
+    var chapterConditionIds = authoringStory.chapters.filter(function (chapter) {
+        return chapter.pageIds.indexOf(page.id) != -1;
+    }).map(function (chapter) {
+        return makeChapterConditionId(chapter.id);
+    });
+
+    if (chapterConditionIds.length == 0) {
+        return undefined;
+    }
+
+    return createOrCondition('page-chapters-' + page.id, chapterConditionIds, readingStory);
+}
+
+function createChapterLockCondition(chapter, readingStory) {
+    var id = makeChapterConditionId(chapter.id);
+    var variableId = makeChapterUnlockedVariableId(chapter.id);
+    return createConditionVariableIsTrue(id, variableId, readingStory);
+}
+
+function createChapterLockFunctions(chapter, readingStory) {
+    if (!chapter.id) {
+        throw new errors.SchemaConversionError("Unable to make chapter function as it doesn't have an ID");
+    }
+
+    var variableId = makeChapterUnlockedVariableId(chapter.id);
+    createSetFunction(makeChapterUnlockFunctionId(chapter.id), variableId, "true", [], readingStory);
+    createSetFunction(makeChapterLockFunctionId(chapter.id), variableId, "false", [], readingStory);
+}
+
+function makeChapterUnlockedVariableId(chapterId) {
+    return "chapter-unlocked" + chapterId + "-variable";
+}
+
+function makeChapterLockFunctionId(chapterId) {
+    return "chapter-" + chapterId + "-lock";
+}
+
+function makeChapterUnlockFunctionId(chapterId) {
+    return "chapter-" + chapterId + "-unlock";
 }
 
 function makeChapterConditionId(chapterId) {
@@ -277,7 +399,7 @@ function makeChapterConditionId(chapterId) {
         throw new errors.SchemaConversionError("Unable to add chapter as it doesn't have an ID")
     }
 
-    return "chapter-" + chapterId;
+    return "chapter-unlocked-" + chapterId;
 }
 //endregion
 
@@ -344,6 +466,10 @@ function createLocationCondition(location, readingStory) {
 }
 
 function makeLocationConditionId(locationId) {
+    if (!locationId) {
+        return undefined;
+    }
+
     return "location-" + locationId;
 }
 //endregion
