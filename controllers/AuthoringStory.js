@@ -42,6 +42,7 @@
 
 var AuthoringSchema = require('../models/authoringSchema');
 var helpers = require('./helpers.js');
+var converter = require('../conversion/SchemaConversion');
 
 exports.create = create;
 exports.index = index;
@@ -194,161 +195,12 @@ function publish(req, res, next) {
             return next(error);
         }
 
-        // Create basic story
-        var readingStory = {};
-        readingStory.name = authoringStory.title;
-        readingStory.description = authoringStory.description;
-        readingStory.audience = authoringStory.audience;
-        readingStory.tags = authoringStory.tags;
-        readingStory.publishState = "pending";
-        readingStory.locations = [];
-        readingStory.conditions = [];
 
-        // Create Locations
+            var readingStory = converter.convert(authoringStory);
 
-        // Create variables, functions, conditions
-        readingStory.conditions = [];
-        readingStory.functions = [];
-
-        // Conditions and functions for chapters
-        authoringStory.chapters.forEach(function (chapter) {
-            createChapterCondition(chapter, readingStory);
-            createChapterFunctions(chapter, readingStory);
-        });
-
-        // Create and add pages
-        var pages = [];
-        authoringStory.pages.forEach(function (page) {
-            var locationId = findAndCopyLocation(page.locationId, authoringStory, readingStory);
-            var locationConditionId = makeLocationConditionId(locationId);
-
-            var newPage = {};
-            newPage.id = page.id;
-            newPage.content = page.content;
-            newPage.name = page.name;
-            newPage.pageTransition = page.finishesStory ? "finish" : "next";
-            newPage.hint = {direction: page.pageHint, locations: locationId ? [locationId] : []};
-            pages.push(newPage);
-        });
-
-        // Add conditions for chapters
-        authoringStory.chapters.forEach(function (chapter) {
-            // TODO - Add conditions to pages
-        });
-
-        readingStory.pages = pages;
-
-        readingStory.locations.forEach(function (location) {
-            createLocationCondition(location, readingStory);
-        });
 
         res.statusCode = 400;
         res.json(readingStory);
     });
 
-    function createLocationCondition(location, readingStory) {
-        readingStory.conditions.push({
-            id: makeLocationConditionId(location.id),
-            location: location.id,
-            bool: "true",
-            type: "location"
-        });
-    }
-
-    function createChapterCondition(chapter, readingStory) {
-        readingStory.conditions.push({
-            id: makeChapterConditionId(chapter.id),
-            name: makeChapterConditionId(chapter.id),
-            type: "check",
-            variable: "chapter-" + chapter.id + "-variable"
-        });
-    }
-
-    function createChapterFunctions(chapter, readingStory) {
-        readingStory.functions.push({
-            id: makeChapterFunctionId(chapter.id, true),
-            name: makeChapterFunctionId(chapter.name, true),
-            type: "set",
-            variable: "chapter-" + chapter.id + "-variable",
-            value: "true"
-        });
-        readingStory.functions.push({
-            id: makeChapterFunctionId(chapter.id, false),
-            name: makeChapterFunctionId(chapter.name, false),
-            type: "set",
-            variable: "chapter-" + chapter.id + "-variable",
-            value: "false"
-        });
-    }
-
-    function findAndCopyLocation(locationId, authoringStory, readingStory) {
-        if (!locationId) {
-            return undefined;
-        }
-
-        var location = authoringStory.locations.filter(function (location) {
-            return location.id == locationId
-        }).pop();
-
-        switch (location.type) {
-            case "circle":
-                return copyCircleLocation(location, readingStory);
-            default:
-                return undefined;
-        }
-    }
-
-    function copyCircleLocation(location, readingStory) {
-        var existingLocation = readingStory.locations.filter(function (readingLocation) {
-            if (readingLocation.type != "circle") {
-                return undefined;
-            }
-
-            var latMatches = readingLocation.lat == location.lat;
-            var lonMatches = readingLocation.lon == location.long;
-            var radiusMatches = readingLocation.radius == location.radius;
-            return latMatches && lonMatches && radiusMatches;
-        });
-
-        if (existingLocation.length != 0) {
-            return existingLocation.pop().id;
-        }
-
-        readingStory.locations.push({
-            id: location.id,
-            lat: location.lat,
-            lon: location.long,
-            radius: location.radius,
-            type: "circle"
-        });
-
-        return location.id;
-    }
-
-    function makeLocationConditionId(locationId) {
-        if (!locationId) {
-            return undefined;
-        }
-
-        return "location-" + locationId;
-    }
-
-    function makeChapterFunctionId(chapterId, enter) {
-        if (!chapterId) {
-            return undefined;
-        }
-
-        if (enter) {
-            return "chapter-" + chapterId + "-enter";
-        }
-        return "chapter-" + chapterId + "-enter";
-    }
-
-    function makeChapterConditionId(chapterId) {
-        if (!chapterId) {
-            return undefined;
-        }
-
-        return "chapter-" + chapterId;
-    }
 }
