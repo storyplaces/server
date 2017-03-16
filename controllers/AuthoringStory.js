@@ -41,6 +41,7 @@
 "use strict";
 
 var AuthoringSchema = require('../models/authoringSchema');
+var CoreSchema = require('../models/coreschema');
 var helpers = require('./helpers.js');
 var converter = require('../conversion/SchemaConversion');
 
@@ -195,12 +196,28 @@ function publish(req, res, next) {
             return next(error);
         }
 
-
+        try {
             var readingStory = converter.convert(authoringStory);
+        } catch (e) {
+            error.message = "Unable to convert story " + storyId;
+            error.status = 500;
+            error.clientMessage = "Unable to convert story";
+            return next(error);
+        }
 
+        var story = new CoreSchema.Story(readingStory);
+        story.save(function (err) {
+            if (err) {
+                error.message = "Unable to convert story " + storyId;
+                error.status = 500;
+                error.clientMessage = "Unable to convert story";
+                return next(error);
+            }
 
-        res.statusCode = 400;
-        res.json(readingStory);
+            res.statusCode = 200;
+            res.json({"message": "Your story has been submitted for approval"})
+        });
     });
+
 
 }
