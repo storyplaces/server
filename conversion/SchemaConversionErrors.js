@@ -4,8 +4,8 @@
 
 "use strict";
 
-exports.SchemaConversionError = SchemaConversionError;
 exports.StoryError = StoryError;
+exports.SchemaConversionError = SchemaConversionError;
 
 function SchemaConversionError(message) {
     this.name = 'SchemaConversionError';
