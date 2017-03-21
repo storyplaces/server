@@ -67,7 +67,7 @@ function create(req, res, next) {
 }
 
 function index(req, res, next) {
-    CoreSchema.Story.find(function (err, stories) {
+    CoreSchema.Story.find({'publishState': 'published'}, function (err, stories) {
         if (err) {
             return next(err);
         }
@@ -83,7 +83,7 @@ function fetch(req, res, next) {
         return next(error);
     }
 
-    CoreSchema.Story.findById(storyId, function (err, story) {
+    CoreSchema.Story.findOne({'publishState': 'published', 'id': storyId}, function (err, story) {
         if (err) {
             return next(err);
         }
