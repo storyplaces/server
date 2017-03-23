@@ -59,7 +59,7 @@ describe("Condition functions", function () {
         });
 
         context("when passed invalid data", function () {
-            it("should throw an exception if id id undefined", function () {
+            it("should throw an exception if id is undefined", function () {
                 expect(function () {
                     conditionFunctions.createOrCondition(undefined, ["c1", "c2"], readingStory);
                 }).to.throw(errors.SchemaConversionError);
@@ -108,7 +108,7 @@ describe("Condition functions", function () {
         });
 
         context("when passed invalid data", function () {
-            it("should throw an exception if id id undefined", function () {
+            it("should throw an exception if id is undefined", function () {
                 expect(function () {
                     conditionFunctions.createAndCondition(undefined, ["c1", "c2"], readingStory);
                 }).to.throw(errors.SchemaConversionError);
@@ -154,7 +154,7 @@ describe("Condition functions", function () {
         });
 
         context("when passed invalid data", function () {
-            it("should throw an exception if id id undefined", function () {
+            it("should throw an exception if id is undefined", function () {
                 expect(function () {
                     conditionFunctions.createCheckCondition(undefined, "v1", readingStory);
                 }).to.throw(errors.SchemaConversionError);
@@ -202,7 +202,7 @@ describe("Condition functions", function () {
         });
 
         context("when passed invalid data", function () {
-            it("should throw an exception if id id undefined", function () {
+            it("should throw an exception if id is undefined", function () {
                 expect(function () {
                     conditionFunctions.createComparisonCondition(undefined, "v1", "==", "value", readingStory, "String");
                 }).to.throw(errors.SchemaConversionError);
@@ -252,7 +252,7 @@ describe("Condition functions", function () {
         });
 
         context("when passed invalid data", function () {
-            it("should throw an exception if id id undefined", function () {
+            it("should throw an exception if id is undefined", function () {
                 expect(function () {
                     conditionFunctions.createConditionVariableIsTrue(undefined, "v1", readingStory);
                 }).to.throw(errors.SchemaConversionError);
@@ -302,7 +302,7 @@ describe("Condition functions", function () {
         });
 
         context("when passed invalid data", function () {
-            it("should throw an exception if id id undefined", function () {
+            it("should throw an exception if id is undefined", function () {
                 expect(function () {
                     conditionFunctions.createConditionVariableIsFalse(undefined, "v1", readingStory);
                 }).to.throw(errors.SchemaConversionError);
@@ -352,7 +352,7 @@ describe("Condition functions", function () {
         });
 
         context("when passed invalid data", function () {
-            it("should throw an exception if id id undefined", function () {
+            it("should throw an exception if id is undefined", function () {
                 expect(function () {
                     conditionFunctions.createConditionVariableIsNotTrue(undefined, "v1", readingStory);
                 }).to.throw(errors.SchemaConversionError);
