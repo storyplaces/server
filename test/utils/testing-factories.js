@@ -1,6 +1,7 @@
 exports.basicPage = basicPage;
 exports.basicChapter = basicChapter;
 exports.basicReadingStory = basicReadingStory;
+exports.basicAuthoringStory = basicAuthoringStory;
 
 function basicChapter(id, name) {
     return {
@@ -39,5 +40,15 @@ function basicReadingStory(id, title) {
         functions: [],
         locations: []
     };
+}
+
+function basicAuthoringStory(id, title, description, audience, tags) {
+    return {
+        id: id,
+        title: title,
+        description: description,
+        audience: audience,
+        tags: tags
+    }
 }
 
