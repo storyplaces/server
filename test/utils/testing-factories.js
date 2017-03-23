@@ -1,5 +1,6 @@
-exports.basicChapter = basicChapter;
 exports.basicPage = basicPage;
+exports.basicChapter = basicChapter;
+exports.basicReadingStory = basicReadingStory;
 
 function basicChapter(id, name) {
     return {
@@ -26,6 +27,17 @@ function basicPage(id, name) {
         unlockedByPageIds: [],
         unlockedByPagesOperator: "and",
         finishesStory: false
-    }
+    };
+}
+
+function basicReadingStory(id, title) {
+    return {
+        id: id,
+        title: title,
+        conditions: [],
+        pages: [],
+        functions: [],
+        locations: []
+    };
 }
 

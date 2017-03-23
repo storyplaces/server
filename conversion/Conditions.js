@@ -13,8 +13,13 @@ exports.createConditionVariableIsFalse = createConditionVariableIsFalse;
 exports.createConditionVariableIsNotTrue = createConditionVariableIsNotTrue;
 
 var utils = require('./Utils');
+var errors = require('./SchemaConversionErrors');
 
 function createCheckCondition(id, variableId, readingStory) {
+    if (!id) {
+        throw new errors.SchemaConversionError("Unable to create OR condition with no ID");
+    }
+
     utils.checkIdDoesNotExist(id, readingStory.conditions);
     readingStory.conditions.push(makeCheckCondition(id, variableId));
     return id;
@@ -41,6 +46,10 @@ function createConditionVariableIsNotTrue(id, variableId, readingStory) {
 }
 
 function createComparisonCondition(id, variableId, comparison, value, readingStory, valueType) {
+    if (!id) {
+        throw new errors.SchemaConversionError("Unable to create OR condition with no ID");
+    }
+
     utils.checkIdDoesNotExist(id, readingStory.conditions);
     readingStory.conditions.push(makeComparisonCondition(id, variableId, value, comparison, valueType));
     return id;
@@ -59,12 +68,20 @@ function makeComparisonCondition(id, variableId, value, operand, valueType) {
 }
 
 function createOrCondition(id, conditionIds, readingStory) {
+    if (!id) {
+        throw new errors.SchemaConversionError("Unable to create OR condition with no ID");
+    }
+
     utils.checkIdDoesNotExist(id, readingStory.conditions);
     readingStory.conditions.push(makeLogicalCondition(id, "OR", conditionIds));
     return id;
 }
 
 function createAndCondition(id, conditionIds, readingStory) {
+    if (!id) {
+        throw new errors.SchemaConversionError("Unable to create OR condition with no ID");
+    }
+
     utils.checkIdDoesNotExist(id, readingStory.conditions);
     readingStory.conditions.push(makeLogicalCondition(id, "AND", conditionIds));
     return id;
