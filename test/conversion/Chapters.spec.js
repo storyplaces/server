@@ -503,7 +503,6 @@ describe("Chapter functions", function () {
                 var expectedFunctionId2 = chapterFunctions.makeChapterChainFunctionId(chapter2.id);
 
                 result.length.should.equal(2);
-                console.log(result);
 
                 result.contains(expectedFunctionId1).should.equal(true);
                 result.contains(expectedFunctionId2).should.equal(true);
