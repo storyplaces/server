@@ -10,6 +10,12 @@ exports.createChapterUnlockedCondition = createChapterUnlockedCondition;
 exports.getChapterUnlockChainFunctionIds = getChapterUnlockChainFunctionIds;
 exports.createChapterMembershipCondition = createChapterMembershipCondition;
 
+// Only really used for testing
+exports.makeChapterLockFunctionId = makeChapterLockFunctionId;
+exports.makeChapterUnlockFunctionId = makeChapterUnlockFunctionId;
+exports.makeChapterUnlockedVariableId = makeChapterUnlockedVariableId;
+exports.makeChapterChainFunctionId = makeChapterChainFunctionId;
+
 var utils = require('./Utils');
 var pageFunctions = require('./Pages');
 var functionFunctions = require('./Functions');
@@ -38,6 +44,8 @@ function makeChapterUnlockChainCondition(chapter, readingStory) {
 }
 
 function getChapterUnlockChainFunctionIds(page, authoringStory) {
+    validateIdentifiableObject(page);
+
     return authoringStory.chapters.filter(function (chapter) {
         return chapter.unlockedByPageIds.indexOf(page.id) != -1;
     }).map(function (chapter) {
@@ -47,6 +55,8 @@ function getChapterUnlockChainFunctionIds(page, authoringStory) {
 
 
 function createChapterChainFunction(chapter, readingStory, authoringStory) {
+    validateIdentifiableObject(chapter);
+
     var id = makeChapterChainFunctionId(chapter.id);
     utils.checkIdDoesNotExist(id, readingStory.functions);
 
@@ -69,6 +79,8 @@ function makeChapterChainConditionId(chapterId) {
 /** Chapter Membership **/
 
 function createChapterMembershipCondition(page, readingStory, authoringStory) {
+    validateIdentifiableObject(page);
+
     var chapterConditionIds = authoringStory.chapters.filter(function (chapter) {
         return chapter.pageIds.indexOf(page.id) != -1;
     }).map(function (chapter) {
@@ -83,6 +95,8 @@ function createChapterMembershipCondition(page, readingStory, authoringStory) {
 }
 
 function createChapterUnlockedCondition(chapter, readingStory) {
+    validateIdentifiableObject(chapter);
+
     var id = makeChapterUnlockedConditionId(chapter.id);
     var variableId = makeChapterUnlockedVariableId(chapter.id);
     return conditionFunctions.createConditionVariableIsTrue(id, variableId, readingStory);
@@ -91,13 +105,12 @@ function createChapterUnlockedCondition(chapter, readingStory) {
 /** Chapter locking/unlocking **/
 
 function createChapterLockFunctions(chapter, readingStory) {
-    if (!chapter.id) {
-        throw new errors.SchemaConversionError("Unable to make chapter function as it doesn't have an ID");
-    }
+    validateIdentifiableObject(chapter);
 
     var variableId = makeChapterUnlockedVariableId(chapter.id);
-    functionFunctions.createSetFunction(makeChapterUnlockFunctionId(chapter.id), variableId, "true", [], readingStory);
-    functionFunctions.createSetFunction(makeChapterLockFunctionId(chapter.id), variableId, "false", [], readingStory);
+    var unlockId = functionFunctions.createSetFunction(makeChapterUnlockFunctionId(chapter.id), variableId, "true", [], readingStory);
+    var lockId = functionFunctions.createSetFunction(makeChapterLockFunctionId(chapter.id), variableId, "false", [], readingStory);
+    return {lockFunctionId: lockId, unlockFunctionId: unlockId};
 }
 
 function makeChapterUnlockedVariableId(chapterId) {
@@ -128,4 +141,10 @@ function getAllOtherChapterIds(currentChapterId, chapters) {
     }).filter(function (chapterId) {
         return chapterId != currentChapterId
     });
+}
+
+function validateIdentifiableObject(chapter) {
+    if (!chapter || !chapter.id) {
+        throw new errors.SchemaConversionError("Unable to make chapter function as it doesn't have an ID");
+    }
 }

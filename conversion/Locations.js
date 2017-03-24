@@ -17,6 +17,10 @@ function createLocation(locationId, authoringStory, readingStory) {
 
     var location = findLocationFromAuthoringStory(locationId, authoringStory);
 
+    if (!location) {
+        return undefined
+    }
+
     switch (location.type) {
         case "circle":
             return copyCircleLocation(location, readingStory);

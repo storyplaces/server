@@ -4,6 +4,8 @@
 
 "use strict";
 
+var errors = require("./SchemaConversionErrors");
+
 exports.addFunction = addFunction;
 exports.arraysMatch = arraysMatch;
 exports.addCondition = addCondition;
