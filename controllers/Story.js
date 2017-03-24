@@ -83,7 +83,7 @@ function fetch(req, res, next) {
         return next(error);
     }
 
-    CoreSchema.Story.findOne({'publishState': 'published', 'id': storyId}, function (err, story) {
+    CoreSchema.Story.findOne({'publishState': {'$in': ['published', 'preview']}, '_id': storyId}, function (err, story) {
         if (err) {
             return next(err);
         }
@@ -93,6 +93,11 @@ function fetch(req, res, next) {
             error.status = 404;
             error.clientMessage = error.message = "Story not found";
             return next(error);
+        }
+
+        // Preview links are supposed to be single use only, so after fetching it once remove it
+        if (story.publishState == 'preview') {
+            story.remove();
         }
 
         res.json(story);

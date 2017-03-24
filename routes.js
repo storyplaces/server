@@ -109,6 +109,10 @@ Router.route('/authoring/story/:story_id')
 Router.route('/authoring/story/:story_id/publish')
     .post(AuthoringStory.publish);
 
+// Preview a story
+Router.route('/authoring/story/:story_id/preview')
+    .post(AuthoringStory.preview);
+
 // Get stories for AuthoringUser
 Router.route('/authoring/story/user/:user_id')
     .get(AuthoringStory.userFetch);

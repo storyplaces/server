@@ -51,6 +51,7 @@ exports.fetch = fetch;
 exports.update = update;
 exports.userFetch = userFetch;
 exports.publish = publish;
+exports.preview = preview;
 
 function create(req, res, next) {
 
@@ -176,6 +177,15 @@ function userFetch(req, res, next) {
 }
 
 function publish(req, res, next) {
+    return handleStoryProcessing(req, res, next, "pending", "Your story has been submitted for approval");
+}
+
+function preview(req, res, next) {
+    return handleStoryProcessing(req, res, next, "preview", "Story Preview Response");
+
+}
+
+function handleStoryProcessing(req, res, next, readingState, responseMessage) {
     try {
         var storyId = helpers.validateId(req.params.story_id);
     } catch (error) {
@@ -197,7 +207,7 @@ function publish(req, res, next) {
         }
 
         try {
-            var readingStory = converter.convert(authoringStory);
+            var readingStory = converter.convert(authoringStory, readingState);
         } catch (e) {
             error.message = "Unable to convert story " + storyId;
             error.status = 500;
@@ -206,7 +216,7 @@ function publish(req, res, next) {
         }
 
         var story = new CoreSchema.Story(readingStory);
-        story.save(function (err) {
+        story.save(function (err, savedStory) {
             if (err) {
                 error.message = "Unable to convert story " + storyId;
                 error.status = 500;
@@ -215,9 +225,7 @@ function publish(req, res, next) {
             }
 
             res.statusCode = 200;
-            res.json({"message": "Your story has been submitted for approval"})
+            res.json({"message": responseMessage, "id": savedStory.id})
         });
     });
-
-
 }
