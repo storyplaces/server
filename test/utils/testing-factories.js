@@ -2,6 +2,7 @@ exports.basicPage = basicPage;
 exports.basicChapter = basicChapter;
 exports.basicReadingStory = basicReadingStory;
 exports.basicAuthoringStory = basicAuthoringStory;
+exports.basicAuthoringLocation = basicAuthoringLocation;
 
 function basicChapter(id, name) {
     return {
@@ -48,7 +49,20 @@ function basicAuthoringStory(id, title, description, audience, tags) {
         title: title,
         description: description,
         audience: audience,
-        tags: tags
+        tags: tags,
+        pages: [],
+        functions: [],
+        locations: [],
+        chapters: []
     }
 }
 
+function basicAuthoringLocation(id, lat, long, radius) {
+    return {
+        id: id,
+        lat: lat,
+        long: long,
+        radius: radius,
+        type: 'circle'
+    }
+}
