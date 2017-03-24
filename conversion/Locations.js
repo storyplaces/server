@@ -5,6 +5,7 @@
 "use strict";
 
 exports.createLocation = createLocation;
+exports.makeReadingLocationId = makeReadingLocationId;
 exports.createLocationCondition = createLocationCondition;
 exports.makeLocationConditionId = makeLocationConditionId;
 
@@ -58,7 +59,7 @@ function copyCircleLocation(location, readingStory) {
 
 function makeLocation(location) {
     return {
-        id: location.id,
+        id: makeReadingLocationId(location.id),
         lat: location.lat,
         lon: location.long,
         radius: location.radius,
@@ -81,4 +82,8 @@ function makeLocationConditionId(locationId) {
     }
 
     return "location-" + locationId;
+}
+
+function makeReadingLocationId(locationId) {
+    return locationId;
 }

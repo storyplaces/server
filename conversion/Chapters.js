@@ -12,9 +12,10 @@ exports.createChapterMembershipCondition = createChapterMembershipCondition;
 
 // Only really used for testing
 exports.makeChapterLockFunctionId = makeChapterLockFunctionId;
+exports.makeChapterChainFunctionId = makeChapterChainFunctionId;
 exports.makeChapterUnlockFunctionId = makeChapterUnlockFunctionId;
 exports.makeChapterUnlockedVariableId = makeChapterUnlockedVariableId;
-exports.makeChapterChainFunctionId = makeChapterChainFunctionId;
+exports.makeChapterMembershipConditionId = makeChapterMembershipConditionId;
 
 var utils = require('./Utils');
 var pageFunctions = require('./Pages');
@@ -76,6 +77,9 @@ function makeChapterChainConditionId(chapterId) {
     return "chapter-chain-condition-" + chapterId;
 }
 
+function makeChapterMembershipConditionId(pageId) {
+    return 'page-chapters-' + pageId;
+}
 /** Chapter Membership **/
 
 function createChapterMembershipCondition(page, readingStory, authoringStory) {
@@ -91,8 +95,9 @@ function createChapterMembershipCondition(page, readingStory, authoringStory) {
         return undefined;
     }
 
-    return conditionFunctions.createOrCondition('page-chapters-' + page.id, chapterConditionIds, readingStory);
+    return conditionFunctions.createOrCondition(makeChapterMembershipConditionId(page.id), chapterConditionIds, readingStory);
 }
+
 
 function createChapterUnlockedCondition(chapter, readingStory) {
     validateIdentifiableObject(chapter);

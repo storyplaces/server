@@ -140,6 +140,28 @@ describe("Locations conversion", function () {
             result1.should.not.equal(result2);
         });
     });
+
+    describe("makeReadingLocationId", function () {
+       context("when passed good data", function () {
+           it("will return an id", function () {
+              var id = locationFunctions.makeReadingLocationId("l1");
+              id.should.not.equal(undefined);
+           });
+
+           it("will return a unique id", function () {
+               var id1 = locationFunctions.makeReadingLocationId("l1");
+               var id2 = locationFunctions.makeReadingLocationId("l2");
+               id1.should.not.equal(id2);
+           });
+       });
+
+       context("when passed bad data", function () {
+           it("will return undefined when passed a location of undefined", function () {
+               var id = locationFunctions.makeReadingLocationId(undefined);
+               should.equal(undefined, id);
+           });
+       });
+    });
 });
 
 

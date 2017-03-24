@@ -5,7 +5,10 @@
 "use strict";
 
 exports.processPage = processPage;
+exports.makePageReadFunctionId = makePageReadFunctionId;
 exports.makePageReadConditionId = makePageReadConditionId;
+exports.makeUnlockedByPagesConditionId = makeUnlockedByPagesConditionId;
+exports.makeAllowMultipleReadingsConditionId = makeAllowMultipleReadingsConditionId;
 
 var utils = require('./Utils');
 var chapterFunctions = require('./Chapters');
@@ -15,7 +18,7 @@ var conditionFunctions = require('./Conditions');
 var errors = require('./SchemaConversionErrors');
 
 function processPage(page, authoringStory, readingStory) {
-    if (!page.id) {
+    if (!page || !page.id) {
         throw new errors.SchemaConversionError("Unable to process page as it doesn't have an ID")
     }
 
@@ -43,7 +46,7 @@ function processPage(page, authoringStory, readingStory) {
     utils.addCondition(chapterMembershipConditionId, conditions);
     utils.addCondition(pageUnlockedByConditionId, conditions);
 
-    return {
+    readingStory.pages.push({
         id: page.id,
         content: page.content,
         name: page.name,
@@ -54,14 +57,24 @@ function processPage(page, authoringStory, readingStory) {
         },
         conditions: conditions,
         functions: functions
-    };
+    });
+
+    return page.id;
+}
+
+function makeUnlockedByPagesConditionId(pageId) {
+    return 'page-unlocked-' + pageId;
 }
 
 function createUnlockedByPagesCondition(page, readingStory) {
 
-    var id = 'page-unlocked-' + page.id;
+    var id = makeUnlockedByPagesConditionId(page.id);
 
     var conditionIds = page.unlockedByPageIds.map(makePageReadConditionId);
+
+    if (conditionIds.length === 0) {
+        return undefined;
+    }
 
     if (page.unlockedByPagesOperator == 'and') {
         return conditionFunctions.createAndCondition(id, conditionIds, readingStory);
@@ -77,15 +90,14 @@ function createPageReadCondition(page, readingStory) {
     return id;
 }
 
-function makePageReadConditionId(pageId) {
-    return 'page-read-' + pageId;
-}
-
-
 function createMarkPageAsReadFunction(page, readingStory) {
     var id = makePageReadFunctionId(page.id);
     var variableId = makePageReadVariableId(page.id);
     return functionFunctions.createSetFunction(id, variableId, "true", [], readingStory);
+}
+
+function makePageReadConditionId(pageId) {
+    return 'page-read-' + pageId;
 }
 
 function makePageReadFunctionId(pageId) {

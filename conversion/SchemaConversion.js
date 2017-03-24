@@ -19,8 +19,7 @@ function convert(authoringStory) {
     });
 
     authoringStory.pages.forEach(function (page) {
-        var newPage = pageFunctions.processPage(page, authoringStory, readingStory);
-        readingStory.pages.push(newPage);
+        pageFunctions.processPage(page, authoringStory, readingStory);
     });
 
     readingStory.locations.forEach(function (location) {
