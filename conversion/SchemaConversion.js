@@ -8,9 +8,9 @@ var chapterFunctions = require('./Chapters');
 var locationFunctions = require('./Locations');
 var createReadingStory = require('./ReadingStory');
 
-function convert(authoringStory) {
+function convert(authoringStory, readingState) {
     // Create basic story
-    var readingStory = createReadingStory.createReadingStory(authoringStory);
+    var readingStory = createReadingStory.createReadingStory(authoringStory, readingState);
 
     authoringStory.chapters.forEach(function (chapter) {
         chapterFunctions.createChapterUnlockedCondition(chapter, readingStory);
