@@ -3,6 +3,7 @@ exports.basicChapter = basicChapter;
 exports.basicReadingStory = basicReadingStory;
 exports.basicAuthoringStory = basicAuthoringStory;
 exports.basicAuthoringLocation = basicAuthoringLocation;
+exports.basicReadingLocation = basicReadingLocation;
 
 function basicChapter(id, name) {
     return {
@@ -62,6 +63,16 @@ function basicAuthoringLocation(id, lat, long, radius) {
         id: id,
         lat: lat,
         long: long,
+        radius: radius,
+        type: 'circle'
+    }
+}
+
+function basicReadingLocation(id, lat, long, radius) {
+    return {
+        id: id,
+        lat: lat,
+        lon: long,
         radius: radius,
         type: 'circle'
     }

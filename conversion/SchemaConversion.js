@@ -6,10 +6,15 @@ exports.convert = convert;
 var pageFunctions = require('./Pages');
 var chapterFunctions = require('./Chapters');
 var locationFunctions = require('./Locations');
+var errors = require('./SchemaConversionErrors');
 var createReadingStory = require('./ReadingStory');
 
 function convert(authoringStory, readingState) {
-    // Create basic story
+
+    if (!authoringStory || !authoringStory.id) {
+        throw new errors.SchemaConversionError("Unable to convert story as it is undefined or its ID is undefined");
+    }
+
     var readingStory = createReadingStory.createReadingStory(authoringStory, readingState);
 
     authoringStory.chapters.forEach(function (chapter) {
