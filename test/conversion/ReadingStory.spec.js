@@ -20,13 +20,13 @@ describe("Creating a blank reading story from an authoring story", function () {
     it("creates a story when the authoring story has tags", function () {
         authoringStory.tags=["tag1", "tag2"];
 
-        var result = readingStoryFunction.createReadingStory(authoringStory);
+        var result = readingStoryFunction.createReadingStory(authoringStory, "published");
 
         result.name.should.equal("title");
         result.description.should.equal("description");
         result.audience.should.equal("audience");
         result.tags.should.eql(["tag1", "tag2"]);
-        result.publishState.should.eql("pending");
+        result.publishState.should.eql("published");
         result.locations.should.eql([]);
         result.conditions.should.eql([]);
         result.functions.should.eql([]);
@@ -36,7 +36,7 @@ describe("Creating a blank reading story from an authoring story", function () {
     it("creates a story when the authoring story has no tags", function () {
         authoringStory.tags=[];
 
-        var result = readingStoryFunction.createReadingStory(authoringStory);
+        var result = readingStoryFunction.createReadingStory(authoringStory, "pending");
 
         result.name.should.equal("title");
         result.description.should.equal("description");

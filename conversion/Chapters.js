@@ -15,7 +15,9 @@ exports.makeChapterLockFunctionId = makeChapterLockFunctionId;
 exports.makeChapterChainFunctionId = makeChapterChainFunctionId;
 exports.makeChapterUnlockFunctionId = makeChapterUnlockFunctionId;
 exports.makeChapterUnlockedVariableId = makeChapterUnlockedVariableId;
+exports.makeChapterUnlockedConditionId = makeChapterUnlockedConditionId;
 exports.makeChapterMembershipConditionId = makeChapterMembershipConditionId;
+
 
 var utils = require('./Utils');
 var pageFunctions = require('./Pages');
