@@ -43,14 +43,14 @@ var Schema = mongoose.Schema;
 // AuthoringUser -----------------------------------------------------------------------
 
 var AuthoringUser = new Schema({
-    email: {type: String, required: true},
+    email: {type: String, unique: true, lowercase: true, required: true},
     name: {type: String, required: true},
     bio: String,
-    role: {
+    roles: [{
         type: String,
-        enum: ['writer', 'publisher', 'researcher', 'admin'],
         required: true
-    }
+    }],
+    googleID: {type: String, required: true},
 });
 
 AuthoringUser.virtual('id').get(function () {
@@ -93,7 +93,8 @@ var AuthoringStory = new Schema({
         required: true
     },
     authorIds: {
-        type: [{type: String, ref: 'AuthoringUser'}]    },
+        type: [{type: String, ref: 'AuthoringUser'}]
+    },
     chapters: {
         type: [AuthoringChapter]
     },

@@ -1,5 +1,3 @@
-
-
 "use strict";
 
 var Express = require('express');
@@ -16,10 +14,16 @@ var Media = require('./controllers/Media.js');
 var AuthoringStory = require('./controllers/AuthoringStory.js');
 var AuthoringUser = require('./controllers/AuthoringUser.js');
 
+var Authentication = require('./controllers/Authentication');
+
 var LogRequestToConsole = require('./middleware/LogRequestToConsole.js');
 var AuthenticateUsingToken = require('./middleware/TokenAuthentication.js');
 var LogErrorToConsole = require('./middleware/LogErrorToConsole.js');
 var LogErrorToClient = require('./middleware/LogErrorToClient.js');
+
+var HasPrivilege = require('./middleware/Authorisation');
+var IsValidUser = require('./middleware/ValidUser');
+var ProcessJWT = require('./middleware/JWT');
 
 Router.use(function (req, res, next) {
     if (['POST', 'PUT', 'PATCH'].indexOf(req.method.toUpperCase()) != -1) {
@@ -96,38 +100,41 @@ Router.route('/user')
 // Get a list of stories
 // Create a new story
 Router.route('/authoring/story')
-    .get(AuthoringStory.index)
-    .post(AuthoringStory.create);
+    .get([ProcessJWT, IsValidUser, HasPrivilege(['listOwnStories', 'listAnyStory']), AuthoringStory.index])
+    .post([ProcessJWT, IsValidUser, HasPrivilege('createStory'), AuthoringStory.create]);
 
 // Get an individual story
 // Update a story
 Router.route('/authoring/story/:story_id')
-    .get(AuthoringStory.fetch)
-    .put(AuthoringStory.update);
+    .get([ProcessJWT, IsValidUser, HasPrivilege(['fetchOwnStory', 'fetchAnyStory']), AuthoringStory.fetch])
+    .put([ProcessJWT, IsValidUser, HasPrivilege(['updateOwnStory', 'updateAnyStory']), AuthoringStory.update]);
 
 // Publish a story
 Router.route('/authoring/story/:story_id/publish')
-    .post(AuthoringStory.publish);
+    .post([ProcessJWT, IsValidUser, HasPrivilege(['requestPublicationOfOwnStory', 'requestPublicationOfAnyStory']), AuthoringStory.publish]);
 
 // Preview a story
 Router.route('/authoring/story/:story_id/preview')
-    .post(AuthoringStory.preview);
+    .post([ProcessJWT, IsValidUser, HasPrivilege(['previewOwnStory', 'previewAnyStory']), AuthoringStory.preview]);
 
 // Get stories for AuthoringUser
 Router.route('/authoring/story/user/:user_id')
-    .get(AuthoringStory.userFetch);
+    .get([ProcessJWT, IsValidUser, HasPrivilege(['fetchOwnStory', 'fetchAnyStory']), AuthoringStory.userFetch]);
 
 // Create AuthoringUser
 // Get list of AuthoringUsers
-Router.route('/authoring/user')
-    .post(AuthoringUser.create)
-    .get(AuthoringUser.index);
+// Router.route('/authoring/user')
+//     .post(AuthoringUser.create)
+//     .get(AuthoringUser.index);
+//
+// // Get AuthoringUser
+// // Update AuthoringUser
+// Router.route('/authoring/user/:user_id')
+//     .put(AuthoringUser.update)
+//     .get(AuthoringUser.fetch);
 
-// Get AuthoringUser
-// Update AuthoringUser
-Router.route('/authoring/user/:user_id')
-    .put(AuthoringUser.update)
-    .get(AuthoringUser.fetch);
+Router.route('/auth/google')
+    .post(Authentication.googleLogin);
 
 // Error logging
 Router.use(LogErrorToConsole);
