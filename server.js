@@ -63,7 +63,10 @@ var Routes = require('./routes.js');
 var App = Express();
 
 // Connect to the database ----------------------------------------------------
-Mongoose.connect(secrets.database.connection); // connect to our database
+Mongoose.connect(secrets.database.connection, {
+    user: secrets.database.username,
+    pass: secrets.database.password
+}); // connect to our database
 
 // Register the routes --------------------------------------------------------
 App.use(settings.api.url, Routes);
