@@ -51,6 +51,7 @@ var AuthoringUser = new Schema({
         required: true
     }],
     googleID: {type: String, required: true},
+    enabled: {type: Boolean, required: true}
 });
 
 AuthoringUser.virtual('id').get(function () {

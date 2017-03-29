@@ -30,7 +30,7 @@ function decodePayloadFromToken(token) {
 }
 
 function getPublicJWT() {
-    return jwtPublic;
+    return jwtPublic.toString();
 }
 
 function getPayloadAndValidateJWT(token) {

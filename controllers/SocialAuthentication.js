@@ -5,9 +5,7 @@ var request = require('request');
 
 var AuthoringSchema = require('../models/authoringSchema');
 
-var fs = require('fs');
-var jwtPublic = fs.readFileSync(secrets.auth.jwt.public);
-var JWT = require('../auth/JWT');
+var jwtAuthentication = require('../auth/JWTAuthentication');
 
 exports.googleLogin = googleLogin;
 exports.logout = logout;
@@ -36,37 +34,19 @@ function googleLogin(req, res, next) {
                 return res.status(500).send({message: profile.error.message});
             }
 
-            // Step 3a. Link user accounts.
-            if (req.header('Authorization')) {
-                AuthoringSchema.AuthoringUser.findOne({googleID: profile.sub}, function (err, existingUser) {
-                    if (existingUser) {
-                        return res.status(409).send({message: 'There is already a Google account that belongs to you'});
-                    }
-
-                    var token = req.header('Authorization').split(' ')[1];
-
-                    try {
-                        var payload = JWT.getPayloadAndValidateJWT(token);
-                    } catch (err) {
-                        return res.status(401).send({message: err.message});
-                    }
-
-                    AuthoringSchema.AuthoringUser.findById(payload.sub, function (err, user) {
-                        if (!user) {
-                            return res.status(400).send({message: 'User not found'});
-                        }
-
-                        updateUserFromProfile(user, profile, function (user) {
-                            var token = JWT.createJWTFromUser(user);
-                            res.send({token: token});
-                        });
-                    });
-                });
-            } else {
+            if (!req.header('Authorization')) {
                 findOrCreateUserFromProfile(profile, function (user) {
-                    var token = JWT.createJWTFromUser(user);
+                    if (!user.enabled) {
+                        return res.status(401).send({message: 'User disabled'});
+                    }
+
+                    var token = jwtAuthentication.createJWTFromUser(user);
                     res.send({token: token});
                 });
+            } else {
+                // If it is wanted to have multiple social providers or social + local and to allow accounts to be linked
+                // then check https://github.com/sahat/satellizer/blob/master/examples/server/node/server.js for how to do it
+                return res.status(500).send({message: 'User already logged in'});
             }
         });
     });
@@ -95,11 +75,12 @@ function createUserFromProfile(profile, callback) {
     var user = new AuthoringSchema.AuthoringUser();
     user.bio = "";
     user.roles = ["author"];
+    user.enabled = true;
+    user.googleID = profile.sub;
     updateUserFromProfile(user, profile, callback);
 }
 
 function updateUserFromProfile(user, profile, callback) {
-    user.googleID = profile.sub;
     user.name = user.name || profile.name;
     user.email = user.email || profile.email;
     user.save(function () {
@@ -108,6 +89,6 @@ function updateUserFromProfile(user, profile, callback) {
 }
 
 function getPublicKey(req, res, next) {
-    res.send({publicKey: JWT.getPublicJWT()});
+    return res.send({publicKey: jwtAuthentication.getPublicJWT()});
 }
 

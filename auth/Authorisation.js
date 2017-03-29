@@ -1,3 +1,5 @@
+"use strict;"
+
 exports.convertRolesToPrivileges = convertRolesToPrivileges;
 exports.hasPrivileges = hasPrivileges;
 
@@ -16,7 +18,7 @@ function convertRolesToPrivileges(roles) {
         }
     });
 
-    return Array.from(new Set(privileges));
+    return unique(privileges);
 }
 
 function hasPrivileges(requiredPrivileges, jwtPrivileges, match) {
@@ -37,4 +39,8 @@ function anyPrivilegesInJWT(requiredPrivileges, jwtPrivileges) {
     return requiredPrivileges.some(function (requiredPrivilege) {
         return jwtPrivileges.indexOf(requiredPrivilege) !== -1;
     });
+}
+
+function unique(privileges) {
+    return Array.from(new Set(privileges));
 }

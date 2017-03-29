@@ -1,10 +1,8 @@
 "use strict";
 
-// Taken from https://github.com/sahat/satellizer/blob/master/examples/server/node/server.js
-
 module.exports = validateJWT;
 
-var JWT = require('../auth/JWT');
+var JWT = require('../auth/JwtAuthentication');
 
 function validateJWT(req, res, next) {
     if (!req.header('Authorization')) {
@@ -19,8 +17,8 @@ function validateJWT(req, res, next) {
         return res.status(401).send({message: err.message});
     }
 
-    req.user = payload.sub;
-    req.privileges = payload.privileges;
+    req.internal.userId = payload.sub;
+    req.internal.privileges = payload.privileges;
     next();
 }
 

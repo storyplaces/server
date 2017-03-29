@@ -7,10 +7,16 @@ module.exports = validateUser;
 var AuthoringSchema = require('../models/authoringSchema');
 
 function validateUser(req, res, next) {
-    AuthoringSchema.AuthoringUser.findById(req.user, function (err, user) {
+    AuthoringSchema.AuthoringUser.findById(req.internal.userId, function (err, user) {
         if (!user) {
-            return res.status(400).send({message: 'User not found'});
+            return res.status(401).send({message: 'User not found'});
         }
+
+        if (!user.enabled) {
+            return res.status(401).send({message: 'User disabled'});
+        }
+
+        req.internal.user = user;
         next();
     });
 }

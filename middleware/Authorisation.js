@@ -3,7 +3,6 @@
 module.exports = checkPrivileges;
 
 var Authorisation = require('../auth/Authorisation');
-var moment = require('moment');
 
 function checkPrivileges(requiredPrivileges, match) {
     return function (req, res, next) {
@@ -11,7 +10,7 @@ function checkPrivileges(requiredPrivileges, match) {
             requiredPrivileges = [requiredPrivileges];
         }
 
-        if (!req.privileges || !Authorisation.hasPrivileges(requiredPrivileges, req.privileges, match)) {
+        if (!req.internal.privileges || !Authorisation.hasPrivileges(requiredPrivileges, req.internal.privileges, match)) {
             return res.status(403).send({message: 'Permission denied'});
         }
 
