@@ -40,6 +40,7 @@
 "use strict";
 
 var AuthoringSchema = require('../models/authoringSchema');
+var Authorisation = require('../auth/Authorisation');
 var helpers = require('./helpers.js');
 
 
@@ -81,6 +82,13 @@ function fetch(req, res, next) {
     try {
         var userId = helpers.validateId(req.params.user_id);
     } catch (error) {
+        return next(error);
+    }
+
+    if (Authorisation.doesNotHavePrivileges('fetchAnyUser', req.internal.privileges) || userId != req.internal.userId){
+        error.message = "Unable to fetch a user which is not currently logged in.";
+        error.status = 500;
+        error.clientMessage = "Insufficient privileges to fetch this user.";
         return next(error);
     }
 

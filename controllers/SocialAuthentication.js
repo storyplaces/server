@@ -5,7 +5,7 @@ var request = require('request');
 
 var AuthoringSchema = require('../models/authoringSchema');
 
-var jwtAuthentication = require('../auth/JWTAuthentication');
+var jwtAuthentication = require('../auth/JwtAuthentication');
 
 exports.googleLogin = googleLogin;
 exports.logout = logout;

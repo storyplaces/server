@@ -12,7 +12,9 @@
   "api": {
     "url" : "/storyplaces"
   },
-
+  "jwt": {
+    "ttlDays": 14
+  },
   "server": {
     "mediaPath": "media",
     "useHttps": false

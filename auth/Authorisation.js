@@ -2,6 +2,7 @@
 
 exports.convertRolesToPrivileges = convertRolesToPrivileges;
 exports.hasPrivileges = hasPrivileges;
+exports.doesNotHavePrivileges = doesNotHavePrivileges;
 
 var rolesToPrivileges = {
     "author": ["createStory", "deleteOwnStory", "editOwnStory", "requestPublicationOfOwnStory", "previewOwnStory", "listOwnStories"]
@@ -27,6 +28,10 @@ function hasPrivileges(requiredPrivileges, jwtPrivileges, match) {
     }
 
     return anyPrivilegesInJWT(requiredPrivileges, jwtPrivileges);
+}
+
+function doesNotHavePrivileges(requiredPrivileges, jwtPrivileges, match){
+    return !hasPrivileges(requiredPrivileges, jwtPrivileges, match);
 }
 
 function allPrivilegesInJWT(requiredPrivileges, jwtPrivileges) {
