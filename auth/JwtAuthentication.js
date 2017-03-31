@@ -19,7 +19,9 @@ function createJWTFromUser(user) {
         sub: user._id,
         iat: moment().unix(),
         exp: moment().add(settings.jwt.ttlDays, 'days').unix(),
-        privileges: Authorisation.convertRolesToPrivileges(user.roles)
+        privileges: Authorisation.convertRolesToPrivileges(user.roles),
+        displayName: user.name,
+        bio: user.bio
     };
 
     return jwt.encode(payload, jwtPrivate, 'RS256');
