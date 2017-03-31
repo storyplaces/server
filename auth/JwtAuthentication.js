@@ -2,6 +2,8 @@ exports.getPublicJWT = getPublicJWT;
 exports.createJWTFromUser = createJWTFromUser;
 exports.getPayloadAndValidateJWT = getPayloadAndValidateJWT;
 
+exports.createJwtFromPayload = createJwtFromPayload;
+
 var fs = require('fs');
 
 var moment = require('moment');
@@ -18,15 +20,10 @@ function createJWTFromUser(user) {
     var payload = {
         sub: user._id,
         iat: moment().unix(),
-        exp: moment().add(settings.jwt.ttlDays, 'days').unix(),
-        privileges: Authorisation.convertRolesToPrivileges(user.roles)
+        exp: moment().add(settings.jwt.ttlDays, 'days').unix()
     };
 
-    return jwt.encode(payload, jwtPrivate, 'RS256');
-}
-
-function decodePayloadFromToken(token) {
-    return jwt.decode(token, jwtPublic);
+    return createJwtFromPayload(payload);
 }
 
 function getPublicJWT() {
@@ -47,4 +44,12 @@ function getPayloadAndValidateJWT(token) {
     }
 
     return payload;
+}
+
+function decodePayloadFromToken(token) {
+    return jwt.decode(token, jwtPublic);
+}
+
+function createJwtFromPayload(payload) {
+    return jwt.encode(payload, jwtPrivate, 'RS256');
 }
