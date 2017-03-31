@@ -1,10 +1,10 @@
 "use strict";
 
-module.exports = checkPrivileges;
+module.exports = hasPrivileges;
 
 var Authorisation = require('../auth/Authorisation');
 
-function checkPrivileges(requiredPrivileges, match) {
+function hasPrivileges(requiredPrivileges, match) {
     return function (req, res, next) {
         if (!Array.isArray(requiredPrivileges)) {
             requiredPrivileges = [requiredPrivileges];
