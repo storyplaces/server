@@ -21,7 +21,7 @@ var AuthenticateUsingToken = require('./middleware/TokenAuthentication.js');
 var LogErrorToConsole = require('./middleware/LogErrorToConsole.js');
 var LogErrorToClient = require('./middleware/LogErrorToClient.js');
 
-var HasPrivilege = require('./middleware/Authorisation');
+var HasPrivilege = require('./middleware/HasPrivilege');
 var IsValidUser = require('./middleware/ValidUser');
 var JwtAuthentication = require('./middleware/JwtAuthentication');
 var InitInternalRequestStore = require('./middleware/InitInternalRequestStore');
