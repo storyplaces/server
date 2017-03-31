@@ -18,3 +18,6 @@ Array.prototype.contains = function (searchItem) {
     return this.indexOf(searchItem) != -1;
 };
 
+String.prototype.replaceAt = function (index, character) {
+    return this.substring(0, index) + character + this.substring(index + 1)
+};
