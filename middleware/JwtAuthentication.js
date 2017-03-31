@@ -18,7 +18,6 @@ function validateJWT(req, res, next) {
     }
 
     req.internal.userId = payload.sub;
-    req.internal.privileges = payload.privileges;
     next();
 }
 

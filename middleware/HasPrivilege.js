@@ -6,11 +6,14 @@ var Authorisation = require('../auth/Authorisation');
 
 function hasPrivileges(requiredPrivileges, match) {
     return function (req, res, next) {
+
+        let privileges = Authorisation.convertRolesToPrivileges(req.internal.user.roles);
+
         if (!Array.isArray(requiredPrivileges)) {
             requiredPrivileges = [requiredPrivileges];
         }
 
-        if (!req.internal.privileges || !Authorisation.hasPrivileges(requiredPrivileges, req.internal.privileges, match)) {
+        if (!privileges || !Authorisation.hasPrivileges(requiredPrivileges, privileges, match)) {
             return res.status(403).send({message: 'Permission denied'});
         }
 
