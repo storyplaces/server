@@ -106,6 +106,9 @@ function fetch(req, res, next) {
             return next(error);
         }
 
+        // Convert roles to privileges because the front end only understands privileges
+        authoringUser.privileges = Authorisation.convertRolesToPrivileges(authoringUser.roles);
+
         res.json(authoringUser);
     });
 }
