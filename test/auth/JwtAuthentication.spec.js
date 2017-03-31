@@ -16,7 +16,7 @@ var factories = require('../utils/testing-factories');
 
 
 describe("JWT Authentication", function () {
-    var user = {_id:"user_id_1"};
+    var user = {_id:"user_id_1", name: "bob", bio: "My bio"};
 
     describe("createJWTFromUser", function () {
 
@@ -45,6 +45,14 @@ describe("JWT Authentication", function () {
                 payload.sub.should.equal(user._id);
             });
 
+            it("returns a JWT who's displayName is the name of the user", function () {
+                payload.displayName.should.equal(user.name);
+            });
+
+            it("returns a JWT who's bio is the bio of the user", function () {
+                payload.bio.should.equal(user.bio);
+            });
+
             it("returns a JWT who's issued at is the current time", function () {
                 expect(payload.iat).to.be.within(now -1, now +1);
             });
@@ -52,8 +60,8 @@ describe("JWT Authentication", function () {
                 expect(payload.exp).to.be.above(now);
             });
 
-            it("returns a JWT which has nothing else in its payload other than sub, iat and exp", function () {
-                Object.keys(payload).length.should.equal(3);
+            it("returns a JWT which has nothing else in its payload other than sub, displayName, bio, iat and exp", function () {
+                Object.keys(payload).length.should.equal(5);
             });
         })
     });
