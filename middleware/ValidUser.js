@@ -3,6 +3,7 @@
 // Taken from https://github.com/sahat/satellizer/blob/master/examples/server/node/server.js
 
 module.exports = validateUser;
+var Authorisation = require('../auth/Authorisation');
 
 var AuthoringSchema = require('../models/authoringSchema');
 
@@ -17,6 +18,7 @@ function validateUser(req, res, next) {
         }
 
         req.internal.user = user;
+        req.internal.privileges = Authorisation.convertRolesToPrivileges(req.internal.user.roles);
         next();
     });
 }

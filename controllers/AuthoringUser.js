@@ -85,8 +85,8 @@ function fetch(req, res, next) {
         return next(error);
     }
 
-    if (Authorisation.doesNotHavePrivileges('fetchAnyUser', req.internal.privileges) || userId != req.internal.userId){
-        error.message = "Unable to fetch a user which is not currently logged in.";
+    if (Authorisation.doesNotHavePrivileges(['fetchAnyUser'], req.internal.privileges) && userId != req.internal.userId){
+        var error = new Error("Unable to fetch a user which is not currently logged in.");
         error.status = 500;
         error.clientMessage = "Insufficient privileges to fetch this user.";
         return next(error);
@@ -106,10 +106,12 @@ function fetch(req, res, next) {
             return next(error);
         }
 
+        let objectToSend = authoringUser.toJSON();
         // Convert roles to privileges because the front end only understands privileges
-        authoringUser.privileges = Authorisation.convertRolesToPrivileges(authoringUser.roles);
+        objectToSend.privileges = Authorisation.convertRolesToPrivileges(authoringUser.roles);
+        console.log(objectToSend);
 
-        res.json(authoringUser);
+        res.json(objectToSend);
     });
 }
 
