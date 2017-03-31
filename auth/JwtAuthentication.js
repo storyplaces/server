@@ -7,14 +7,16 @@ exports.createJwtFromPayload = createJwtFromPayload;
 var fs = require('fs');
 
 var moment = require('moment');
-var jwt = require('jwt-simple');
+var jwtSimple = require('jwt-simple');
 var Authorisation = require('./Authorisation');
 
 var secrets = require('../config/secrets.json');
 var settings = require('../config/settings.json');
 
-var jwtPrivate = fs.readFileSync(secrets.auth.jwt.private);
-var jwtPublic = fs.readFileSync(secrets.auth.jwt.public);
+var jwtPrivateKey = fs.readFileSync(secrets.auth.jwt.private);
+var jwtPublicKey = fs.readFileSync(secrets.auth.jwt.public);
+
+const jwtEncoding = 'RS256';
 
 function createJWTFromUser(user) {
     var payload = {
@@ -27,14 +29,14 @@ function createJWTFromUser(user) {
 }
 
 function getPublicJWT() {
-    return jwtPublic.toString();
+    return jwtPublicKey.toString();
 }
 
 function getPayloadAndValidateJWT(token) {
     var payload = null;
 
     try {
-        payload = decodePayloadFromToken(token);
+        payload = decodePayloadFromJwt(token);
     } catch (err) {
         throw new Error(err.message);
     }
@@ -46,10 +48,10 @@ function getPayloadAndValidateJWT(token) {
     return payload;
 }
 
-function decodePayloadFromToken(token) {
-    return jwt.decode(token, jwtPublic);
+function decodePayloadFromJwt(jwt) {
+    return jwtSimple.decode(jwt, jwtPublicKey, false, jwtEncoding);
 }
 
 function createJwtFromPayload(payload) {
-    return jwt.encode(payload, jwtPrivate, 'RS256');
+    return jwtSimple.encode(payload, jwtPrivateKey, jwtEncoding);
 }
