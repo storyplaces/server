@@ -39,9 +39,9 @@
 
 "use strict";
 
-var AuthoringSchema = require('../models/authoringSchema');
-var Authorisation = require('../auth/Authorisation');
-var helpers = require('./helpers.js');
+let AuthoringSchema = require('../models/authoringSchema');
+let Authorisation = require('../auth/Authorisation');
+let helpers = require('./helpers.js');
 
 
 exports.create = create;
@@ -51,7 +51,7 @@ exports.update = update;
 
 function create(req, res, next) {
 
-    var authoringUser = new AuthoringSchema.AuthoringUser(req.body);
+    let authoringUser = new AuthoringSchema.AuthoringUser(req.body);
 
     authoringUser.save(function (err) {
         if (err) {
@@ -79,14 +79,16 @@ function index(req, res, next) {
 }
 
 function fetch(req, res, next) {
+    let userId;
+
     try {
-        var userId = helpers.validateId(req.params.user_id);
+        userId = helpers.validateId(req.params.user_id);
     } catch (error) {
         return next(error);
     }
 
     if (Authorisation.doesNotHavePrivileges(['fetchAnyUser'], req.internal.privileges) && userId != req.internal.userId){
-        var error = new Error("Unable to fetch a user which is not currently logged in.");
+        let error = new Error("Unable to fetch a user which is not currently logged in.");
         error.status = 500;
         error.clientMessage = "Insufficient privileges to fetch this user.";
         return next(error);
@@ -97,38 +99,38 @@ function fetch(req, res, next) {
             return next(err);
         }
 
-        var error = new Error();
-
         if (!authoringUser) {
-            error.message = "Authoring User id " + userId + " not found";
+            let error = new Error("Authoring User id " + userId + " not found");
             error.status = 404;
             error.clientMessage = "Authoring User not found";
             return next(error);
         }
 
         let objectToSend = authoringUser.toJSON();
+
         // Convert roles to privileges because the front end only understands privileges
         objectToSend.privileges = Authorisation.convertRolesToPrivileges(authoringUser.roles);
-        console.log(objectToSend);
 
         res.json(objectToSend);
     });
 }
 
 function update(req, res, next) {
+    let userId;
+
     try {
-        var userId = helpers.validateId(req.params.user_id);
+        userId = helpers.validateId(req.params.user_id);
     } catch (error) {
         return next(error);
     }
 
-    AuthoringSchema.AuthoringUser.findByIdAndUpdate(req.params.user_id, req.body, function (err, authoringUser) {
+    AuthoringSchema.AuthoringUser.findByIdAndUpdate(userId, req.body, function (err, authoringUser) {
         if (err) {
             return next(err);
         }
 
         if (!authoringUser) {
-            error.message = "Authoring User id " + userId + " not found";
+            let error = new Error("Authoring User id " + userId + " not found");
             error.status = 404;
             error.clientMessage = "Authoring User not found";
             return next(error);
