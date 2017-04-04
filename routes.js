@@ -137,10 +137,6 @@ function authoringRouter() {
     AuthoringRouter.route('/story/:story_id/preview')
         .post([HasPrivilege(['previewOwnStory', 'previewAnyStory']), AuthoringStory.preview]);
 
-    // Get stories for AuthoringUser
-    AuthoringRouter.route('/story/user/:user_id')
-        .get([HasPrivilege(['fetchOwnStory', 'fetchAnyStory']), AuthoringStory.userFetch]);
-
     // Create AuthoringUser
     // Get list of AuthoringUsers
     AuthoringRouter.route('/user')

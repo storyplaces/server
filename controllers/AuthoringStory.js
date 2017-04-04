@@ -184,17 +184,6 @@ function update(req, res, next) {
 
 }
 
-function userFetch(req, res, next) {
-    AuthoringSchema.AuthoringStory.find({"authorIds": req.params.user_id}, function (err, authoringStories) {
-        if (err) {
-            return next(err);
-        }
-
-        res.json(authoringStories);
-    });
-
-}
-
 function publish(req, res, next) {
     return handleStoryProcessing(req, res, next, "pending", "Your story has been submitted for approval");
 }
