@@ -51,7 +51,6 @@ exports.create = create;
 exports.index = index;
 exports.fetch = fetch;
 exports.update = update;
-exports.userFetch = userFetch;
 exports.publish = publish;
 exports.preview = preview;
 
