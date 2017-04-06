@@ -143,7 +143,7 @@ function authoringRouter() {
     // Update a story
     AuthoringRouter.route('/story/:story_id')
         .get([HasPrivilege(['fetchOwnStory', 'fetchAnyStory']), AuthoringStory.fetch])
-        .put([HasPrivilege(['updateOwnStory', 'updateAnyStory']), AuthoringStory.update]);
+        .put([HasPrivilege(['editOwnStory', 'editAnyStory']), AuthoringStory.update]);
 
     // Publish a story
     AuthoringRouter.route('/story/:story_id/publish')
@@ -152,10 +152,6 @@ function authoringRouter() {
     // Preview a story
     AuthoringRouter.route('/story/:story_id/preview')
         .post([HasPrivilege(['previewOwnStory', 'previewAnyStory']), AuthoringStory.preview]);
-
-    // Get stories for AuthoringUser
-    AuthoringRouter.route('/story/user/:user_id')
-        .get([HasPrivilege(['fetchOwnStory', 'fetchAnyStory']), AuthoringStory.userFetch]);
 
     // Create AuthoringUser
     // Get list of AuthoringUsers

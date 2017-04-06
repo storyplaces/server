@@ -40,22 +40,22 @@
 
 "use strict";
 
-var AuthoringSchema = require('../models/authoringSchema');
-var CoreSchema = require('../models/coreschema');
-var helpers = require('./helpers.js');
-var converter = require('../conversion/SchemaConversion');
+let AuthoringSchema = require('../models/authoringSchema');
+let CoreSchema = require('../models/coreschema');
+let helpers = require('./helpers.js');
+let converter = require('../conversion/SchemaConversion');
+
+let Authorisation = require('../auth/Authorisation');
 
 exports.create = create;
 exports.index = index;
 exports.fetch = fetch;
 exports.update = update;
-exports.userFetch = userFetch;
 exports.publish = publish;
 exports.preview = preview;
 
 function create(req, res, next) {
-
-    var authoringStory = new AuthoringSchema.AuthoringStory(req.body);
+    let authoringStory = new AuthoringSchema.AuthoringStory(req.body);
 
     authoringStory.save(function (err) {
         if (err) {
@@ -73,7 +73,10 @@ function create(req, res, next) {
 }
 
 function index(req, res, next) {
-    AuthoringSchema.AuthoringStory.find(function (err, authoringStories) {
+    let onlyOwnStories = Authorisation.doesNotHavePrivileges(['fetchAnyStory'], req.internal.privileges);
+    let query = onlyOwnStories ? {"authorIds": req.internal.userId} : {};
+
+    AuthoringSchema.AuthoringStory.find(query, function (err, authoringStories) {
         if (err) {
             return next(err);
         }
@@ -83,8 +86,10 @@ function index(req, res, next) {
 }
 
 function fetch(req, res, next) {
+    let storyId;
+
     try {
-        var storyId = helpers.validateId(req.params.story_id);
+        storyId = helpers.validateId(req.params.story_id);
     } catch (error) {
         return next(error);
     }
@@ -94,12 +99,17 @@ function fetch(req, res, next) {
             return next(err);
         }
 
-        var error = new Error();
-
         if (!authoringStory) {
-            error.message = "Authoring Story id " + storyId + " not found";
+            let error = new Error("Authoring Story id " + storyId + " not found");
             error.status = 404;
             error.clientMessage = "Authoring Story not found";
+            return next(error);
+        }
+
+        if (Authorisation.doesNotHavePrivileges(['editAnyStory'], req.internal.privileges) && authoringStory.authorIds.indexOf(req.internal.userId) === -1){
+            let error = new Error("Unable to fetch a story not owned by this user");
+            error.status = 403;
+            error.clientMessage = "Insufficient privileges.";
             return next(error);
         }
 
@@ -108,37 +118,44 @@ function fetch(req, res, next) {
 }
 
 function update(req, res, next) {
+    let storyId;
+
     try {
-        var storyId = helpers.validateId(req.params.story_id);
+        storyId = helpers.validateId(req.params.story_id);
     } catch (error) {
         return next(error);
     }
-
 
     AuthoringSchema.AuthoringStory.findById(storyId, function (err, authoringStory) {
         if (err) {
             return next(err);
         }
 
-        var error = new Error();
-
         if (!authoringStory) {
-            error.message = "Authoring Story id " + storyId + " not found";
+            let error = new Error("Authoring Story id " + storyId + " not found");
             error.status = 404;
             error.clientMessage = "Authoring Story not found";
             return next(error);
         }
 
-        var submittedModifiedDate = new Date(req.body.modifiedDate);
+        if (Authorisation.doesNotHavePrivileges(['editAnyStory'], req.internal.privileges) && authoringStory.authorIds.indexOf(req.internal.userId) === -1){
+            let error = new Error("Unable to update story for which they are not an owner");
+            error.status = 403;
+            error.clientMessage = "Insufficient privileges.";
+            return next(error);
+        }
+
+        let submittedModifiedDate = new Date(req.body.modifiedDate);
 
         if (isNaN(submittedModifiedDate.getTime())) {
-            error.clientMessage = error.message = "Invalid modified date passed";
+            let error = new Error("Invalid modified date passed");
+            error.clientMessage = error.message ;
             error.status = 400;
             return next(error);
         }
 
         if (submittedModifiedDate <= authoringStory.modifiedDate) {
-            error.message = "The Authoring Story id " + storyId + " on the server is newer or the same age as the one submitted";
+            let error = new Error("The Authoring Story id " + storyId + " on the server is newer or the same age as the one submitted");
             error.clientMessage = "The Authoring Story on the server is newer or the same age as the one submitted";
             error.status = 409;
             return next(error);
@@ -150,8 +167,9 @@ function update(req, res, next) {
             }
 
             if (!authoringStory) {
+                let error = new Error("Unable to update story");
                 error.status = 400;
-                error.clientMessage = error.message = "Unable to update story";
+                error.clientMessage = error.message;
                 return next(err);
             }
 
@@ -165,29 +183,19 @@ function update(req, res, next) {
 
 }
 
-function userFetch(req, res, next) {
-    AuthoringSchema.AuthoringStory.find({"authorIds": req.params.user_id}, function (err, authoringStories) {
-        if (err) {
-            return next(err);
-        }
-
-        res.json(authoringStories);
-    });
-
-}
-
 function publish(req, res, next) {
     return handleStoryProcessing(req, res, next, "pending", "Your story has been submitted for approval");
 }
 
 function preview(req, res, next) {
     return handleStoryProcessing(req, res, next, "preview", "Story Preview Response");
-
 }
 
 function handleStoryProcessing(req, res, next, readingState, responseMessage) {
+    let storyId;
+
     try {
-        var storyId = helpers.validateId(req.params.story_id);
+        storyId = helpers.validateId(req.params.story_id);
     } catch (error) {
         return next(error);
     }
@@ -197,28 +205,43 @@ function handleStoryProcessing(req, res, next, readingState, responseMessage) {
             return next(err);
         }
 
-        var error = new Error();
-
         if (!authoringStory) {
-            error.message = "Authoring Story id " + storyId + " not found";
+            let error = new Error("Authoring Story id " + storyId + " not found");
             error.status = 404;
             error.clientMessage = "Authoring Story not found";
             return next(error);
         }
 
+        let hasAnyPrivilege;
+
+        if (readingState === "preview") {
+            hasAnyPrivilege = Authorisation.hasPrivileges(['requestPreviewOfAnyStory'], req.internal.privileges);
+        } else {
+            hasAnyPrivilege = Authorisation.hasPrivileges(['requestPublicationOfAnyStory'], req.internal.privileges);
+        }
+
+        if (!hasAnyPrivilege && authoringStory.authorIds.indexOf(req.internal.userId) === -1){
+            let error = new Error("Unable to request conversion for a story not owned by this user");
+            error.status = 403;
+            error.clientMessage = "Insufficient privileges.";
+            return next(error);
+        }
+
+        let readingStory;
+
         try {
-            var readingStory = converter.convert(authoringStory, readingState);
+            readingStory = converter.convert(authoringStory, readingState);
         } catch (e) {
-            error.message = "Unable to convert story " + storyId;
+            let error = new Error("Unable to convert story " + storyId);
             error.status = 500;
             error.clientMessage = "Unable to convert story";
             return next(error);
         }
 
-        var story = new CoreSchema.Story(readingStory);
+        let story = new CoreSchema.Story(readingStory);
         story.save(function (err, savedStory) {
             if (err) {
-                error.message = "Unable to convert story " + storyId;
+                let error = new Error("Unable to convert story " + storyId);
                 error.status = 500;
                 error.clientMessage = "Unable to convert story";
                 return next(error);
