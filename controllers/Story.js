@@ -45,11 +45,15 @@ var helpers = require('./helpers.js');
 
 exports.create = create;
 exports.index = index;
+exports.adminindex = adminindex;
 exports.fetch = fetch;
 exports.destroy = destroy;
 exports.allReadings = allReadings;
 exports.readingsForUser = allReadingsForUser;
 exports.update = update;
+exports.approve = approve;
+exports.remove = remove;
+exports.createPreview = createPreview;
 
 function create(req, res, next) {
 
@@ -76,6 +80,61 @@ function index(req, res, next) {
     });
 }
 
+function adminindex(req, res, next) {
+    CoreSchema.Story.find({'publishState': {'$in': ['published', 'pending']}}, function (err, stories) {
+        if (err) {
+            return next(err);
+        }
+
+        res.json(stories);
+    });
+}
+
+function approve(req, res, next) {
+    try {
+        var storyId = helpers.validateId(req.params.story_id);
+    } catch (error) {
+        return next(error);
+    }
+
+    CoreSchema.Story.findByIdAndUpdate(storyId, {$set: {publishState: req.body.publishState}}, function (err, story) {
+        if (err) {
+            return next(err);
+        }
+
+        if (!story) {
+            var error = new Error();
+            error.status = 400;
+            error.clientMessage = error.message = "Unable To update story";
+            return next(error);
+        }
+
+        res.json(story);
+    });
+}
+
+function remove(req, res, next) {
+    try {
+        var storyId = helpers.validateId(req.params.story_id);
+    } catch (error) {
+        return next(error);
+    }
+    CoreSchema.Story.findByIdAndRemove(storyId, function (err, story) {
+        if (err) {
+            return next(err);
+        }
+
+        if (!story) {
+            var error = new Error();
+            error.status = 400;
+            error.clientMessage = error.message = "Unable to delete story";
+            return next(error);
+        }
+
+        res.json({"success": true, "id": storyId});
+    });
+}
+
 function fetch(req, res, next) {
     try {
         var storyId = helpers.validateId(req.params.story_id);
@@ -83,7 +142,10 @@ function fetch(req, res, next) {
         return next(error);
     }
 
-    CoreSchema.Story.findOne({'publishState': {'$in': ['published', 'preview']}, '_id': storyId}, function (err, story) {
+    CoreSchema.Story.findOne({
+        'publishState': {'$in': ['published', 'preview']},
+        '_id': storyId
+    }, function (err, story) {
         if (err) {
             return next(err);
         }
@@ -183,4 +245,47 @@ function update(req, res, next) {
 
         res.json(story);
     });
+}
+
+function createPreview(req, res, next) {
+    try {
+        var storyId = helpers.validateId(req.params.story_id);
+    } catch (error) {
+        return next(error);
+    }
+
+    CoreSchema.Story.findById(storyId, function (err, story) {
+        if (err) {
+            return next(err);
+        }
+
+        var error = new Error();
+
+        if (!story) {
+            error.message = "Story id " + storyId + " not found";
+            error.status = 404;
+            error.clientMessage = "Story not found";
+            return next(error);
+
+        }
+        var storyToPreview = story.toJSON();
+        storyToPreview.publishState = "preview";
+        delete storyToPreview._id;
+        delete storyToPreview.id;
+        var previewStory = new CoreSchema.Story(storyToPreview);
+
+        previewStory.save(function (err, savedStory) {
+            if (err) {
+                console.log(err);
+                error.message = "Unable to create preview story " + storyId;
+                error.status = 500;
+                error.clientMessage = "Unable to create preview story";
+                return next(error);
+            }
+
+            res.statusCode = 200;
+            res.json({"message": "Preview Created", "id": savedStory.id})
+        });
+    });
+
 }

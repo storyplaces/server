@@ -117,6 +117,22 @@ function authoringRouter() {
     AuthoringRouter.use(JwtAuthentication);
     AuthoringRouter.use(IsValidUser);
 
+    // Get a list of pending and published Reading Stories
+    AuthoringRouter.route('/admin/story')
+        .get([HasPrivilege(['getReviewStories']), Story.adminindex]);
+
+    // Delete reading story
+    AuthoringRouter.route('/admin/story/:story_id')
+        .delete([HasPrivilege(['deleteReadingStory']), Story.remove]);
+
+    // Update the publish status of a reading story (to pending or published)
+    AuthoringRouter.route('/admin/story/:story_id/updatePublishState')
+        .post([HasPrivilege(['updateReadingStoryPublishStatus']), Story.approve]);
+
+    // Update the publish status of a reading story (to pending or published)
+    AuthoringRouter.route('/admin/story/:story_id/createPreview')
+        .post([HasPrivilege(['previewAnyStory']), Story.createPreview]);
+
     // Get a list of stories
     // Create a new story
     AuthoringRouter.route('/story')
