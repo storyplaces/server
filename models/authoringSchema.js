@@ -62,6 +62,14 @@ AuthoringUser.set('toJSON', {
     virtuals: true
 });
 
+// AuthoringImage ----------------------------------------------------------------------
+
+let AuthoringImage = new Schema({
+    id: {type: String, required: true},
+    storyId: {type: String, required: true},
+    mimeType: {type: String, required: true},
+});
+
 // AuthoringPage -----------------------------------------------------------------------
 
 var AuthoringPage = new Schema({
@@ -77,7 +85,8 @@ var AuthoringPage = new Schema({
         type: String,
         enum: ['and', 'or'],
         required: true
-    }
+    },
+    imageId: {type: String}
 });
 
 // AuthoringStory ----------------------------------------------------------------------
@@ -108,6 +117,9 @@ var AuthoringStory = new Schema({
     tags: {
         type: [String]
     },
+    imageIds: {
+        type: [String]
+    }
 });
 
 AuthoringStory.virtual('id').get(function () {
@@ -173,5 +185,6 @@ module.exports = {
     AuthoringChapter: mongoose.model('AuthoringChapter', AuthoringChapter),
     AuthoringCircleLocation: mongoose.model('AuthoringCircleLocation', AuthoringCircleLocation),
     AuthoringStory: mongoose.model('AuthoringStory', AuthoringStory),
+    AuthoringImage: mongoose.model('AuthoringImage', AuthoringImage)
 };
 
