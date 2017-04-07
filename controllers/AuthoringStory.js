@@ -229,17 +229,7 @@ function handleStoryProcessing(req, res, next, readingState, responseMessage) {
 
         let readingStory;
 
-        try {
-            readingStory = converter.convert(authoringStory, readingState);
-        } catch (e) {
-            let error = new Error("Unable to convert story " + storyId);
-            error.status = 500;
-            error.clientMessage = "Unable to convert story";
-            return next(error);
-        }
-
-        let story = new CoreSchema.Story(readingStory);
-        story.save(function (err, savedStory) {
+        AuthoringSchema.AuthoringUser.findById(authoringStory.authorIds, function(err, authoringUser) {
             if (err) {
                 let error = new Error("Unable to convert story " + storyId);
                 error.status = 500;
@@ -247,8 +237,28 @@ function handleStoryProcessing(req, res, next, readingState, responseMessage) {
                 return next(error);
             }
 
-            res.statusCode = 200;
-            res.json({"message": responseMessage, "id": savedStory.id})
+            try {
+                readingStory = converter.convert(authoringStory, readingState, authoringUser.name);
+            } catch (e) {
+                let error = new Error("Unable to convert story " + storyId);
+                error.status = 500;
+                error.clientMessage = "Unable to convert story";
+                return next(error);
+            }
+
+            let story = new CoreSchema.Story(readingStory);
+            story.save(function (err, savedStory) {
+                if (err) {
+                    let error = new Error("Unable to convert story " + storyId);
+                    error.status = 500;
+                    error.clientMessage = "Unable to convert story";
+                    return next(error);
+                }
+
+                res.statusCode = 200;
+                res.json({"message": responseMessage, "id": savedStory.id})
+            });
         });
+
     });
 }
