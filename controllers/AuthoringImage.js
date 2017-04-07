@@ -151,7 +151,7 @@ function createJSONFile(filePath, mimetype) {
 
 
 function makePath(storyId) {
-    return 'authoring-media/' + storyId + '/';
+    return helpers.authoringMediaFolder() + '/' + storyId + '/';
 }
 
 function processFetch(req, res, next, thumbnail) {
@@ -166,8 +166,6 @@ function processFetch(req, res, next, thumbnail) {
     }
 
     checkStoryOwnership(storyId, req.internal.userId, (ownershipError) => {
-
-        console.log("AA", ownershipError);
 
         if (ownershipError) {
             return next(ownershipError);

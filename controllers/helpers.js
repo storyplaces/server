@@ -5,6 +5,10 @@
 "use strict";
 
 exports.validateId = validateId;
+exports.authoringMediaFolder = authoringMediaFolder;
+
+let fs = require('fs');
+let settings = require('../config/settings.json');
 
 function validateId(passedId) {
     var id = passedId.replace(/[^0-9A-F]/gi, '');
@@ -14,4 +18,13 @@ function validateId(passedId) {
     }
 
     return id;
+}
+
+
+function authoringMediaFolder() {
+    if (settings.server.mediaPath[0] === '/') {
+        return settings.server.authoringMediaPath;
+    }
+
+    return fs.realpathSync(__dirname + '/../' + settings.server.authoringMediaPath);
 }

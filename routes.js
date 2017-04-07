@@ -27,7 +27,7 @@ var IsValidUser = require('./middleware/ValidUser');
 var JwtAuthentication = require('./middleware/JwtAuthentication');
 var InitInternalRequestStore = require('./middleware/InitInternalRequestStore');
 
-var Multer = require('multer');
+var upload = require('./middleware/FileUpload');
 
 Router.use(function (req, res, next) {
 
@@ -123,11 +123,6 @@ Router.use(LogErrorToClient);
 
 module.exports = Router;
 
-let crypto = require('crypto');
-let helpers = require('./controllers/helpers.js');
-let fs = require('fs');
-
-
 function authoringRouter() {
     var AuthoringRouter = Express.Router();
     AuthoringRouter.use(InitInternalRequestStore);
@@ -150,58 +145,6 @@ function authoringRouter() {
     AuthoringRouter.route('/admin/story/:story_id/createPreview')
         .post([HasPrivilege(['previewAnyStory']), Story.createPreview]);
 
-    let storage = Multer.diskStorage({
-        destination: function (req, file, cb) {
-            let storyId;
-            try {
-                storyId = helpers.validateId(req.params.story_id);
-            } catch (error) {
-                return cb(error);
-            }
-
-            let path = 'authoring-media/' + storyId + "/";
-            let stats;
-
-            try {
-                stats = fs.lstatSync(path);
-            } catch (e) {
-                fs.mkdirSync(path, 0o700);
-                return cb(null,path);
-            }
-
-            if (!stats.isDirectory()) {
-                return cb(new Error("Non directory exists with story name in authoring media"));
-            }
-
-            return cb(null, path);
-        },
-        filename: function (req, file, cb) {
-            let fileExtension = file.mimetype.substr(file.mimetype.lastIndexOf('/') + 1);
-
-            if(fileExtension !== "png" && fileExtension !== "jpeg") {
-                return cb(new Error("Bad file extension"));
-            }
-
-            let baseName = crypto.createHash('md5').update(file.originalname + Date.now().toString()).digest('hex');
-            let filename = baseName + "." + fileExtension;
-            cb(null, filename);
-        }
-    });
-
-    let upload = Multer({
-        limits: {fileSize: 2097152, files: 1},
-        fileFilter: (req, file, cb) => {
-            if (file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/png') {
-                let error = new Error("Bad file format");
-                error.status = 400;
-                error.clientMessage = "Bad file format";
-                cb(error);
-            }
-
-            cb(null, true);
-        },
-        storage: storage
-    });
 
     // Get a list of stories
     // Create a new story
