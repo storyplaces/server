@@ -89,6 +89,7 @@ var Story = new Schema({
     author: String,
     cachedMediaIds: [String],
     publishState: {type: String, required: true},
+    publishDate: String,
     tags: [String],
     pagesMapViewSettings: {
         map: Boolean,

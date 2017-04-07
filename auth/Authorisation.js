@@ -6,7 +6,7 @@ exports.doesNotHavePrivileges = doesNotHavePrivileges;
 
 var rolesToPrivileges = {
     "author": ["createStory", "deleteOwnStory", "editOwnStory", "requestPublicationOfOwnStory", "previewOwnStory", "listOwnStories", "updateOwnUser", "fetchOwnUser"],
-    "admin": ["getReviewStories", "updateReadingStoryPublishStatus", "deleteReadingStory", "previewAnyStory", "adminMenu"]
+    "admin": ["getReviewStories", "updateReadingStoryPublishStatus", "deleteReadingStory", "previewAnyStory", "adminMenu", "fetchAnyStory", "requestPublicationOfAnyStory", "requestPreviewOfAnyStory"]
 };
 
 

@@ -9,13 +9,13 @@ var locationFunctions = require('./Locations');
 var errors = require('./SchemaConversionErrors');
 var createReadingStory = require('./ReadingStory');
 
-function convert(authoringStory, readingState) {
+function convert(authoringStory, readingState, authorName) {
 
     if (!authoringStory || !authoringStory.id) {
         throw new errors.SchemaConversionError("Unable to convert story as it is undefined or its ID is undefined");
     }
 
-    var readingStory = createReadingStory.createReadingStory(authoringStory, readingState);
+    var readingStory = createReadingStory.createReadingStory(authoringStory, readingState, authorName);
 
     authoringStory.chapters.forEach(function (chapter) {
         chapterFunctions.createChapterUnlockedCondition(chapter, readingStory);

@@ -276,7 +276,6 @@ function createPreview(req, res, next) {
 
         previewStory.save(function (err, savedStory) {
             if (err) {
-                console.log(err);
                 error.message = "Unable to create preview story " + storyId;
                 error.status = 500;
                 error.clientMessage = "Unable to create preview story";
