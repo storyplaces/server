@@ -50,8 +50,11 @@ let fs = require('fs');
 var Logger = require('../utilities/Logger.js');
 var File = require('../utilities/File.js');
 
+let gm = require('gm');
+
 exports.create = create;
 exports.fetch = fetch;
+exports.fetchThumbnail = fetchThumbnail;
 exports.remove = remove;
 
 function create(req, res, next) {
@@ -64,38 +67,74 @@ function create(req, res, next) {
             return next(ownershipError);
         }
 
-        if (!req.file || !req.file.filename || !req.file.path || !req.file.mimetype) {
+        let filePath = req.file.path;
+        let filename = req.file.filename;
+        let mimeType = req.file.mimetype;
+
+        if (!req.file || !filename || !filePath || !mimeType) {
             let error = new Error("Bad image uploaded");
             error.response = 400;
             error.clientMessage = "Bad image";
             return next(error);
         }
 
-
-
-        let id = req.file.filename.substr(0, req.file.filename.lastIndexOf('.'));
-
-        let authoringImage = new AuthoringSchema.AuthoringImage({
-            id: id,
-            storyId: storyId,
-            mimeType: req.file.mimetype
-        });
-
-        authoringImage.save(err => {
-            if (err) {
-                err.status = 400;
-                err.message = "Unable to create image";
-                return next(err);
+        resizeImage(filePath, (resizeError) => {
+            if (resizeError) {
+                console.log(resizeError);
+                let error = new Error("Error resizing image");
+                return next(error);
             }
 
-            createJSONFile(req.file.path, req.file.mimetype);
+            let id = filename.substr(0, filename.lastIndexOf('.'));
 
-            res.json({
-                message: "Image created",
-                imageId: id
+            let authoringImage = new AuthoringSchema.AuthoringImage({
+                id: id,
+                storyId: storyId,
+                mimeType: mimeType
+            });
+
+            authoringImage.save(err => {
+                if (err) {
+                    err.status = 400;
+                    err.message = "Unable to create image";
+                    return next(err);
+                }
+
+                createJSONFile(filePath, mimeType);
+
+                let thumbnailPath = makeThumbnailPath(filePath)
+
+                makeThumbnail(req.file.path, thumbnailPath, (thumbnailError) => {
+                    if (thumbnailError) {
+                        let error = new Error("Error creating thumbnail image");
+                        return next(error);
+                    }
+
+                    createJSONFile(thumbnailPath, mimeType);
+
+                    res.json({
+                        message: "Image created",
+                        imageId: id
+                    });
+                });
             });
         });
     });
+}
+
+function resizeImage(filePath, callback) {
+    gm(filePath).noProfile().resize(800, 600).write(filePath, callback);
+}
+
+function makeThumbnail(filePath, thumbnailPath, callback) {
+    gm(filePath).noProfile().thumb(94, 94, thumbnailPath, 100, callback);
+}
+
+function makeThumbnailPath(filePath) {
+    let extn = filePath.substr(filePath.lastIndexOf('.') + 1);
+    let baseName = filePath.substr(0, filePath.lastIndexOf('.'));
+
+    return `${baseName}-thumb.${extn}`;
 }
 
 function createJSONFile(filePath, mimetype) {
@@ -115,7 +154,7 @@ function makePath(storyId) {
     return 'authoring-media/' + storyId + '/';
 }
 
-function fetch(req, res, next) {
+function processFetch(req, res, next, thumbnail) {
     let storyId;
     let imageId;
 
@@ -157,7 +196,11 @@ function fetch(req, res, next) {
                 return next(error);
             }
 
-            filename = imageId + '.json';
+            if (thumbnail) {
+                filename = imageId + '-thumb.json';
+            } else {
+                filename = imageId + '.json';
+            }
 
             res.sendfile(filename, fileOptions, err => {
                 if (err) {
@@ -170,6 +213,14 @@ function fetch(req, res, next) {
         });
 
     });
+}
+
+function fetchThumbnail(req, res, next) {
+    processFetch(req, res, next, true);
+}
+
+function fetch(req, res, next) {
+    processFetch(req, res, next, false);
 }
 
 function remove(req, res, next) {

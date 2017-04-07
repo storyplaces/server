@@ -124,7 +124,7 @@ Router.use(LogErrorToClient);
 module.exports = Router;
 
 let crypto = require('crypto');
-let helpers = require('./Controllers/helpers.js');
+let helpers = require('./controllers/helpers.js');
 let fs = require('fs');
 
 
@@ -241,6 +241,9 @@ function authoringRouter() {
     AuthoringRouter.route('/story/:story_id/image/:image_id')
         .get(HasPrivilege(['getOwnImage']), AuthoringImage.fetch)
         .delete(HasPrivilege(['deleteOwnImage']), AuthoringImage.remove);
+
+    AuthoringRouter.route('/story/:story_id/image/:image_id/thumb')
+        .get(HasPrivilege(['getOwnImage']), AuthoringImage.fetchThumbnail);
 
     return AuthoringRouter;
 }
