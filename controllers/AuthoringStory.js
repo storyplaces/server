@@ -46,6 +46,7 @@ let helpers = require('./helpers.js');
 let converter = require('../conversion/SchemaConversion');
 
 let Authorisation = require('../auth/Authorisation');
+var Media = require('../models/Media.js');
 
 exports.create = create;
 exports.index = index;
@@ -240,6 +241,7 @@ function handleStoryProcessing(req, res, next, readingState, responseMessage) {
             try {
                 readingStory = converter.convert(authoringStory, readingState, authoringUser.name);
             } catch (e) {
+                console.log(e);
                 let error = new Error("Unable to convert story " + storyId);
                 error.status = 500;
                 error.clientMessage = "Unable to convert story";
@@ -249,11 +251,22 @@ function handleStoryProcessing(req, res, next, readingState, responseMessage) {
             let story = new CoreSchema.Story(readingStory);
             story.save(function (err, savedStory) {
                 if (err) {
+                    console.log(err);
                     let error = new Error("Unable to convert story " + storyId);
                     error.status = 500;
                     error.clientMessage = "Unable to convert story";
                     return next(error);
                 }
+
+                // Copy media to reading story location
+                //console.log(savedStory);
+                savedStory.cachedMediaIds.forEach(function(mediaId) {
+                    var destPath = Media.getDestMediaFolderPathFromId(savedStory.id);
+                    console.log("dest " + destPath);
+
+                    var sourcePath =  helpers.authoringMediaFolder() + "/" + authoringStory.id + '/' + mediaId +".json";
+                    console.log("source " + sourcePath);
+                });
 
                 res.statusCode = 200;
                 res.json({"message": responseMessage, "id": savedStory.id})

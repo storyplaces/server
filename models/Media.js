@@ -127,8 +127,16 @@ function rootFolder() {
     return fs.realpathSync(__dirname + '/../' + settings.server.mediaPath);
 }
 
+function getDestMediaFolderPathFromId(storyId){
+    var path = rootFolder();
+    if (storyId) {
+        path = path.concat('/', storyId, '/');
+    }
+    return path;
+}
 
 
+exports.getDestMediaFolderPathFromId = getDestMediaFolderPathFromId;
 exports.getFileNameFromRequest = getFileNameFromRequest;
 exports.rootFolder = rootFolder;
 exports.validateId = validateId;

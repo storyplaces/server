@@ -16,6 +16,7 @@ var functionFunctions = require('./Functions');
 var locationFunctions = require('./Locations');
 var conditionFunctions = require('./Conditions');
 var errors = require('./SchemaConversionErrors');
+var helpers = require('../controllers/helpers');
 
 function processPage(page, authoringStory, readingStory) {
     if (!page || !page.id) {
@@ -46,9 +47,11 @@ function processPage(page, authoringStory, readingStory) {
     utils.addCondition(chapterMembershipConditionId, conditions);
     utils.addCondition(pageUnlockedByConditionId, conditions);
 
+    handleImage(page, authoringStory, readingStory);
+
     readingStory.pages.push({
         id: page.id,
-        content: page.content,
+        content: buildPageContent(page),
         name: page.name,
         pageTransition: page.finishesStory ? "end" : "next",
         hint: {
@@ -56,10 +59,35 @@ function processPage(page, authoringStory, readingStory) {
             locations: locationId ? [locationId] : []
         },
         conditions: conditions,
-        functions: functions
+        functions: functions,
     });
 
     return page.id;
+}
+
+function handleImage(page, authoringStory, readingStory){
+
+    if (page.imageId){
+        addImageToStory(page.imageId, authoringStory, readingStory);
+    }
+    return page.imageId;
+}
+
+function addImageToStory(imageId, authoringStory, readingStory){
+    readingStory.cachedMediaIds.push(imageId);
+    return imageId;
+}
+
+function buildPageContent(page){
+    if (!page.imageId){
+        return page.content;
+    }
+    return addImageTagsToPageContent(page.imageId, page.content);
+}
+
+function addImageTagsToPageContent(imageId, pageContent){
+    var imageBlock = "<img style='max-width: 100%; display: block; margin: auto;' data-media-id='" + imageId + "'/><br/><br/>";
+    return imageBlock + pageContent;
 }
 
 function makeUnlockedByPagesConditionId(pageId) {
