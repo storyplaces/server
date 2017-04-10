@@ -42,6 +42,8 @@
 
 "use strict";
 
+let file = require('./utilities/File');
+
 // Get configuration ----------------------------------------------------------
 var settings = require('./config/settings.json');
 
@@ -49,6 +51,19 @@ if (process.env.NODE_ENV !== 'test') {
     var secrets = require('./config/secrets.json');
 } else {
     var secrets = require('./config/secrets-test.json');
+}
+
+if (!file.isDirectoryOK(file.authoringMediaFolder()) || !file.isDirectoryOK(file.readingMediaFolder())) {
+    console.log("Authoring: ", file.authoringMediaFolder());
+    console.log("Reading: ", file.readingMediaFolder());
+
+    console.log("Please ensure the media folders both exist and have appropriate permissions");
+    process.exit(1);
+}
+
+if (!file.fileExistsAndIsReadable(secrets.auth.jwt.private) || !file.fileExistsAndIsReadable(secrets.auth.jwt.public)) {
+    console.log("Please ensure the jwt secret files exists and are readable to this process");
+    process.exit(1);
 }
 
 var port = process.env.PORT || 8080;

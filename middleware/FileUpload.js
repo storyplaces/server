@@ -7,6 +7,7 @@ let fs = require('fs');
 
 let helpers = require('../controllers/helpers.js');
 
+let file_utilities = require('../utilities/File');
 
 let storage = Multer.diskStorage({
     destination: function (req, file, cb) {
@@ -17,7 +18,7 @@ let storage = Multer.diskStorage({
             return cb(error);
         }
 
-        let path =  helpers.authoringMediaFolder() + "/" + storyId + "/";
+        let path = file_utilities.authoringMediaFolder() + "/" + storyId + "/";
         let stats;
 
         try {

@@ -42,13 +42,14 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 var media = require('../models/Media.js');
 var Logger = require('../utilities/Logger.js');
+var File = require('../utilities/File');
 
 function fetch(req, res, next) {
 
     // Setup how we serve the files and set teh max age to one day.
 
     var fileOptions = {
-        root: media.rootFolder(),
+        root: File.readingMediaFolder(),
         dotfiles: 'deny',
         maxAge: 60*24*1000
     };

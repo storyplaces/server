@@ -110,6 +110,10 @@ function fetch(req, res, next) {
 
         // Convert roles to privileges because the front end only understands privileges
         objectToSend.privileges = Authorisation.convertRolesToPrivileges(authoringUser.roles);
+        delete objectToSend.googleID;
+        delete objectToSend.email;
+        delete objectToSend.roles;
+        delete objectToSend.enabled;
 
         res.json(objectToSend);
     });

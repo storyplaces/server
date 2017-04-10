@@ -48,7 +48,7 @@ var fs = require('fs');
 
 
 function fullPath(storyId) {
-    return rootFolder() + "/" + storyId;
+    return File.readingMediaFolder() + "/" + storyId;
 }
 
 function getFileNameFromRequest(req) {
@@ -112,6 +112,7 @@ function validateId(id) {
     return undefined;
 }
 
+
 /**
  * Work out the root of where we look for media based upon the settings.
  * If mediaPath is set as a absolute path then we will look there
@@ -135,9 +136,7 @@ function getDestMediaFolderPathFromId(storyId){
     return path;
 }
 
-
 exports.getDestMediaFolderPathFromId = getDestMediaFolderPathFromId;
 exports.getFileNameFromRequest = getFileNameFromRequest;
-exports.rootFolder = rootFolder;
 exports.validateId = validateId;
 exports.fullPath = fullPath;
