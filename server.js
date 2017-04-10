@@ -61,6 +61,11 @@ if (!file.isDirectoryOK(file.authoringMediaFolder()) || !file.isDirectoryOK(file
     process.exit(1);
 }
 
+if (!file.fileExistsAndIsReadable(secrets.auth.jwt.private) || !file.fileExistsAndIsReadable(secrets.auth.jwt.public)) {
+    console.log("Please ensure the jwt secret files exists and are readable to this process");
+    process.exit(1);
+}
+
 var port = process.env.PORT || 8080;
 
 // Load dependencies ----------------------------------------------------------

@@ -72,7 +72,7 @@ function isADirectory(directory) {
     return true;
 }
 
-function isReadableandWritable(item) {
+function isReadableAndWritable(item) {
     try {
         fs.accessSync(item, fs.R_OK);
         fs.accessSync(item, fs.W_OK);
@@ -85,7 +85,7 @@ function isReadableandWritable(item) {
 }
 
 function isDirectoryOK(directory) {
-    return isADirectory(directory) && isReadableandWritable(directory);
+    return isADirectory(directory) && isReadableAndWritable(directory);
 }
 
 function fileExtension(file) {
