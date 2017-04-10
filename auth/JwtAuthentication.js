@@ -22,9 +22,7 @@ function createJWTFromUser(user) {
     var payload = {
         sub: user._id,
         iat: moment().unix(),
-        exp: moment().add(settings.jwt.ttlDays, 'days').unix(),
-        displayName: user.name,
-        bio: user.bio
+        exp: moment().add(settings.jwt.ttlDays, 'days').unix()
     };
 
     return createJwtFromPayload(payload);
