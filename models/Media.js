@@ -48,7 +48,7 @@ var fs = require('fs');
 
 
 function fullPath(storyId) {
-    return rootFolder() + "/" + storyId;
+    return File.readingMediaFolder() + "/" + storyId;
 }
 
 function getFileNameFromRequest(req) {
@@ -112,24 +112,8 @@ function validateId(id) {
     return undefined;
 }
 
-/**
- * Work out the root of where we look for media based upon the settings.
- * If mediaPath is set as a absolute path then we will look there
- * otherwise we will use a relative path from the root of the application
- *
- * @returns {string}
- */
-function rootFolder() {
-    if (settings.server.mediaPath[0] === '/') {
-        return settings.server.mediaPath;
-    }
-
-    return fs.realpathSync(__dirname + '/../' + settings.server.mediaPath);
-}
-
 
 
 exports.getFileNameFromRequest = getFileNameFromRequest;
-exports.rootFolder = rootFolder;
 exports.validateId = validateId;
 exports.fullPath = fullPath;

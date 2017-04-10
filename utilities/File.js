@@ -43,6 +43,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 var Logger = require('../utilities/Logger.js');
 
 var fs = require('fs');
+let settings = require('../config/settings.json');
 
 function fileExistsAndIsReadable(fileName) {
 
@@ -53,6 +54,38 @@ function fileExistsAndIsReadable(fileName) {
     }
 
     return true;
+}
+
+function isADirectory(directory) {
+    let stats;
+
+    try {
+        stats = fs.lstatSync(directory);
+    } catch (e) {
+        return false;
+    }
+
+    if (!stats.isDirectory()) {
+        return false;
+    }
+
+    return true;
+}
+
+function isReadableandWritable(item) {
+    try {
+        fs.accessSync(item, fs.R_OK);
+        fs.accessSync(item, fs.W_OK);
+        fs.accessSync(item, fs.X_OK);
+    } catch (e) {
+        return false;
+    }
+
+    return true;
+}
+
+function isDirectoryOK(directory) {
+    return isADirectory(directory) && isReadableandWritable(directory);
 }
 
 function fileExtension(file) {
@@ -102,9 +135,37 @@ function createFile(filePath, fileContents) {
     var result = fs.writeFileSync(filePath, fileContents);
 }
 
+/**
+ * Work out the root of where we look for media based upon the settings.
+ * If mediaPath is set as a absolute path then we will look there
+ * otherwise we will use a relative path from the root of the application
+ *
+ * @returns {string}
+ */
+function readingMediaFolder() {
+    return mediaFolder(settings.server.mediaPath);
+
+}
+
+function authoringMediaFolder() {
+    return mediaFolder(settings.server.authoringMediaPath);
+}
+
+function mediaFolder(path) {
+    if (path[0] === '/') {
+        return path;
+    }
+
+    return fs.realpathSync(__dirname + '/../' + path);
+}
+
+
 exports.fileExistsAndIsReadable = fileExistsAndIsReadable;
+exports.authoringMediaFolder = authoringMediaFolder;
 exports.fileWithoutExtension = fileWithoutExtension;
+exports.readingMediaFolder = readingMediaFolder
 exports.base64EncodeFile = base64EncodeFile;
 exports.fileExtension = fileExtension;
+exports.isDirectoryOK = isDirectoryOK;
 exports.getAllFiles = getAllFiles;
 exports.createFile = createFile;

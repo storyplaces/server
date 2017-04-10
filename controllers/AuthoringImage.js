@@ -41,14 +41,13 @@
 "use strict";
 
 let AuthoringSchema = require('../models/authoringSchema');
-let CoreSchema = require('../models/coreschema');
 let helpers = require('./helpers.js');
 
 let Authorisation = require('../auth/Authorisation');
 let fs = require('fs');
 
-var Logger = require('../utilities/Logger.js');
-var File = require('../utilities/File.js');
+let Logger = require('../utilities/Logger.js');
+let File = require('../utilities/File.js');
 
 let gm = require('gm');
 
@@ -80,7 +79,6 @@ function create(req, res, next) {
 
         resizeImage(filePath, (resizeError) => {
             if (resizeError) {
-                console.log(resizeError);
                 let error = new Error("Error resizing image");
                 return next(error);
             }
@@ -102,7 +100,7 @@ function create(req, res, next) {
 
                 createJSONFile(filePath, mimeType);
 
-                let thumbnailPath = makeThumbnailPath(filePath)
+                let thumbnailPath = makeThumbnailPath(filePath);
 
                 makeThumbnail(req.file.path, thumbnailPath, (thumbnailError) => {
                     if (thumbnailError) {
@@ -111,6 +109,8 @@ function create(req, res, next) {
                     }
 
                     createJSONFile(thumbnailPath, mimeType);
+
+                    Logger.log(`Image ${id} uploaded for story ${storyId}`);
 
                     res.json({
                         message: "Image created",
@@ -141,7 +141,7 @@ function createJSONFile(filePath, mimetype) {
     let jsonData = {
         "contentType": mimetype,
         "content": File.base64EncodeFile(filePath)
-    }
+    };
 
     let basePath = filePath.substr(0, filePath.lastIndexOf('.'));
     let jsonPath = basePath + '.json';
@@ -151,7 +151,7 @@ function createJSONFile(filePath, mimetype) {
 
 
 function makePath(storyId) {
-    return helpers.authoringMediaFolder() + '/' + storyId + '/';
+    return File.authoringMediaFolder() + '/' + storyId + '/';
 }
 
 function processFetch(req, res, next, thumbnail) {
@@ -176,9 +176,6 @@ function processFetch(req, res, next, thumbnail) {
             dotfiles: 'deny',
             maxAge: 60 * 24 * 1000
         };
-
-        console.log(storyId, imageId);
-
 
         AuthoringSchema.AuthoringImage.find({id: imageId, storyId: storyId}, (err, authoringImage) => {
             let filename;
