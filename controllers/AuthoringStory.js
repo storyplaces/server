@@ -44,8 +44,9 @@ let AuthoringSchema = require('../models/authoringSchema');
 let CoreSchema = require('../models/coreschema');
 let helpers = require('./helpers.js');
 let converter = require('../conversion/SchemaConversion');
-
 let Authorisation = require('../auth/Authorisation');
+
+let AuthoringImage = require('./AuthoringImage');
 
 exports.create = create;
 exports.index = index;
@@ -173,14 +174,18 @@ function update(req, res, next) {
                 return next(err);
             }
 
+            try {
+                AuthoringImage.pruneImages(storyId, authoringStory.imageIds);
+            } catch (error) {
+
+            }
+
             res.json({
                 message: 'Authoring Story updated',
                 object: authoringStory
             });
         });
     });
-
-
 }
 
 function publish(req, res, next) {

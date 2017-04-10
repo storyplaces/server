@@ -182,8 +182,7 @@ function authoringRouter() {
         .post(HasPrivilege(['uploadOwnImage']), upload.single('image'), AuthoringImage.create);
 
     AuthoringRouter.route('/story/:story_id/image/:image_id')
-        .get(HasPrivilege(['getOwnImage']), AuthoringImage.fetch)
-        .delete(HasPrivilege(['deleteOwnImage']), AuthoringImage.remove);
+        .get(HasPrivilege(['getOwnImage']), AuthoringImage.fetch);
 
     AuthoringRouter.route('/story/:story_id/image/:image_id/thumb')
         .get(HasPrivilege(['getOwnImage']), AuthoringImage.fetchThumbnail);
