@@ -159,6 +159,27 @@ function mediaFolder(path) {
     return fs.realpathSync(__dirname + '/../' + path);
 }
 
+function copyFile(filename, sourceFolder, destFolder){
+    let sourceFile = sourceFolder.concat(filename);
+    let outFile = destFolder.concat(filename);
+
+    if (!isDirectoryOK(destFolder)){
+        fs.mkdirSync(destFolder);
+    }
+
+    try {
+        let content = fs.readFileSync(sourceFile);
+        if (content) {
+            fs.writeFileSync(outFile, content);
+        }
+        else {
+            return false;
+        }
+    } catch (err) {
+        return false;
+    }
+    return true;
+}
 
 exports.fileExistsAndIsReadable = fileExistsAndIsReadable;
 exports.authoringMediaFolder = authoringMediaFolder;
@@ -169,3 +190,4 @@ exports.fileExtension = fileExtension;
 exports.isDirectoryOK = isDirectoryOK;
 exports.getAllFiles = getAllFiles;
 exports.createFile = createFile;
+exports.copyFile = copyFile;

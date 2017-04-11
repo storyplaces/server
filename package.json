@@ -5,6 +5,7 @@
     "body-parser": "~1.0.1",
     "express": "~4.0.0",
     "file-extension": "^2.0.1",
+    "fs-extra": "^2.1.2",
     "gm": "^1.23.0",
     "jwt-simple": "^0.4.1",
     "moment": "^2.12.0",

@@ -40,8 +40,10 @@
 
 "use strict";
 
-var CoreSchema = require('../models/coreschema');
-var helpers = require('./helpers.js');
+let CoreSchema = require('../models/coreschema');
+let helpers = require('./helpers.js');
+let fse = require('fs-extra');
+let Media = require('../models/Media.js');
 
 exports.create = create;
 exports.index = index;
@@ -281,6 +283,11 @@ function createPreview(req, res, next) {
                 error.clientMessage = "Unable to create preview story";
                 return next(error);
             }
+
+            // Copy media files
+            let destPath = Media.getDestMediaFolderPathFromId(savedStory.id);
+            let sourcePath =  Media.getDestMediaFolderPathFromId(storyId);
+            fse.copySync(sourcePath, destPath);
 
             res.statusCode = 200;
             res.json({"message": "Preview Created", "id": savedStory.id})
