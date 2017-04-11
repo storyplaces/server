@@ -104,13 +104,13 @@ var AuthoringChapter = new Schema({
         type: [{
             type: String,
             ref: 'AuthoringPage'
-        }], required: true
+        }]
     },
     unlockedByPageIds: {
         type: [{
             type: String,
             ref: 'AuthoringPage'
-        }], required: true
+        }]
     },
     unlockedByPagesOperator: {
         type: String,
@@ -122,7 +122,7 @@ var AuthoringChapter = new Schema({
         type: [{
             type: String,
             ref: 'AuthoringChapter'
-        }], required: true
+        }]
     }
 });
 

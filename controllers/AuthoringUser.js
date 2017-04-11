@@ -128,7 +128,10 @@ function update(req, res, next) {
         return next(error);
     }
 
-    AuthoringSchema.AuthoringUser.findByIdAndUpdate(userId, req.body, {new: true}, function (err, authoringUser) {
+    AuthoringSchema.AuthoringUser.findByIdAndUpdate(userId, req.body, {
+        new: true,
+        runValidators: true
+    }, function (err, authoringUser) {
         if (err) {
             return next(err);
         }

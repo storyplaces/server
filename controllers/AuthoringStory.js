@@ -110,7 +110,7 @@ function fetch(req, res, next) {
             return next(error);
         }
 
-        if (Authorisation.doesNotHavePrivileges(['editAnyStory'], req.internal.privileges) && authoringStory.authorIds.indexOf(req.internal.userId) === -1){
+        if (Authorisation.doesNotHavePrivileges(['editAnyStory'], req.internal.privileges) && authoringStory.authorIds.indexOf(req.internal.userId) === -1) {
             let error = new Error("Unable to fetch a story not owned by this user");
             error.status = 403;
             error.clientMessage = "Insufficient privileges.";
@@ -142,7 +142,7 @@ function update(req, res, next) {
             return next(error);
         }
 
-        if (Authorisation.doesNotHavePrivileges(['editAnyStory'], req.internal.privileges) && authoringStory.authorIds.indexOf(req.internal.userId) === -1){
+        if (Authorisation.doesNotHavePrivileges(['editAnyStory'], req.internal.privileges) && authoringStory.authorIds.indexOf(req.internal.userId) === -1) {
             let error = new Error("Unable to update story for which they are not an owner");
             error.status = 403;
             error.clientMessage = "Insufficient privileges.";
@@ -153,7 +153,7 @@ function update(req, res, next) {
 
         if (isNaN(submittedModifiedDate.getTime())) {
             let error = new Error("Invalid modified date passed");
-            error.clientMessage = error.message ;
+            error.clientMessage = error.message;
             error.status = 400;
             return next(error);
         }
@@ -165,7 +165,10 @@ function update(req, res, next) {
             return next(error);
         }
 
-        AuthoringSchema.AuthoringStory.findByIdAndUpdate(storyId, req.body, {new: true}, function (err, authoringStory) {
+        AuthoringSchema.AuthoringStory.findByIdAndUpdate(storyId, req.body, {
+            new: true,
+            runValidators: true
+        }, function (err, authoringStory) {
             if (err) {
                 return next(err);
             }
@@ -228,7 +231,7 @@ function handleStoryProcessing(req, res, next, readingState, responseMessage) {
             hasAnyPrivilege = Authorisation.hasPrivileges(['requestPublicationOfAnyStory'], req.internal.privileges);
         }
 
-        if (!hasAnyPrivilege && authoringStory.authorIds.indexOf(req.internal.userId) === -1){
+        if (!hasAnyPrivilege && authoringStory.authorIds.indexOf(req.internal.userId) === -1) {
             let error = new Error("Unable to request conversion for a story not owned by this user");
             error.status = 403;
             error.clientMessage = "Insufficient privileges.";
@@ -237,7 +240,7 @@ function handleStoryProcessing(req, res, next, readingState, responseMessage) {
 
         let readingStory;
 
-        AuthoringSchema.AuthoringUser.findById(authoringStory.authorIds, function(err, authoringUser) {
+        AuthoringSchema.AuthoringUser.findById(authoringStory.authorIds, function (err, authoringUser) {
             if (err) {
                 let error = new Error("Unable to convert story " + storyId);
                 error.status = 500;
@@ -265,11 +268,11 @@ function handleStoryProcessing(req, res, next, readingState, responseMessage) {
                 }
 
                 // Copy media to reading story location
-                savedStory.cachedMediaIds.forEach(function(mediaId) {
+                savedStory.cachedMediaIds.forEach(function (mediaId) {
                     var destPath = Media.getDestMediaFolderPathFromId(savedStory.id);
-                    var sourcePath =  File.authoringMediaFolder() + "/" + authoringStory.id + '/';
+                    var sourcePath = File.authoringMediaFolder() + "/" + authoringStory.id + '/';
 
-                    if(!tryFileCopy(mediaId, destPath, sourcePath)){
+                    if (!tryFileCopy(mediaId, destPath, sourcePath)) {
                         let error = new Error("Unable to find all media for story " + storyId + ". Media with id " + mediaId + " was missing.");
                         error.status = 500;
                         error.clientMessage = "Unable to convert all media for story.";
@@ -286,11 +289,11 @@ function handleStoryProcessing(req, res, next, readingState, responseMessage) {
     });
 }
 
-function tryFileCopy(mediaId, destPath, sourcePath){
+function tryFileCopy(mediaId, destPath, sourcePath) {
     let count = 0;
-    ['.jpeg', '.png', '.json'].forEach(function(extension){
+    ['.jpeg', '.png', '.json'].forEach(function (extension) {
         let fileName = mediaId.concat(extension);
-        if(File.copyFile(fileName, sourcePath, destPath)) {
+        if (File.copyFile(fileName, sourcePath, destPath)) {
             count++;
         }
     });

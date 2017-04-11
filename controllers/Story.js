@@ -99,7 +99,10 @@ function approve(req, res, next) {
         return next(error);
     }
 
-    CoreSchema.Story.findByIdAndUpdate(storyId, {$set: {publishState: req.body.publishState}}, {new: true}, function (err, story) {
+    CoreSchema.Story.findByIdAndUpdate(storyId, {$set: {publishState: req.body.publishState}}, {
+        new: true,
+        runValidators: true
+    }, function (err, story) {
         if (err) {
             return next(err);
         }
@@ -233,7 +236,7 @@ function update(req, res, next) {
         return next(error);
     }
 
-    CoreSchema.Story.findByIdAndUpdate(storyId, req.body, {new: true}, function (err, story) {
+    CoreSchema.Story.findByIdAndUpdate(storyId, req.body, {new: true, runValidators: true}, function (err, story) {
         if (err) {
             return next(err);
         }
