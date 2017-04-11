@@ -75,6 +75,25 @@ var Page = new Schema({
     }
 });
 
+// Location -------------------------------------------------------------------
+
+var Location = new Schema({
+    id: {type: String, required: true},
+    name: String,
+    type: String,
+    lat: Number,
+    lon: Number,
+    radius: Number
+});
+
+var Function = new Schema({
+    id: {type: String, required: true},
+    type: {type: String, required: true},
+    variable: {type: String, required: true},
+    value: {type: String, required: false},
+    conditions: [{type: String, ref: 'Condition'}],
+});
+
 
 // Story ----------------------------------------------------------------------
 
@@ -154,13 +173,6 @@ LogEvent.set('toJSON', {
 
 // Function -------------------------------------------------------------------
 
-var Function = new Schema({
-    id: {type: String, required: true},
-    type: {type: String, required: true},
-    variable: {type: String, required: true},
-    value: {type: String, required: false},
-    conditions: [{type: String, ref: 'Condition'}],
-});
 
 var ChainFunction = new Schema({
     id: {type: String, required: true},
@@ -168,19 +180,6 @@ var ChainFunction = new Schema({
     functions: [{type: String, ref: 'Function'}],
     conditions: [{type: String, ref: 'Condition'}],
 });
-
-
-// Location -------------------------------------------------------------------
-
-var Location = new Schema({
-    id: {type: String, required: true},
-    name: String,
-    type: String,
-    lat: Number,
-    lon: Number,
-    radius: Number
-});
-
 
 
 // Comparison Condition -------------------------------------------------------
@@ -238,6 +237,7 @@ module.exports = {
     Reading: mongoose.model('Reading', Reading),
     LogEvent: mongoose.model('LogEvent', LogEvent),
     Function: mongoose.model('Function', Function),
+    ChainFunction: mongoose.model('ChainFunction', ChainFunction),
     Location: mongoose.model('Location', Location),
     ComparisonCondition: mongoose.model('ComparisonCondition', ComparisonCondition),
     LogicalCondition: mongoose.model('LogicalCondition', LogicalCondition),
