@@ -89,6 +89,55 @@ var AuthoringPage = new Schema({
     imageId: {type: String}
 });
 
+
+// AuthoringChapter ---------------------------------------------------------
+
+var AuthoringChapter = new Schema({
+    id: {type: String, required: true},
+    name: {type: String, required: true},
+    colour: {
+        type: String,
+        enum: ['aqua', 'black', 'blue', 'fuchsia', 'gray', 'green', 'lime', 'maroon', 'navy', 'olive', 'purple', 'red', 'silver', 'teal', 'white', 'yellow'],
+        required: true
+    },
+    pageIds: {
+        type: [{
+            type: String,
+            ref: 'AuthoringPage'
+        }], required: true
+    },
+    unlockedByPageIds: {
+        type: [{
+            type: String,
+            ref: 'AuthoringPage'
+        }], required: true
+    },
+    unlockedByPagesOperator: {
+        type: String,
+        enum: ['and', 'or'],
+        required: true
+    },
+    locksAllOtherChapters: {type: Boolean, required: true},
+    locksChapterIds: {
+        type: [{
+            type: String,
+            ref: 'AuthoringChapter'
+        }], required: true
+    }
+});
+
+
+// AuthoringCircleLocation -------------------------------------------------------------------
+
+var AuthoringCircleLocation = new Schema({
+    id: {type: String, required: true},
+    lat: {type: Number, required: true},
+    long: {type: Number, required: true},
+    radius: {type: Number, required: true},
+    type: {type: String, required: true, enum: ['circle']}
+});
+
+
 // AuthoringStory ----------------------------------------------------------------------
 
 var AuthoringStory = new Schema({
@@ -130,52 +179,7 @@ AuthoringStory.set('toJSON', {
     virtuals: true
 });
 
-// AuthoringCircleLocation -------------------------------------------------------------------
 
-var AuthoringCircleLocation = new Schema({
-    id: {type: String, required: true},
-    lat: {type: Number, required: true},
-    long: {type: Number, required: true},
-    radius: {type: Number, required: true},
-    type: {type: String, required: true, enum: ['circle']}
-});
-
-
-// AuthoringChapter ---------------------------------------------------------
-
-var AuthoringChapter = new Schema({
-    id: {type: String, required: true},
-    name: {type: String, required: true},
-    colour: {
-        type: String,
-        enum: ['aqua', 'black', 'blue', 'fuchsia', 'gray', 'green', 'lime', 'maroon', 'navy', 'olive', 'purple', 'red', 'silver', 'teal', 'white', 'yellow'],
-        required: true
-    },
-    pageIds: {
-        type: [{
-            type: String,
-            ref: 'AuthoringPage'
-        }], required: true
-    },
-    unlockedByPageIds: {
-        type: [{
-            type: String,
-            ref: 'AuthoringPage'
-        }], required: true
-    },
-    unlockedByPagesOperator: {
-        type: String,
-        enum: ['and', 'or'],
-        required: true
-    },
-    locksAllOtherChapters: {type: Boolean, required: true},
-    locksChapterIds: {
-        type: [{
-            type: String,
-            ref: 'AuthoringChapter'
-        }], required: true
-    }
-});
 
 // Exports --------------------------------------------------------------------
 
