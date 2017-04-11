@@ -63,7 +63,7 @@ function fetch(req, res, next) {
         return next(err);
     }
 
-    res.sendfile(mediaPath, fileOptions, function (err) {
+    res.sendFile(mediaPath, fileOptions, function (err) {
         if (err) {
             err.status = 404;
             return next(err);
