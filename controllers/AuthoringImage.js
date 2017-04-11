@@ -197,7 +197,7 @@ function processFetch(req, res, next, thumbnail) {
                 filename = imageId + '.json';
             }
 
-            res.sendfile(filename, fileOptions, err => {
+            res.sendFile(filename, fileOptions, err => {
                 if (err) {
                     err.satus = 404;
                     return next(err);

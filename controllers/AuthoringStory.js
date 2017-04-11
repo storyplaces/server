@@ -62,6 +62,7 @@ function create(req, res, next) {
 
     authoringStory.save(function (err) {
         if (err) {
+            console.log(err);
             err.status = 400;
             err.clientMessage = "Unable To save authoring story";
             return next(err);
@@ -164,7 +165,7 @@ function update(req, res, next) {
             return next(error);
         }
 
-        AuthoringSchema.AuthoringStory.findByIdAndUpdate(storyId, req.body, function (err, authoringStory) {
+        AuthoringSchema.AuthoringStory.findByIdAndUpdate(storyId, req.body, {new: true}, function (err, authoringStory) {
             if (err) {
                 return next(err);
             }

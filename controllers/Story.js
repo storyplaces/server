@@ -99,7 +99,7 @@ function approve(req, res, next) {
         return next(error);
     }
 
-    CoreSchema.Story.findByIdAndUpdate(storyId, {$set: {publishState: req.body.publishState}}, function (err, story) {
+    CoreSchema.Story.findByIdAndUpdate(storyId, {$set: {publishState: req.body.publishState}}, {new: true}, function (err, story) {
         if (err) {
             return next(err);
         }
@@ -233,7 +233,7 @@ function update(req, res, next) {
         return next(error);
     }
 
-    CoreSchema.Story.findByIdAndUpdate(storyId, req.body, function (err, story) {
+    CoreSchema.Story.findByIdAndUpdate(storyId, req.body, {new: true}, function (err, story) {
         if (err) {
             return next(err);
         }
@@ -286,7 +286,7 @@ function createPreview(req, res, next) {
 
             // Copy media files
             let destPath = Media.getDestMediaFolderPathFromId(savedStory.id);
-            let sourcePath =  Media.getDestMediaFolderPathFromId(storyId);
+            let sourcePath = Media.getDestMediaFolderPathFromId(storyId);
             fse.copySync(sourcePath, destPath);
 
             res.statusCode = 200;

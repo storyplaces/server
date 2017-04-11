@@ -87,7 +87,7 @@ function fetch(req, res, next) {
         return next(error);
     }
 
-    if (Authorisation.doesNotHavePrivileges(['fetchAnyUser'], req.internal.privileges) && userId != req.internal.userId){
+    if (Authorisation.doesNotHavePrivileges(['fetchAnyUser'], req.internal.privileges) && userId != req.internal.userId) {
         let error = new Error("Unable to fetch a user which is not currently logged in.");
         error.status = 500;
         error.clientMessage = "Insufficient privileges to fetch this user.";
@@ -128,7 +128,7 @@ function update(req, res, next) {
         return next(error);
     }
 
-    AuthoringSchema.AuthoringUser.findByIdAndUpdate(userId, req.body, function (err, authoringUser) {
+    AuthoringSchema.AuthoringUser.findByIdAndUpdate(userId, req.body, {new: true}, function (err, authoringUser) {
         if (err) {
             return next(err);
         }

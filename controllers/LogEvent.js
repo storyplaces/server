@@ -120,7 +120,7 @@ function update(req, res, next) {
         return next(error);
     }
 
-    CoreSchema.LogEvent.findByIdAndUpdate(logEventId, {variables: req.body.variables}, function (err, logevent) {
+    CoreSchema.LogEvent.findByIdAndUpdate(logEventId, {variables: req.body.variables}, {new: true}, function (err, logevent) {
         if (err) {
             return next(err);
         }

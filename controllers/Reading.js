@@ -103,7 +103,7 @@ function update(req, res, next) {
         return next(error);
     }
 
-    CoreSchema.Reading.findByIdAndUpdate(readingId, {variables: req.body.variables, state: req.body.state, timestamp: req.body.timestamp}, function (err, reading) {
+    CoreSchema.Reading.findByIdAndUpdate(readingId, {variables: req.body.variables, state: req.body.state, timestamp: req.body.timestamp}, {new: true}, function (err, reading) {
         if (err) {
             return next(err);
         }
