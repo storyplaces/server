@@ -257,6 +257,7 @@ function handleStoryProcessing(req, res, next, readingState, responseMessage) {
             let story = new CoreSchema.Story(readingStory);
             story.save(function (err, savedStory) {
                 if (err) {
+                    console.log(err);
                     let error = new Error("Unable to convert story " + storyId);
                     error.status = 500;
                     error.clientMessage = "Unable to convert story";
