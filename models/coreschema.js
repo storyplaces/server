@@ -61,7 +61,7 @@ User.set('toJSON', {
 
 var Page = new Schema({
     id: {type: String, required: true},
-    content: {type: String, required: true},
+    content: {type: String},
     name: {type: String, required: true},
     pageTransition: {type: String, required: true},
     conditions: [{type: String, ref: 'Schema.Types.Mixed'}],
@@ -86,11 +86,14 @@ var Location = new Schema({
     radius: Number
 });
 
+// Function -------------------------------------------------------------------
+
 var Function = new Schema({
     id: {type: String, required: true},
     type: {type: String, required: true},
-    variable: {type: String, required: true},
+    variable: {type: String}, // for non chain functions
     value: {type: String, required: false},
+    functions: [{type: String, ref: 'Function'}], // For chain functions
     conditions: [{type: String, ref: 'Condition'}],
 });
 
@@ -171,15 +174,7 @@ LogEvent.set('toJSON', {
     virtuals: true
 });
 
-// Function -------------------------------------------------------------------
 
-
-var ChainFunction = new Schema({
-    id: {type: String, required: true},
-    type: {type: String, required: true, enum: ['chain']},
-    functions: [{type: String, ref: 'Function'}],
-    conditions: [{type: String, ref: 'Condition'}],
-});
 
 
 // Comparison Condition -------------------------------------------------------
@@ -237,7 +232,6 @@ module.exports = {
     Reading: mongoose.model('Reading', Reading),
     LogEvent: mongoose.model('LogEvent', LogEvent),
     Function: mongoose.model('Function', Function),
-    ChainFunction: mongoose.model('ChainFunction', ChainFunction),
     Location: mongoose.model('Location', Location),
     ComparisonCondition: mongoose.model('ComparisonCondition', ComparisonCondition),
     LogicalCondition: mongoose.model('LogicalCondition', LogicalCondition),
