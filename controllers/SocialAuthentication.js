@@ -64,7 +64,7 @@ function disconnect(req, res, next) {
 function findOrCreateUserFromProfile(profile, callback) {
     AuthoringSchema.AuthoringUser.findOne({googleID: profile.sub}, function (err, existingUser) {
         if (existingUser) {
-            callback(existingUser);
+            return updateUserFromProfile(existingUser, profile, callback);
         }
 
         createUserFromProfile(profile, callback);
@@ -77,11 +77,11 @@ function createUserFromProfile(profile, callback) {
     user.roles = ["author"];
     user.enabled = true;
     user.googleID = profile.sub;
+    user.name = profile.name;
     updateUserFromProfile(user, profile, callback);
 }
 
 function updateUserFromProfile(user, profile, callback) {
-    user.name = user.name || profile.name;
     user.email = user.email || profile.email;
     user.save(function () {
         callback(user);
