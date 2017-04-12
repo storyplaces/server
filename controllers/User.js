@@ -45,7 +45,6 @@ let helpers = require('./helpers.js');
 
 
 exports.create = create;
-exports.index = index;
 
 function create(req, res, next) {
 
