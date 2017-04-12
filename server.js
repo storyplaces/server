@@ -80,7 +80,8 @@ var App = Express();
 // Connect to the database ----------------------------------------------------
 Mongoose.connect(secrets.database.connection, {
     user: secrets.database.username,
-    pass: secrets.database.password
+    pass: secrets.database.password,
+    auth: {authdb: "admin"}
 }); // connect to our database
 
 // Register the routes --------------------------------------------------------
@@ -91,7 +92,7 @@ App.use(settings.authoringTool.url, Express.static(settings.authoringTool.source
 // Start the server -----------------------------------------------------------
 if (settings.server.useHttps) {
     startHttpsServer();
-}  else{
+} else {
     startHttpServer();
 }
 
