@@ -89,6 +89,9 @@ App.use(settings.api.url, Routes);
 App.use(settings.readingTool.url, Express.static(settings.readingTool.sourcePath));
 App.use(settings.authoringTool.url, Express.static(settings.authoringTool.sourcePath));
 
+// Security Steps
+App.disable('x-powered-by');
+
 // Start the server -----------------------------------------------------------
 if (settings.server.useHttps) {
     startHttpsServer();
