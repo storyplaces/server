@@ -59,8 +59,9 @@ exports.pruneImages = pruneImages;
 function create(req, res, next) {
 
     let storyId = helpers.validateId(req.params.story_id);
+    let canUploadAnyImage = Authorisation.hasPrivileges(['uploadAnyImage'], req.internal.privileges);
 
-    checkStoryOwnership(storyId, req.internal.userId, (ownershipError) => {
+    checkStoryOwnership(storyId, canUploadAnyImage, req.internal.userId, (ownershipError) => {
 
         if (ownershipError) {
             return next(ownershipError);
@@ -165,7 +166,9 @@ function processFetch(req, res, next, thumbnail) {
         return next(error);
     }
 
-    checkStoryOwnership(storyId, req.internal.userId, (ownershipError) => {
+    let canFetchAnyImage = Authorisation.hasPrivileges(['getAnyImage'], req.internal.privileges);
+
+    checkStoryOwnership(storyId, canFetchAnyImage, req.internal.userId, (ownershipError) => {
 
         if (ownershipError) {
             return next(ownershipError);
@@ -218,7 +221,12 @@ function fetch(req, res, next) {
     processFetch(req, res, next, false);
 }
 
-function checkStoryOwnership(storyId, userId, callback) {
+function checkStoryOwnership(storyId, canUploadAnyImage, userId, callback) {
+
+    if (canUploadAnyImage) {
+        return callback(undefined);
+    }
+
     AuthoringSchema.AuthoringStory.findById(storyId, (err, authoringStory) => {
         if (err) {
             return callback(err);
@@ -244,20 +252,20 @@ function checkStoryOwnership(storyId, userId, callback) {
 
 function pruneImages(storyId, imageIds) {
 
-        AuthoringSchema.AuthoringImage.find({storyId: storyId}, (err, authoringImages) => {
-            if (err) {
-                throw err;
+    AuthoringSchema.AuthoringImage.find({storyId: storyId}, (err, authoringImages) => {
+        if (err) {
+            throw err;
+        }
+
+        authoringImages.forEach(image => {
+            if (imageIds.indexOf(image.id) === -1) {
+                Logger.log(`Cleaning up image ${image.id}`);
+                deleteImage(storyId, image.id, image.mimeType);
+                image.remove();
             }
-
-            authoringImages.forEach(image => {
-               if (imageIds.indexOf(image.id) === -1) {
-                   Logger.log(`Cleaning up image ${image.id}`);
-                   deleteImage(storyId, image.id, image.mimeType);
-                   image.remove();
-               }
-            });
-
         });
+
+    });
 }
 
 function deleteImage(storyId, imageId, mimeType) {
