@@ -73,9 +73,7 @@ Router.route('/story')
     .post([AuthenticateUsingToken, Story.create]);
 
 Router.route('/story/:story_id')
-    .get(Story.fetch)
-    .put([AuthenticateUsingToken, Story.update])
-    .delete([AuthenticateUsingToken, Story.destroy]);
+    .get(Story.fetch);
 
 Router.route('/story/:story_id/media/:media_id')
     .get(Media.fetch);
@@ -99,15 +97,13 @@ Router.route('/logevent')
     .get([AuthenticateUsingToken, LogEvent.index]);
 
 Router.route('/logevent/:logevent_id')
-    .get([AuthenticateUsingToken, LogEvent.fetch])
-    .put(LogEvent.update);
+    .get([AuthenticateUsingToken, LogEvent.fetch]);
 
 Router.route('/logevent/user/:user_id')
     .get([AuthenticateUsingToken, LogEvent.userFetch]);
 
 Router.route('/user')
-    .post(User.create)
-    .get([AuthenticateUsingToken, User.index]);
+    .post(User.create);
 
 Router.route('/auth/google')
     .post(SocialAuthentication.googleLogin);
@@ -168,9 +164,9 @@ function authoringRouter() {
 
     // Create AuthoringUser
     // Get list of AuthoringUsers
-    AuthoringRouter.route('/user')
-        .post([HasPrivilege(['createAuthoringUser'])], AuthoringUser.create)
-        .get([HasPrivilege(['listAllUsers'])], AuthoringUser.index);
+    // AuthoringRouter.route('/user')
+    //     .post([HasPrivilege(['createAuthoringUser'])], AuthoringUser.create)
+    //     .get([HasPrivilege(['listAllUsers'])], AuthoringUser.index);
 
     // Get AuthoringUser
     // Update AuthoringUser

@@ -50,7 +50,9 @@ exports.fetch = fetch;
 
 function create(req, res, next) {
 
-    var reading = new CoreSchema.Reading(req.body);
+    let requestBody = helpers.sanitizeAndValidateInboundIds(undefined, req.body);
+
+    var reading = new CoreSchema.Reading(requestBody);
 
     reading.save(function (err) {
         if (err) {
@@ -59,7 +61,10 @@ function create(req, res, next) {
             return next(err);
         }
 
-        res.json(reading);
+        let toSend = helpers.sanitizeOutboundObject(reading);
+        toSend.variables = toSend.variables.map(variable => helpers.sanitizeOutboundJson(variable));
+
+        res.json(toSend);
     });
 }
 
@@ -69,7 +74,9 @@ function index(req, res, next) {
             return next(err);
         }
 
-        res.json(readings);
+        let toSend = readings.map(reading => helpers.sanitizeOutboundObject(reading));
+
+        res.json(toSend);
     });
 }
 
@@ -92,7 +99,10 @@ function fetch(req, res, next) {
             return next(error);
         }
 
-        res.json(reading);
+        let toSend = helpers.sanitizeOutboundObject(reading);
+        toSend.variables = toSend.variables.map(variable => helpers.sanitizeOutboundJson(variable));
+
+        res.json(toSend);
     });
 }
 
@@ -119,6 +129,9 @@ function update(req, res, next) {
             return next(error);
         }
 
-        res.json(reading);
+        let toSend = helpers.sanitizeOutboundObject(reading);
+        toSend.variables = toSend.variables.map(variable => helpers.sanitizeOutboundJson(variable));
+
+        res.json(toSend);
     });
 }

@@ -41,6 +41,8 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 "use strict";
 
 var CoreSchema = require('../models/coreschema');
+let helpers = require('./helpers.js');
+
 
 exports.create = create;
 exports.index = index;
@@ -58,16 +60,9 @@ function create(req, res, next) {
         }
 
         Logger.log("Create new user");
-        res.json(user);
-    });
-}
 
-function index(req, res, next) {
-    CoreSchema.User.find(function (err, users) {
-        if (err) {
-            return next(err);
-        }
+        let toSend = helpers.sanitizeOutboundObject(user);
 
-        res.json(users);
+        res.json(toSend);
     });
 }

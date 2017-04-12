@@ -45,13 +45,14 @@ var helpers = require('./helpers.js');
 
 exports.create = create;
 exports.index = index;
-exports.update = update;
 exports.fetch = fetch;
 exports.userFetch = userFetch;
 
 function create(req, res, next) {
 
-    var logevent = new CoreSchema.LogEvent(req.body);
+    let requestBody = helpers.sanitizeAndValidateInboundIds(undefined, req.body);
+
+    var logevent = new CoreSchema.LogEvent(requestBody);
 
     logevent.save(function (err) {
         if (err) {
@@ -60,7 +61,9 @@ function create(req, res, next) {
             return next(err);
         }
 
-        res.json(logevent);
+        let toSend = helpers.sanitizeOutboundObject(logevent);
+
+        res.json(toSend);
     });
 }
 
@@ -70,7 +73,9 @@ function index(req, res, next) {
             return next(err);
         }
 
-        res.json(logevents);
+        let toSend = logevents.map(event => helpers.sanitizeOutboundObject(event));
+
+        res.json(toSend);
     });
 }
 
@@ -93,7 +98,9 @@ function fetch(req, res, next) {
             return next(error);
         }
 
-        res.json(logevent);
+        let toSend = helpers.sanitizeOutboundObject(logevent);
+
+        res.json(toSend);
     });
 }
 
@@ -104,37 +111,13 @@ function userFetch(req, res, next) {
         return next(error);
     }
 
-    CoreSchema.LogEvent.find({"user": userId}, function (err, logevent) {
+    CoreSchema.LogEvent.find({"user": userId}, function (err, logevents) {
         if (err) {
             return next(err);
         }
 
-        res.json(logevent);
-    });
-}
+        let toSend = logevents.map(event => helpers.sanitizeOutboundObject(event));
 
-function update(req, res, next) {
-    try {
-        var logEventId = helpers.validateId(req.params.logevent_id);
-    } catch (error) {
-        return next(error);
-    }
-
-    CoreSchema.LogEvent.findByIdAndUpdate(logEventId, {variables: req.body.variables}, {
-        new: true,
-        runValidators: true
-    }, function (err, logevent) {
-        if (err) {
-            return next(err);
-        }
-
-        if (!logevent) {
-            var error = new Error();
-            error.status = 400;
-            error.clientMessage = error.message = "Unable To update logevent";
-            return next(error);
-        }
-
-        res.json(logevent);
+        res.json(toSend);
     });
 }

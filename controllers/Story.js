@@ -59,7 +59,9 @@ exports.createPreview = createPreview;
 
 function create(req, res, next) {
 
-    var story = new CoreSchema.Story(req.body);
+    let requestBody = helpers.sanitizeAndValidateInboundIds(undefined, req.body);
+
+    var story = new CoreSchema.Story(requestBody);
 
     story.save(function (err) {
         if (err) {
@@ -78,7 +80,9 @@ function index(req, res, next) {
             return next(err);
         }
 
-        res.json(stories);
+        let toSend = stories.map(story => sanitizeOutboundStory(story));
+
+        res.json(toSend);
     });
 }
 
@@ -88,7 +92,9 @@ function adminindex(req, res, next) {
             return next(err);
         }
 
-        res.json(stories);
+        let toSend = stories.map(story => sanitizeOutboundStory(story));
+
+        res.json(toSend);
     });
 }
 
@@ -114,7 +120,9 @@ function approve(req, res, next) {
             return next(error);
         }
 
-        res.json(story);
+        let toSend = sanitizeOutboundStory(story);
+
+        res.json(toSend);
     });
 }
 
@@ -124,6 +132,7 @@ function remove(req, res, next) {
     } catch (error) {
         return next(error);
     }
+
     CoreSchema.Story.findByIdAndRemove(storyId, function (err, story) {
         if (err) {
             return next(err);
@@ -167,33 +176,10 @@ function fetch(req, res, next) {
             story.remove();
         }
 
-        res.json(story);
+        let toSend = sanitizeOutboundStory(story);
+
+        res.json(toSend);
     });
-}
-
-function destroy(req, res, next) {
-    try {
-        var storyId = helpers.validateId(req.params.story_id);
-    } catch (error) {
-        return next(error);
-    }
-
-    CoreSchema.Story.remove(
-        {_id: storyId},
-        function (err, story) {
-            if (err) {
-                return next(err);
-            }
-
-            if (!story) {
-                var error = new Error();
-                error.status = 400;
-                error.clientMessage = error.message = "Unable to delete story";
-                return next(error);
-            }
-
-            res.json({message: 'Successfully deleted'});
-        });
 }
 
 function allReadings(req, res, next) {
@@ -208,7 +194,9 @@ function allReadings(req, res, next) {
             return next(err);
         }
 
-        res.json(readings);
+        let toSend = readings.map(reading => helpers.sanitizeOutboundObject(reading));
+
+        res.json(toSend);
     });
 }
 
@@ -225,30 +213,9 @@ function allReadingsForUser(req, res, next) {
             return next(err);
         }
 
-        res.json(readings);
-    });
-}
+        let toSend = readings.map(reading => helpers.sanitizeOutboundObject(reading));
 
-function update(req, res, next) {
-    try {
-        var storyId = helpers.validateId(req.params.story_id);
-    } catch (error) {
-        return next(error);
-    }
-
-    CoreSchema.Story.findByIdAndUpdate(storyId, req.body, {new: true, runValidators: true}, function (err, story) {
-        if (err) {
-            return next(err);
-        }
-
-        if (!story) {
-            var error = new Error();
-            error.status = 400;
-            error.clientMessage = error.message = "Unable To update story";
-            return next(error);
-        }
-
-        res.json(story);
+        res.json(toSend);
     });
 }
 
@@ -296,5 +263,15 @@ function createPreview(req, res, next) {
             res.json({"message": "Preview Created", "id": savedStory.id})
         });
     });
+
+}
+
+function sanitizeOutboundStory(story) {
+    let toSend = helpers.sanitizeOutboundObject(story);
+    toSend.locations = toSend.locations.map(location => helpers.sanitizeOutboundJson(location));
+    toSend.functions = toSend.functions.map(func => helpers.sanitizeOutboundJson(func));
+    toSend.pages = toSend.pages.map(page => helpers.sanitizeOutboundJson(page));
+
+    return toSend;
 
 }

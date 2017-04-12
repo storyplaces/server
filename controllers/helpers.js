@@ -4,17 +4,48 @@
 
 "use strict";
 
-exports.validateId = validateId;
+exports.validateId = validateId
+exports.sanitizeAndValidateInboundIds = sanitizeAndValidateInboundIds;
+exports.sanitizeOutboundObject = sanitizeOutboundObject;
+exports.sanitizeOutboundJson = sanitizeOutboundJson;
 
 let fs = require('fs');
 
 function validateId(passedId) {
-    var id = passedId.replace(/[^0-9A-F]/gi, '');
+    let id = passedId.replace(/[^0-9A-F]/gi, '');
 
-    if (id != passedId) {
+    if (id !== passedId) {
         throw new Error("Bad characters passed in the id");
     }
 
     return id;
 }
 
+function sanitizeAndValidateInboundIds(objectId, objectBody) {
+    if (objectBody.id && objectBody.id !== objectId) {
+        throw new Error("Invalid Ids");
+    }
+
+    if (objectBody._id && objectBody._id !== objectId) {
+        throw new Error("Invalid Ids");
+    }
+
+    delete objectBody.id;
+    delete objectBody._id;
+    delete objectBody.__v;
+
+    return objectBody;
+}
+
+function sanitizeOutboundJson(jsonToSend) {
+    delete jsonToSend._id;
+    delete jsonToSend.__v;
+
+    return jsonToSend
+}
+
+function sanitizeOutboundObject(object) {
+    let jsonToSend = object.toJSON();
+
+    return sanitizeOutboundJson(jsonToSend);
+}

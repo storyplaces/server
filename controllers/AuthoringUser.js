@@ -44,39 +44,39 @@ let Authorisation = require('../auth/Authorisation');
 let helpers = require('./helpers.js');
 
 
-exports.create = create;
-exports.index = index;
+// exports.create = create;
+// exports.index = index;
 exports.fetch = fetch;
 exports.update = update;
 
-function create(req, res, next) {
+// function create(req, res, next) {
+//
+//     let authoringUser = new AuthoringSchema.AuthoringUser(req.body);
+//
+//     authoringUser.save(function (err) {
+//         if (err) {
+//             err.status = 400;
+//             err.clientMessage = "Unable To save Authoring User";
+//             return next(err);
+//         }
+//
+//         res.statusCode = 201;
+//         res.json({
+//             message: 'Authoring User Created',
+//             object: authoringUser
+//         });
+//     });
+// }
 
-    let authoringUser = new AuthoringSchema.AuthoringUser(req.body);
-
-    authoringUser.save(function (err) {
-        if (err) {
-            err.status = 400;
-            err.clientMessage = "Unable To save Authoring User";
-            return next(err);
-        }
-
-        res.statusCode = 201;
-        res.json({
-            message: 'Authoring User Created',
-            object: authoringUser
-        });
-    });
-}
-
-function index(req, res, next) {
-    AuthoringSchema.AuthoringUser.find(function (err, authoringUsers) {
-        if (err) {
-            return next(err);
-        }
-
-        res.json(authoringUsers);
-    });
-}
+// function index(req, res, next) {
+//     AuthoringSchema.AuthoringUser.find(function (err, authoringUsers) {
+//         if (err) {
+//             return next(err);
+//         }
+//
+//         res.json(authoringUsers);
+//     });
+// }
 
 function fetch(req, res, next) {
     let userId;
@@ -106,10 +106,11 @@ function fetch(req, res, next) {
             return next(error);
         }
 
-        let objectToSend = authoringUser.toJSON();
+        let objectToSend = helpers.sanitizeOutboundObject(authoringUser);
 
         // Convert roles to privileges because the front end only understands privileges
         objectToSend.privileges = Authorisation.convertRolesToPrivileges(authoringUser.roles);
+
         delete objectToSend.googleID;
         delete objectToSend.email;
         delete objectToSend.roles;
@@ -128,7 +129,14 @@ function update(req, res, next) {
         return next(error);
     }
 
-    AuthoringSchema.AuthoringUser.findByIdAndUpdate(userId, req.body, {
+    let requestBody = helpers.sanitizeAndValidateInboundIds(userId, req.body);
+
+    let update = {
+        name: requestBody.name,
+        bio: requestBody.bio
+    };
+
+    AuthoringSchema.AuthoringUser.findByIdAndUpdate(userId, update, {
         new: true,
         runValidators: true
     }, function (err, authoringUser) {
@@ -143,9 +151,19 @@ function update(req, res, next) {
             return next(error);
         }
 
+        let objectToSend = helpers.sanitizeOutboundObject(authoringUser);
+
+        // Convert roles to privileges because the front end only understands privileges
+        objectToSend.privileges = Authorisation.convertRolesToPrivileges(authoringUser.roles);
+
+        delete objectToSend.googleID;
+        delete objectToSend.email;
+        delete objectToSend.roles;
+        delete objectToSend.enabled;
+
         res.json({
-            message: "Authoring User created",
-            object: authoringUser
+            message: "Authoring User updated",
+            object: objectToSend
         });
     });
 }

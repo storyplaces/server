@@ -58,7 +58,9 @@ exports.publish = publish;
 exports.preview = preview;
 
 function create(req, res, next) {
-    let authoringStory = new AuthoringSchema.AuthoringStory(req.body);
+    let requestBody = helpers.sanitizeAndValidateInboundIds(undefined, req.body);
+
+    let authoringStory = new AuthoringSchema.AuthoringStory(requestBody);
 
     authoringStory.save(function (err) {
         if (err) {
@@ -69,9 +71,12 @@ function create(req, res, next) {
         }
 
         res.statusCode = 201;
+
+        let toSend = helpers.sanitizeOutboundObject(authoringStory);
+
         res.json({
             message: 'Authoring Story created',
-            object: authoringStory
+            object: toSend
         });
     });
 }
@@ -85,7 +90,9 @@ function index(req, res, next) {
             return next(err);
         }
 
-        res.json(authoringStories);
+        let toSend = authoringStories.map(story => helpers.sanitizeOutboundObject(story));
+
+        res.json(toSend);
     });
 }
 
@@ -117,7 +124,9 @@ function fetch(req, res, next) {
             return next(error);
         }
 
-        res.json(authoringStory);
+        let toSend = helpers.sanitizeOutboundObject(authoringStory);
+
+        res.json(toSend);
     });
 }
 
@@ -129,6 +138,8 @@ function update(req, res, next) {
     } catch (error) {
         return next(error);
     }
+
+    let requestBody = helpers.sanitizeAndValidateInboundIds(storyId, req.body);
 
     AuthoringSchema.AuthoringStory.findById(storyId, function (err, authoringStory) {
         if (err) {
@@ -149,7 +160,7 @@ function update(req, res, next) {
             return next(error);
         }
 
-        let submittedModifiedDate = new Date(req.body.modifiedDate);
+        let submittedModifiedDate = new Date(requestBody.modifiedDate);
 
         if (isNaN(submittedModifiedDate.getTime())) {
             let error = new Error("Invalid modified date passed");
@@ -165,7 +176,8 @@ function update(req, res, next) {
             return next(error);
         }
 
-        AuthoringSchema.AuthoringStory.findByIdAndUpdate(storyId, req.body, {
+
+        AuthoringSchema.AuthoringStory.findByIdAndUpdate(storyId, requestBody, {
             new: true,
             runValidators: true
         }, function (err, authoringStory) {
@@ -186,9 +198,11 @@ function update(req, res, next) {
 
             }
 
+            let toSend = helpers.sanitizeOutboundObject(authoringStory);
+
             res.json({
                 message: 'Authoring Story updated',
-                object: authoringStory
+                object: toSend
             });
         });
     });
