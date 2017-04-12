@@ -75,8 +75,8 @@ let AuthoringImage = new Schema({
 var AuthoringPage = new Schema({
     id: {type: String, required: true},
     name: {type: String, required: true},
-    content: {type: String, required: true},
-    pageHint: {type: String, required: true},
+    content: {type: String},
+    pageHint: {type: String},
     locationId: {type: String, ref: 'AuthoringCircleLocation'},
     allowMultipleReadings: {type: Boolean, required: true},
     finishesStory: {type: Boolean, required: true},
