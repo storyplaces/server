@@ -41,7 +41,7 @@ describe("Creating a blank reading story from an authoring story", function () {
         result.name.should.equal("title");
         result.description.should.equal("description");
         result.audience.should.equal("audience");
-        result.tags.should.eql(["untagged"]);
+        result.tags.should.eql([]);
         result.publishState.should.eql("pending");
         result.locations.should.eql([]);
         result.conditions.should.eql([]);

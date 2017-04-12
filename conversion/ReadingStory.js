@@ -15,7 +15,7 @@ function createReadingStory(authoringStory, readingState, authorName) {
         description: authoringStory.description,
         author: authorName,
         audience: authoringStory.audience,
-        tags: authoringStory.tags.length != 0 ? authoringStory.tags : ["untagged"],
+        tags: authoringStory.tags.length != 0 ? authoringStory.tags : [],
         publishState: readingState,
         publishDate: moment().format("dddd, MMMM Do YYYY, h:mm:ss a"),
         locations: [],
