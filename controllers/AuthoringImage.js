@@ -58,6 +58,13 @@ exports.pruneImages = pruneImages;
 
 function create(req, res, next) {
 
+    if (!req.file) {
+        let error = new Error("Unable to create image");
+        error.status = 400;
+        error.clientMessage = error.message;
+        return next(error);
+    }
+
     let storyId = helpers.validateId(req.params.story_id);
     let canUploadAnyImage = Authorisation.hasPrivileges(['uploadAnyImage'], req.internal.privileges);
 

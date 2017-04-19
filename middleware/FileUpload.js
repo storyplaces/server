@@ -51,7 +51,7 @@ let storage = Multer.diskStorage({
 });
 
 let upload = Multer({
-    limits: {fileSize: 2097152, files: 1},
+    limits: {fileSize: 10 * 1024 * 1024, files: 1},
     fileFilter: (req, file, cb) => {
         if (file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/png') {
             let error = new Error("Bad file format");
