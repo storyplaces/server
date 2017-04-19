@@ -58,7 +58,7 @@ function getFileNameFromRequest(req) {
         return undefined;
     }
 
-    if (req.accepts("image")) {
+    if (req.accepts(["image/jpeg", "image/png", "image/gif", "audio/mp3"])) {
         return buildMediaFilePath(base);
     }
 
