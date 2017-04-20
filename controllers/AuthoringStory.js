@@ -282,21 +282,25 @@ function handleStoryProcessing(req, res, next, readingState, responseMessage) {
                 }
 
                 // Copy media to reading story location
+
+                let success = true;
                 savedStory.cachedMediaIds.forEach(function (mediaId) {
                     var destPath = Media.getDestMediaFolderPathFromId(savedStory.id);
                     var sourcePath = File.authoringMediaFolder() + "/" + authoringStory.id + '/';
 
                     if (!tryFileCopy(mediaId, destPath, sourcePath)) {
+                        success = false;
                         let error = new Error("Unable to find all media for story " + storyId + ". Media with id " + mediaId + " was missing.");
                         error.status = 500;
                         error.clientMessage = "Unable to convert all media for story.";
                         return next(error);
                     }
-
                 });
 
-                res.statusCode = 200;
-                res.json({"message": responseMessage, "id": savedStory.id})
+                if (success) {
+                    res.statusCode = 200;
+                    res.json({"message": responseMessage, "id": savedStory.id})
+                }
             });
         });
 
