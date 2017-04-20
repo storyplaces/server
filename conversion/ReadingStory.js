@@ -6,13 +6,13 @@
 
 exports.createReadingStory = createReadingStory;
 
-let AuthoringSchema = require('../models/authoringSchema');
 var moment = require("moment");
+let markdown = require('./Markdown');
 
 function createReadingStory(authoringStory, readingState, authorName) {
     return {
         name: authoringStory.title,
-        description: authoringStory.description,
+        description: markdown.render(authoringStory.description),
         author: authorName,
         audience: authoringStory.audience,
         tags: authoringStory.tags.length != 0 ? authoringStory.tags : [],

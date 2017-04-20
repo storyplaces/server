@@ -23,7 +23,7 @@ describe("Creating a blank reading story from an authoring story", function () {
         var result = readingStoryFunction.createReadingStory(authoringStory, "published");
 
         result.name.should.equal("title");
-        result.description.should.equal("description");
+        result.description.should.equal("<p>description</p>\n");
         result.audience.should.equal("audience");
         result.tags.should.eql(["tag1", "tag2"]);
         result.publishState.should.eql("published");
@@ -39,7 +39,7 @@ describe("Creating a blank reading story from an authoring story", function () {
         var result = readingStoryFunction.createReadingStory(authoringStory, "pending");
 
         result.name.should.equal("title");
-        result.description.should.equal("description");
+        result.description.should.equal("<p>description</p>\n");
         result.audience.should.equal("audience");
         result.tags.should.eql([]);
         result.publishState.should.eql("pending");

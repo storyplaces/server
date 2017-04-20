@@ -68,8 +68,8 @@ describe("Pages conversion", function () {
                     createdPage.id.should.equal(id);
                 });
 
-                it("sets the page content", function () {
-                    createdPage.content.should.equal("some content");
+                it("sets the page content through markdown", function () {
+                    createdPage.content.should.equal("<p>some content</p>\n");
                 });
 
                 it("sets the page name", function () {

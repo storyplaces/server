@@ -18,6 +18,8 @@ var conditionFunctions = require('./Conditions');
 var errors = require('./SchemaConversionErrors');
 var helpers = require('../controllers/helpers');
 
+let markdown = require('./Markdown');
+
 function processPage(page, authoringStory, readingStory) {
     if (!page || !page.id) {
         throw new errors.SchemaConversionError("Unable to process page as it doesn't have an ID")
@@ -79,10 +81,13 @@ function addImageToStory(imageId, authoringStory, readingStory){
 }
 
 function buildPageContent(page){
+
+    let html = markdown.render(page.content);
+
     if (!page.imageId){
-        return page.content;
+        return html;
     }
-    return addImageTagsToPageContent(page.imageId, page.content);
+    return addImageTagsToPageContent(page.imageId, html);
 }
 
 function addImageTagsToPageContent(imageId, pageContent){
