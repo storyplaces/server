@@ -69,7 +69,7 @@ function processPage(page, authoringStory, readingStory) {
 
 function handleImage(page, authoringStory, readingStory){
 
-    if (page.imageId){
+    if (page.imageId && authoringStory.imageIds.indexOf(page.imageId) !== -1){
         addImageToStory(page.imageId, authoringStory, readingStory);
     }
     return page.imageId;
