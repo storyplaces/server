@@ -44,6 +44,7 @@ let CoreSchema = require('../models/coreschema');
 let helpers = require('./helpers.js');
 let fse = require('fs-extra');
 let Media = require('../models/Media.js');
+let File = require('../utilities/File');
 
 exports.create = create;
 exports.index = index;
@@ -255,7 +256,10 @@ function createPreview(req, res, next) {
             // Copy media files
             let destPath = Media.getDestMediaFolderPathFromId(savedStory.id);
             let sourcePath = Media.getDestMediaFolderPathFromId(storyId);
-            fse.copySync(sourcePath, destPath);
+
+            if (File.isDirectoryOK(sourcePath)) {
+                fse.copySync(sourcePath, destPath);
+            }
 
             res.statusCode = 200;
             res.json({"message": "Preview Created", "id": savedStory.id})
