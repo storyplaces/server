@@ -58,14 +58,16 @@ exports.createPreview = createPreview;
 
 function create(req, res, next) {
 
-    let requestBody = helpers.sanitizeAndValidateInboundIds(undefined, req.body);
+    let requestBody = helpers.sanitizeInboundIds(req.body);
 
     var story = new CoreSchema.Story(requestBody);
+
 
     story.save(function (err) {
         if (err) {
             err.status = 400;
             err.clientMessage = "Unable To save story";
+            console.log("Also yes");
             return next(err);
         }
 
