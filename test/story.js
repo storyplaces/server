@@ -74,7 +74,7 @@ describe('Stories', function () {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
                     res.body.should.have.property('message').eql('Story created!');
-                    CoreSchema.Story.findOne({'_id': '579b8de189ed4ed46600005f'}, function (err, res) {
+                    CoreSchema.Story.findOne({'name': 'The Destitute and The Alien'}, function (err, res) {
                         res.should.not.be.null;
                         done();
                     });
