@@ -67,11 +67,12 @@ function create(req, res, next) {
         if (err) {
             err.status = 400;
             err.clientMessage = "Unable To save story";
-            console.log("Also yes");
             return next(err);
         }
-
-        res.json({message: 'Story created!'});
+        res.json({
+            message: 'Story created!',
+            story_id: story.id
+        });
     });
 }
 
