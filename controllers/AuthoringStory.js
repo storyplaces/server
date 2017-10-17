@@ -56,6 +56,7 @@ exports.fetch = fetch;
 exports.update = update;
 exports.publish = publish;
 exports.preview = preview;
+exports.downloadJson = downloadJson;
 
 function create(req, res, next) {
     let requestBody = helpers.sanitizeAndValidateInboundIds(undefined, req.body);
@@ -214,6 +215,67 @@ function publish(req, res, next) {
 
 function preview(req, res, next) {
     return handleStoryProcessing(req, res, next, "preview", "Story Preview Response");
+}
+
+
+function downloadJson(req, res, next) {
+    // Convert the story, but don't save it, just return the JSON of the converted story in the response.
+    let storyId;
+    try {
+        storyId = helpers.validateId(req.params.story_id);
+    } catch (error) {
+        return next(error);
+    }
+
+    AuthoringSchema.AuthoringStory.findById(storyId, function (err, authoringStory) {
+        if (err) {
+            return next(err);
+        }
+
+        if (!authoringStory) {
+            let error = new Error("Authoring Story id " + storyId + " not found");
+            error.status = 404;
+            error.clientMessage = "Authoring Story not found";
+            return next(error);
+        }
+        // Check user is authorised to download this story.
+        let hasAnyPrivilege = Authorisation.hasPrivileges(['requestPublicationOfAnyStory'], req.internal.privileges);
+
+        if (!hasAnyPrivilege && authoringStory.authorIds.indexOf(req.internal.userId) === -1) {
+            let error = new Error("Unable to request conversion for a story not owned by this user");
+            error.status = 403;
+            error.clientMessage = "Insufficient privileges.";
+            return next(error);
+        }
+
+        let readingStory;
+
+        AuthoringSchema.AuthoringUser.findById(authoringStory.authorIds, function (err, authoringUser) {
+            if (err) {
+                let error = new Error("Unable to convert story " + storyId);
+                error.status = 500;
+                error.clientMessage = "Unable to convert story";
+                return next(error);
+            }
+
+            try {
+                readingStory = converter.convert(authoringStory, "preview", authoringUser.name);
+            } catch (e) {
+                console.log(e);
+                let error = new Error("Unable to convert story " + storyId);
+                error.status = 500;
+                error.clientMessage = "Unable to convert story";
+                return next(error);
+            }
+
+            let story = new CoreSchema.Story(readingStory);
+
+            res.statusCode = 200;
+            res.header("Content-Disposition", "attachment; filename=download.json");
+            res.json(story);
+            return;
+        });
+    });
 }
 
 function handleStoryProcessing(req, res, next, readingState, responseMessage) {

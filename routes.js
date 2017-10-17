@@ -162,6 +162,10 @@ function authoringRouter() {
     AuthoringRouter.route('/story/:story_id/preview')
         .post([HasPrivilege(['previewOwnStory', 'previewAnyStory']), AuthoringStory.preview]);
 
+    // Download reading JSON for an authoring story
+    AuthoringRouter.route('/story/:story_id/downloadJson')
+        .post([HasPrivilege(['requestPublicationOfOwnStory', 'requestPublicationOfAnyStory']), AuthoringStory.downloadJson]);
+
     // Create AuthoringUser
     // Get list of AuthoringUsers
     // AuthoringRouter.route('/user')
