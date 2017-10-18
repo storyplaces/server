@@ -26,7 +26,7 @@
 ### Configuring the server tool
 * Copy `config/settings.json.default` to `config/settings.json`
 * Edit `config/settings.json` and:
-  * Change the locations of the reading and authoring tool paths to match your install
+  * Change the locations of the reading and authoring tool paths to the paths of their respective dist folders
   * Change the locations of the media paths to match your installation
   * Enable https if you wish the server to support https.  You will also need to set the certificate locations in the `secrets.json` file.
 * Copy `config/secrets.json.default` to `config/secrets.json`
