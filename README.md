@@ -2,19 +2,44 @@
 > For the StoryPlaces client please see the Story Places Client repository
 
 ## Requirements
-nodejs
-npm
-mongo
+* nodejs
+* npm
+* mongo
 
 
 ## Installation
-* Create an install folder and cd to it.
-* Clone this repository to `StoryPlacesServer`
-* Clone client repository to `StoryPlacesClient`
-* cd into `StoryPlacesServer`
+### Mongo setup
+* Create a mongo instance with a suitable username and password for the 'storyplaces' database.
+  * There are several good guides on the internet on how to do this, however we can not cover the details here and it is up to you to ensure you instance is properly configured, especially as Mongo comes fully open out of the box!
+
+### JWT signing keys
+* If you are using the authoring tool you will require a RS256 key pair to sign the JWT with.  You will need to create these and set their paths as described later
+  * Again this is beyond the scope of this document and there are good examples of how to do this.  We would strongly suggest storing them outside of any of the repository folders.
+  
+### HTTPS certificates
+* If you wish to use HTTPS you will need to generate a set of certs for the server to use.  Again, this is outside of the scope of this document.
+
+### Directory structure
+* We suggest creating one directory to hold all the components.
+* Clone this repository, the reading tool and if required the authoring tool into separate directories under the above directory.
+
+### Configuring the server tool
+* Copy `config/settings.json.default` to `config/settings.json`
+* Edit `config/settings.json` and:
+  * Change the locations of the reading and authoring tool paths to the paths of their respective dist folders
+  * Change the locations of the media paths to match your installation
+  * Enable https if you wish the server to support https.  You will also need to set the certificate locations in the `secrets.json` file.
+* Copy `config/secrets.json.default` to `config/secrets.json`
+* Edit `config/secrets.json` and:
+  * Set the database connection information as required by your installation
+  * Set a strong password in `auth.value`
+  * If using the authoring tool set the location of your JWT signing keys in the `auth.jwt.*` fields
+  * If using the authoring tool set your googld OAuth2 secret in the `auth.socialProviders.google.secretToken` field
+  * If using HTTPS set the location of your ssl certs in the `ssl.*` fields.  If you do not need a ca, remove the entry.
+  
 * run `npm install`
 
-## Server setup
+## Server start up
 * run `node server.js`
 * Point your browser at `<server>:8080` and you will see the client
 

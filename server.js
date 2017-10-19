@@ -74,6 +74,9 @@ var Express = require('express');
 var Mongoose = require('mongoose');
 var Routes = require('./routes.js');
 
+Mongoose.Promise = require('bluebird');
+
+
 // Build our express app ------------------------------------------------------
 var App = Express();
 
@@ -81,7 +84,8 @@ var App = Express();
 Mongoose.connect(secrets.database.connection, {
     user: secrets.database.username,
     pass: secrets.database.password,
-    auth: {authdb: "admin"}
+    auth: {authdb: "admin"},
+    useMongoClient: true
 }); // connect to our database
 
 // Register the routes --------------------------------------------------------
@@ -120,7 +124,7 @@ function startHttpsServer() {
         https_options = {
             key: fs.readFileSync(secrets.ssl.keypath),
             cert: fs.readFileSync(secrets.ssl.certpath)
-        }
+        };
 
         if (secrets.ssl.capath) {
             https_options.ca = fs.readFileSync(secrets.ssl.capath, 'utf8');

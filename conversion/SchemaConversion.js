@@ -31,6 +31,8 @@ function convert(authoringStory, readingState, authorName) {
         locationFunctions.createLocationCondition(location, readingStory);
     });
 
+
+
     return readingStory;
 }
 
