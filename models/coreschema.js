@@ -118,6 +118,9 @@ var Story = new Schema({
         pageArrows: Boolean,
         pageDistance: Boolean
     },
+    storyOptions: {
+        logLocations: Boolean
+    },
     schemaVersion: String,
     audience: {type: String, required: true}
 });

@@ -22,6 +22,9 @@ function createReadingStory(authoringStory, readingState, authorName) {
         conditions: [],
         functions: [],
         pages: [],
-        cachedMediaIds: []
+        cachedMediaIds: [],
+        storyOptions: {
+            logLocations: authoringStory.logLocations
+        }
     };
 }
