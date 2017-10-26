@@ -58,9 +58,10 @@ exports.createPreview = createPreview;
 
 function create(req, res, next) {
 
-    let requestBody = helpers.sanitizeAndValidateInboundIds(undefined, req.body);
+    let requestBody = helpers.sanitizeInboundIds(req.body);
 
     var story = new CoreSchema.Story(requestBody);
+
 
     story.save(function (err) {
         if (err) {
@@ -68,8 +69,10 @@ function create(req, res, next) {
             err.clientMessage = "Unable To save story";
             return next(err);
         }
-
-        res.json({message: 'Story created!'});
+        res.json({
+            message: 'Story created!',
+            story_id: story.id
+        });
     });
 }
 

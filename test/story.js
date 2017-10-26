@@ -74,7 +74,7 @@ describe('Stories', function () {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
                     res.body.should.have.property('message').eql('Story created!');
-                    CoreSchema.Story.findOne({'_id': '579b8de189ed4ed46600005f'}, function (err, res) {
+                    CoreSchema.Story.findOne({'name': 'The Destitute and The Alien'}, function (err, res) {
                         res.should.not.be.null;
                         done();
                     });
@@ -95,14 +95,20 @@ describe('Stories', function () {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
                     res.body.should.have.property('message').eql('Story created!');
-                });
-            chai.request(server)
-                .get('/storyplaces/story/579b8de189ed4ed46600005f')
-                .end(function (err, res) {
-                    res.should.have.status(200);
-                    res.body.should.be.a('object');
-                    res.body.should.eql(story);
-                    done();
+                    res.body.should.have.property('story_id');
+
+                    let storyId = res.body.story_id;
+                    chai.request(server)
+                        .get('/storyplaces/story/' + storyId)
+                        .end(function (err, res) {
+                            res.should.have.status(200);
+                            res.body.should.be.a('object');
+
+                            //Response ID changes each submission, remove it
+                            delete res.body.id;
+                            res.body.should.eql(story);
+                            done();
+                        });
                 });
         });
 

@@ -4,7 +4,8 @@
 
 "use strict";
 
-exports.validateId = validateId
+exports.validateId = validateId;
+exports.sanitizeInboundIds = sanitizeInboundIds;
 exports.sanitizeAndValidateInboundIds = sanitizeAndValidateInboundIds;
 exports.sanitizeOutboundObject = sanitizeOutboundObject;
 exports.sanitizeOutboundJson = sanitizeOutboundJson;
@@ -21,6 +22,14 @@ function validateId(passedId) {
     return id;
 }
 
+function sanitizeInboundIds(objectBody) {
+    delete objectBody.id;
+    delete objectBody._id;
+    delete objectBody.__v;
+
+    return objectBody;
+}
+
 function sanitizeAndValidateInboundIds(objectId, objectBody) {
     if (objectBody.id && objectBody.id !== objectId) {
         throw new Error("Invalid Ids");
@@ -30,11 +39,7 @@ function sanitizeAndValidateInboundIds(objectId, objectBody) {
         throw new Error("Invalid Ids");
     }
 
-    delete objectBody.id;
-    delete objectBody._id;
-    delete objectBody.__v;
-
-    return objectBody;
+    return sanitizeInboundIds(objectBody);
 }
 
 function sanitizeOutboundJson(jsonToSend) {
