@@ -151,6 +151,11 @@ var AuthoringStory = new Schema({
         enum: ['general', 'advisory', 'family'],
         required: true
     },
+    logLocations: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
     authorIds: {
         type: [{type: String, ref: 'AuthoringUser'}]
     },
