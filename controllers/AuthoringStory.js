@@ -161,6 +161,13 @@ function update(req, res, next) {
             return next(error);
         }
 
+
+        if (Authorisation.doesNotHavePrivileges(['editAnyStory'], req.internal.privileges)){
+            // If not admin then don't change the owner
+            requestBody.authorIds = authoringStory.authorIds;
+
+        }
+
         let submittedModifiedDate = new Date(requestBody.modifiedDate);
 
         if (isNaN(submittedModifiedDate.getTime())) {

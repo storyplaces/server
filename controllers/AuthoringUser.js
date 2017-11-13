@@ -45,7 +45,7 @@ let helpers = require('./helpers.js');
 
 
 // exports.create = create;
-// exports.index = index;
+exports.index = index;
 exports.fetch = fetch;
 exports.update = update;
 
@@ -68,15 +68,15 @@ exports.update = update;
 //     });
 // }
 
-// function index(req, res, next) {
-//     AuthoringSchema.AuthoringUser.find(function (err, authoringUsers) {
-//         if (err) {
-//             return next(err);
-//         }
-//
-//         res.json(authoringUsers);
-//     });
-// }
+function index(req, res, next) {
+    AuthoringSchema.AuthoringUser.find(function (err, authoringUsers) {
+        if (err) {
+            return next(err);
+        }
+
+        res.json(authoringUsers);
+    });
+}
 
 function fetch(req, res, next) {
     let userId;

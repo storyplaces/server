@@ -187,5 +187,8 @@ function authoringRouter() {
     AuthoringRouter.route('/story/:story_id/image/:image_id/thumb')
         .get(HasPrivilege(['getOwnImage']), AuthoringImage.fetchThumbnail);
 
+    AuthoringRouter.route('/user/')
+        .get(HasPrivilege(['getUserList']), AuthoringUser.index);
+
     return AuthoringRouter;
 }
