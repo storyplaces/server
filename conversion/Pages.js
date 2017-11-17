@@ -67,30 +67,30 @@ function processPage(page, authoringStory, readingStory) {
     return page.id;
 }
 
-function handleImage(page, authoringStory, readingStory){
+function handleImage(page, authoringStory, readingStory) {
 
-    if (page.imageId && authoringStory.imageIds.indexOf(page.imageId) !== -1){
+    if (page.imageId && authoringStory.imageIds.indexOf(page.imageId) !== -1) {
         addImageToStory(page.imageId, authoringStory, readingStory);
     }
     return page.imageId;
 }
 
-function addImageToStory(imageId, authoringStory, readingStory){
+function addImageToStory(imageId, authoringStory, readingStory) {
     readingStory.cachedMediaIds.push(imageId);
     return imageId;
 }
 
-function buildPageContent(page){
+function buildPageContent(page) {
 
     let html = markdown.render(page.content);
 
-    if (!page.imageId){
+    if (!page.imageId) {
         return html;
     }
     return addImageTagsToPageContent(page.imageId, html);
 }
 
-function addImageTagsToPageContent(imageId, pageContent){
+function addImageTagsToPageContent(imageId, pageContent) {
     var imageBlock = "<img style='max-width: 100%; display: block; margin: auto;' data-media-id='" + imageId + "'/><br/><br/>";
     return imageBlock + pageContent;
 }
@@ -140,6 +140,7 @@ function makePageReadFunctionId(pageId) {
 function makePageReadVariableId(pageId) {
     return "page-read-" + pageId + "-variable";
 }
+
 //
 
 //region MultipleReadings

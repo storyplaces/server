@@ -121,7 +121,7 @@ function createChapterLockFunctions(chapter, readingStory) {
 }
 
 function makeChapterUnlockedVariableId(chapterId) {
-    return "chapter-unlocked" + chapterId + "-variable";
+    return "chapter-unlocked-" + chapterId + "-variable";
 }
 
 function makeChapterLockFunctionId(chapterId) {

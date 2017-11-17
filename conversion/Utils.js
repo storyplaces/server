@@ -10,6 +10,7 @@ exports.addFunction = addFunction;
 exports.arraysMatch = arraysMatch;
 exports.addCondition = addCondition;
 exports.checkIdDoesNotExist = checkIdDoesNotExist;
+exports.validateId = validateId;
 
 function checkIdDoesNotExist(id, items) {
     var existingItemsMatchingId = items.filter(function (item) {
@@ -47,4 +48,10 @@ function addFunction(functionId, functions) {
     }
 
     functions.push(functionId);
+}
+
+function validateId(uuid) {
+    if (uuid.match(/^[-a-z0-9]*$/) === null) {
+        throw errors.SchemaConversionError(`Bad id: ${uuid} found`);
+    }
 }
