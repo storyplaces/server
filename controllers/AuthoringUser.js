@@ -48,6 +48,7 @@ let helpers = require('./helpers.js');
 exports.index = index;
 exports.fetch = fetch;
 exports.update = update;
+exports.assignRoles = assignRoles;
 
 // function create(req, res, next) {
 //
@@ -163,6 +164,49 @@ function update(req, res, next) {
 
         res.json({
             message: "Authoring User updated",
+            object: objectToSend
+        });
+    });
+}
+
+function assignRoles(req, res, next){
+    let userId;
+
+    try {
+        userId = helpers.validateId(req.params.user_id);
+    } catch (error) {
+        return next(error);
+    }
+
+    let update = {
+        roles: req.body.roles,
+    };
+
+    AuthoringSchema.AuthoringUser.findByIdAndUpdate(userId, update, {
+        runValidators: true
+    }, function (err, authoringUser) {
+        if (err) {
+            return next(err);
+        }
+
+        if (!authoringUser) {
+            let error = new Error("Authoring User id " + userId + " not found");
+            error.status = 404;
+            error.clientMessage = "Authoring User not found";
+            return next(error);
+        }
+
+        let objectToSend = helpers.sanitizeOutboundObject(authoringUser);
+
+        // Convert roles to privileges because the front end only understands privileges
+        objectToSend.privileges = Authorisation.convertRolesToPrivileges(authoringUser.roles);
+
+        delete objectToSend.googleID;
+        delete objectToSend.email;
+        delete objectToSend.enabled;
+
+        res.json({
+            message: "Authoring User Roles updated",
             object: objectToSend
         });
     });

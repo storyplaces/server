@@ -190,5 +190,8 @@ function authoringRouter() {
     AuthoringRouter.route('/user/')
         .get(HasPrivilege(['getUserList']), AuthoringUser.index);
 
+    AuthoringRouter.route('/user/:user_id/assignRoles')
+        .post(HasPrivilege(['assignUserRoles']), AuthoringUser.assignRoles);
+
     return AuthoringRouter;
 }
