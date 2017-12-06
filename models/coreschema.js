@@ -61,7 +61,7 @@ User.set('toJSON', {
 
 var Page = new Schema({
     id: {type: String, required: true},
-    content: {type: String},
+    content: {type: String, ref: 'Content'},
     name: {type: String, required: true},
     pageTransition: {type: String, required: true},
     conditions: [{type: String, ref: 'Schema.Types.Mixed'}],
@@ -97,12 +97,19 @@ var Function = new Schema({
     conditions: [{type: String, ref: 'Condition'}],
 });
 
+// Content --------------------------------------------------------------------
+
+var Content = new Schema({
+    name: String,
+    body: String
+});
 
 // Story ----------------------------------------------------------------------
 
 var Story = new Schema({
     name: {type: String, required: true},
     pages: [Page],
+    content: [Content],
     locations: [Location],
     conditions: [Schema.Types.Mixed],
     functions: [Function],
