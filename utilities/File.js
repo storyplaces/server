@@ -159,6 +159,20 @@ function mediaFolder(path) {
     return fs.realpathSync(__dirname + '/../' + path);
 }
 
+function getSchemaPath() {
+    return fs.realpathSync(__dirname + "/../" + settings.schemaPath);
+}
+
+function loadSchema() {
+    let schemaPath = getSchemaPath();
+    if(fileExistsAndIsReadable(schemaPath)) {
+        let schemaData = fs.readFileSync(schemaPath, {encoding: 'utf8'});
+        return JSON.parse(schemaData);
+    }
+    Logger.error("Unable to load schema file");
+    return null;
+}
+
 function copyFile(filename, sourceFolder, destFolder){
     let sourceFile = sourceFolder.concat(filename);
     let outFile = destFolder.concat(filename);
@@ -183,6 +197,8 @@ function copyFile(filename, sourceFolder, destFolder){
 
 exports.fileExistsAndIsReadable = fileExistsAndIsReadable;
 exports.authoringMediaFolder = authoringMediaFolder;
+exports.getSchemaPath = getSchemaPath;
+exports.loadSchema = loadSchema;
 exports.fileWithoutExtension = fileWithoutExtension;
 exports.readingMediaFolder = readingMediaFolder
 exports.base64EncodeFile = base64EncodeFile;
