@@ -102,6 +102,7 @@ Router.route('/logevent/:logevent_id')
 Router.route('/logevent/user/:user_id')
     .get([AuthenticateUsingToken, LogEvent.userFetch]);
 
+
 Router.route('/user')
     .post(User.create);
 
@@ -192,6 +193,9 @@ function authoringRouter() {
 
     AuthoringRouter.route('/user/:user_id/assignRoles')
         .post(HasPrivilege(['assignUserRoles']), AuthoringUser.assignRoles);
+
+    AuthoringRouter.route('/logevent/range/:start/:finish')
+        .get([HasPrivilege(['readLogs']), LogEvent.fetchRange]);
 
     return AuthoringRouter;
 }
