@@ -128,7 +128,8 @@ function authoringRouter() {
 
     // Get a list of pending and published Reading Stories
     AuthoringRouter.route('/admin/story')
-        .get([HasPrivilege(['getReviewStories']), Story.adminindex]);
+        .get([HasPrivilege(['getReviewStories']), Story.adminindex])
+        .put([HasPrivilege(['addReadingStory']), Story.create]);
 
     // Delete reading story
     AuthoringRouter.route('/admin/story/:story_id')
@@ -141,7 +142,6 @@ function authoringRouter() {
     // Update the publish status of a reading story (to pending or published)
     AuthoringRouter.route('/admin/story/:story_id/createPreview')
         .post([HasPrivilege(['previewAnyStory']), Story.createPreview]);
-
 
     // Get a list of stories
     // Create a new story
