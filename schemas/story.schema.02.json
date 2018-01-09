@@ -475,6 +475,13 @@
         },
         "value": {
           "type": "string"
+        },
+        "functions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/functionReference"
+          },
+          "uniqueItems": true
         }
       },
       "additionalProperties": false,
@@ -502,6 +509,13 @@
         },
         "variable": {
           "$ref": "#/definitions/variableReference"
+        },
+        "functions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/functionReference"
+          },
+          "uniqueItems": true
         }
       },
       "additionalProperties": false,
@@ -531,7 +545,15 @@
         },
         "value": {
           "type": "string"
+        },
+        "functions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/functionReference"
+          },
+          "uniqueItems": true
         }
+
       },
       "additionalProperties": false,
       "required": [
