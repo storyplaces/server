@@ -2,9 +2,10 @@
   "name": "node-api",
   "main": "server.js",
   "dependencies": {
+    "ajv": "^5.5.1",
+    "bluebird": "^3.4.1",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
-    "bluebird": "^3.4.1",
     "file-extension": "^3.1.2",
     "fs-extra": "^4.0.2",
     "gm": "^1.23.0",
