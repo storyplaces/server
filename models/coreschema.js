@@ -225,6 +225,23 @@ var CheckCondition = new Schema({
 });
 
 
+// Story Collections
+
+var StoryCollection = new Schema({
+    name: {type: String, required: true},
+    description: {type: String, require: true},
+    storyIds: [{type: String, ref: 'Story', required: true}]
+
+});
+
+StoryCollection.virtual('id').get(function () {
+    return this._id.toHexString();
+});
+
+StoryCollection.set('toJSON', {
+    virtuals: true
+});
+
 // Exports --------------------------------------------------------------------
 
 module.exports = {
@@ -239,7 +256,8 @@ module.exports = {
     ComparisonCondition: mongoose.model('ComparisonCondition', ComparisonCondition),
     LogicalCondition: mongoose.model('LogicalCondition', LogicalCondition),
     LocationCondition: mongoose.model('LocationCondition', LocationCondition),
-    CheckCondition: mongoose.model('CheckCondition', CheckCondition)
+    CheckCondition: mongoose.model('CheckCondition', CheckCondition),
+    StoryCollection: mongoose.model('StoryCollection', StoryCollection)
 
 };
 
