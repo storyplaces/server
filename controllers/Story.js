@@ -58,6 +58,9 @@ exports.createPreview = createPreview;
 
 function create(req, res, next) {
 
+    delete req.body.id;
+    delete req.body._id;
+
     let requestBody = helpers.sanitizeAndValidateInboundIds(undefined, req.body);
 
     var story = new CoreSchema.Story(requestBody);

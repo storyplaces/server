@@ -103,17 +103,17 @@ describe('AuthoringUser', function () {
 
     describe('/POST valid user', function () {
         it('it should POST a valid story', function (done) {
-            var authoringUser = JSON.parse(fs.readFileSync('test/resources/sample_authoring_user.json'));
+            var logEvent = JSON.parse(fs.readFileSync('test/resources/sample_authoring_user.json'));
             chai.request(server)
                 .post('/storyplaces/authoring/user')
                 .set("Content-Type", "application/json")
                 .set("X-Auth-Token", "thisisadefaultpass")
-                .send(authoringUser)
+                .send(logEvent)
                 .end(function (err, res) {
                     res.should.have.status(201);
                     res.body.should.be.a('object');
-                    res.body.should.have.property('message').eql('Authoring User Created');
-                    AuthoringSchema.AuthoringUser.findOne({'name': 'Testy McTest'}, function (err, res) {
+                    res.body.should.have.property('message').eql('Log Event Creates');
+                    AuthoringSchema.LogEvent.findOne({'name': 'Testy McTest'}, function (err, res) {
                         res.should.not.be.null;
                         res.should.have.property('name', 'Testy McTest');
                         res.should.have.property('email', 'test@email.com');
