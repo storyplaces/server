@@ -47,6 +47,7 @@ exports.create = create;
 exports.index = index;
 exports.fetch = fetch;
 exports.userFetch = userFetch;
+exports.fetchRange = fetchRange;
 
 function create(req, res, next) {
 
@@ -120,4 +121,30 @@ function userFetch(req, res, next) {
 
         res.json(toSend);
     });
+}
+
+function fetchRange(req, res, next) {
+    try {
+        var startTime = new Date(parseInt(req.params.start));
+        var finishTime = new Date(parseInt(req.params.finish));
+    } catch (error) {
+        return next(error);
+    }
+    CoreSchema.LogEvent.find({
+            "date":
+                {
+                    $gte: startTime.getTime(),
+                    $lt: finishTime.getTime()
+                }
+        },
+        function (err, logevents) {
+            if (err) {
+                return next(err);
+            }
+
+            let toSend = logevents.map(event => helpers.sanitizeOutboundObject(event));
+
+            res.json(toSend);
+        }
+    );
 }
