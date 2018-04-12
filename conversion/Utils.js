@@ -51,7 +51,7 @@ function addFunction(functionId, functions) {
 }
 
 function validateId(uuid) {
-    if (uuid.match(/^[-a-z0-9]*$/) === null) {
-        throw errors.SchemaConversionError(`Bad id: ${uuid} found`);
+    if (!uuid || uuid.match(/^[-a-z0-9]+$/) === null) {
+        throw new errors.SchemaConversionError(`Bad id: ${uuid} found`);
     }
 }

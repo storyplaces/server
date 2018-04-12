@@ -3,6 +3,7 @@ process.env.NODE_ENV = 'test';
 
 //Require the dev-dependencies
 var chai = require('chai');
+let should = chai.should();
 var expect = chai.expect;
 
 var utilFunctions = require('../../conversion/Utils');
@@ -74,6 +75,8 @@ describe("Utility functions", function () {
                var array2 = [];
 
                var result = utilFunctions.arraysMatch(array1, array2);
+
+               console.log(result);
 
                result.should.equal(true);
            });
@@ -171,5 +174,39 @@ describe("Utility functions", function () {
 
             functions.length.should.equal(0);
         });
+    });
+
+    describe("validateId", () => {
+       context("when given a valid Id", () => {
+           it("does not throw an exception", () => {
+               utilFunctions.validateId("abc-1234");
+           });
+       });
+
+       context("when given an invalid Id", () => {
+          it("throws a SchemaConversionError for an undefined id", () => {
+              expect(() => {
+                  utilFunctions.validateId(undefined);
+              }).to.throw(errors.SchemaConversionError);
+          });
+
+          it("throws a SchemaConversionError for a null id", () => {
+              expect(() => {
+                  utilFunctions.validateId(null);
+              }).to.throw(errors.SchemaConversionError);
+          });
+
+           it("throws a SchemaConversionError for an empty string", () => {
+               expect(() => {
+                   utilFunctions.validateId("");
+               }).to.throw(errors.SchemaConversionError);
+           });
+
+           it("throws a SchemaConversionError for an invalid id", () => {
+               expect(() => {
+                   utilFunctions.validateId("abc+123");
+               }).to.throw(errors.SchemaConversionError);
+           });
+       });
     });
 });
