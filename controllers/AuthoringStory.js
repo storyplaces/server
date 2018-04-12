@@ -65,7 +65,6 @@ function create(req, res, next) {
 
     authoringStory.save(function (err) {
         if (err) {
-            console.log(err);
             err.status = 400;
             err.clientMessage = "Unable To save authoring story";
             return next(err);
