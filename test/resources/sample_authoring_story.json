@@ -15,7 +15,7 @@
       "colour": "blue",
       "pageIds": ["1", "2"],
       "unlockedByPageIds": [],
-      "unlockedByPageOperator": "and",
+      "unlockedByPagesOperator": "and",
       "locksAllOtherChapters": true,
       "locksChapterIds": []
     }
@@ -29,7 +29,8 @@
       "locationId": "123456",
       "allowMultipleReadings": false,
       "unlockedByPageIds": [],
-      "unlockedByPagesOperator": "and"
+      "unlockedByPagesOperator": "and",
+      "finishesStory": false
     },
     {
       "id": "2",
@@ -39,7 +40,8 @@
       "locationId": "654321",
       "allowMultipleReadings": false,
       "unlockedByPageIds": ["1"],
-      "unlockedByPagesOperator": "and"
+      "unlockedByPagesOperator": "and",
+      "finishesStory": true
     }
   ],
   "locations": [

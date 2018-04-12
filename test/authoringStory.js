@@ -45,6 +45,8 @@ var mongoDb = require('mongodb');
 var ObjectId = mongoDb.ObjectID;
 var AuthoringSchema = require('../models/authoringSchema');
 
+let jwt = require('../auth/JwtAuthentication');
+
 // Misc requires
 var fs = require('fs');
 
@@ -58,12 +60,27 @@ chai.use(chaiHttp);
 
 // Setup - Empty the database before each test
 describe('AuthoringStories', function () {
-    beforeEach(function (done) {
-        AuthoringSchema.AuthoringStory.remove({}, function (err) {
-            done();
-        });
-    });
+    let authHeader;
 
+    beforeEach(() => {
+        return AuthoringSchema.AuthoringStory.remove({})
+            .then(()=>{
+                return AuthoringSchema.AuthoringUser.remove({});
+            })
+            .then(() => {
+                return new AuthoringSchema.AuthoringUser({
+                    email: "test.user@example.local",
+                    name:"Test user",
+                    bio:"Bio",
+                    roles: ["author", "admin"],
+                    googleID: "abc123",
+                    enabled: true
+                }).save();
+            })
+            .then(user => {
+                authHeader = "Basic " + jwt.createJWTFromUser(user);
+            });
+    });
 
     /*
      * Test the /GET route
@@ -72,6 +89,7 @@ describe('AuthoringStories', function () {
         it('it should GET all the authoringStories', function (done) {
             chai.request(server)
                 .get('/storyplaces/authoring/story')
+                .set("Authorization", authHeader)
                 .end(function (err, res) {
                     res.should.have.status(200);
                     res.body.should.be.a('array');
@@ -90,7 +108,7 @@ describe('AuthoringStories', function () {
             chai.request(server)
                 .post('/storyplaces/authoring/story')
                 .set("Content-Type", "application/json")
-                .set("X-Auth-Token", "thisisadefaultpass")
+                .set("Authorization", authHeader)
                 .send(story)
                 .end(function (err, res) {
                     res.should.have.status(400);
@@ -109,7 +127,7 @@ describe('AuthoringStories', function () {
             chai.request(server)
                 .post('/storyplaces/authoring/story')
                 .set("Content-Type", "application/json")
-                .set("X-Auth-Token", "thisisadefaultpass")
+                .set("Authorization", authHeader)
                 .send(story)
                 .end(function (err, res) {
                     res.should.have.status(201);
@@ -132,9 +150,13 @@ describe('AuthoringStories', function () {
             chai.request(server)
                 .post('/storyplaces/authoring/story')
                 .set("Content-Type", "application/json")
-                .set("X-Auth-Token", "thisisadefaultpass")
+                .set("Authorization", authHeader)
                 .send(story)
                 .end(function (err, res) {
+                    if(err) {
+                        throw new Error(err)
+                    }
+
                     res.should.have.status(201);
                     res.body.should.be.a('object');
                     res.body.should.have.property('message').eql('Authoring Story created');
@@ -144,7 +166,7 @@ describe('AuthoringStories', function () {
                     chai.request(server)
                         .put('/storyplaces/authoring/story/' + res.body.object.id)
                         .set("Content-Type", "application/json")
-                        .set("X-Auth-Token", "thisisadefaultpass")
+                        .set("Authorization", authHeader)
                         .send(story)
                         .end(function (err, res) {
                             res.should.have.status(409);
@@ -161,7 +183,7 @@ describe('AuthoringStories', function () {
             chai.request(server)
                 .post('/storyplaces/authoring/story')
                 .set("Content-Type", "application/json")
-                .set("X-Auth-Token", "thisisadefaultpass")
+                .set("Authorization", authHeader)
                 .send(firstStory)
                 .end(function (err, res) {
                     res.should.have.status(201);
@@ -173,7 +195,7 @@ describe('AuthoringStories', function () {
                     chai.request(server)
                         .put('/storyplaces/authoring/story/' + res.body.object.id)
                         .set("Content-Type", "application/json")
-                        .set("X-Auth-Token", "thisisadefaultpass")
+                        .set("Authorization", authHeader)
                         .send(laterStory)
                         .end(function (err, res) {
                             res.should.have.status(200);
@@ -182,6 +204,7 @@ describe('AuthoringStories', function () {
 
                             chai.request(server)
                                 .get('/storyplaces/authoring/story/' + res.body.object.id)
+                                .set("Authorization", authHeader)
                                 .end(function (err, res) {
                                     res.should.have.status(200);
                                     res.body.should.be.a('object');
@@ -200,7 +223,7 @@ describe('AuthoringStories', function () {
             chai.request(server)
                 .post('/storyplaces/authoring/story')
                 .set("Content-Type", "application/json")
-                .set("X-Auth-Token", "thisisadefaultpass")
+                .set("Authorization", authHeader)
                 .send(authoringStory)
                 .end(function (err, res) {
                     res.should.have.status(201);
@@ -211,6 +234,7 @@ describe('AuthoringStories', function () {
 
                     chai.request(server)
                         .get('/storyplaces/authoring/story/' + res.body.object.id)
+                        .set("Authorization", authHeader)
                         .end(function (err, res) {
                             res.should.have.status(200);
                             res.body.should.be.a('object');
