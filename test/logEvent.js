@@ -42,6 +42,8 @@ process.env.NODE_ENV = 'test';
 
 var mongoose = require("mongoose");
 var CoreSchema = require('../models/coreschema');
+let AuthoringSchema = require('../models/authoringSchema');
+let jwt = require('../auth/JwtAuthentication');
 
 // Misc requires
 var fs = require('fs');
@@ -56,13 +58,26 @@ chai.use(chaiHttp);
 
 // Setup - Empty the database before each test
 describe('LogEvent', function () {
+    let authHeader;
 
-    var user = {_id:"user_id_1", name: "bob", bio: "My bio"};
-
-    beforeEach(function (done) {
-        CoreSchema.LogEvent.remove({}, function (err) {
-            done();
-        });
+    beforeEach(() => {
+        return CoreSchema.LogEvent.remove({})
+            .then(() => {
+                return AuthoringSchema.AuthoringUser.remove({})
+            })
+            .then(() => {
+                return new AuthoringSchema.AuthoringUser({
+                    email: "test.user@example.local",
+                    name: "Test user",
+                    bio: "Bio",
+                    roles: ["author", "admin"],
+                    googleID: "abc123",
+                    enabled: true
+                }).save();
+            })
+            .then(user => {
+                authHeader = "Basic " + jwt.createJWTFromUser(user);
+            });
     });
 
     /*
@@ -96,20 +111,24 @@ describe('LogEvent', function () {
      * Test the /GET route
      */
     describe('/GET logEvent with range', function () {
-        it('it should GET no logEvents', function (done) {
-            var authoringUser = JSON.parse(fs.readFileSync('test/resources/valid_log_event.json'));
+        it('it should GET one logEvent', function (done) {
+            var eventlog = JSON.parse(fs.readFileSync('test/resources/valid_log_event.json'));
             chai.request(server)
                 .post('/storyplaces/logevent')
                 .set("Content-Type", "application/json")
                 .set("X-Auth-Token", "thisisadefaultpass")
-                .send(authoringUser);
-            chai.request(server)
-                .get('/storyplaces/logevent/range/1/2')
-                .end(function (err, res) {
-                    res.should.have.status(200);
-                    res.body.should.be.a('array');
-                    res.body.length.should.be.eql(1);
-                    done();
+                .send(eventlog)
+                .end(() => {
+                    chai.request(server)
+                        .get('/storyplaces/authoring/logevent/range/1478784683000/1478784685000')
+                        .set("Authorization", authHeader)
+                        .end(function (err, res) {
+                            console.log(err);
+                            res.should.have.status(200);
+                            res.body.should.be.a('array');
+                            res.body.length.should.be.eql(1);
+                            done();
+                        });
                 });
         });
     });
