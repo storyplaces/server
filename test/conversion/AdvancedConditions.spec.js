@@ -122,6 +122,21 @@ describe("Advanced condition conversion functions", function () {
                 readingStory.conditions[0].variable.should.be.eql('def456');
                 readingStory.conditions[0].minutes.should.be.eql(12);
             });
+
+            it("will return multiple conditions", () => {
+                let condition1 = factories.advancedTimePassedCondition("abc123", "def456", 12);
+                let condition2 = factories.advancedTimePassedCondition("abc456", "def456", 12);
+                authoringStory.advancedConditions.push(condition1, condition2);
+
+                advancedConditionFunctions.addAdvancedConditions(readingStory, authoringStory);
+
+                readingStory.conditions.should.be.a('array');
+                readingStory.conditions.length.should.be.eql(2);
+
+                readingStory.conditions[0].id.should.be.eql('abc123');
+                readingStory.conditions[1].id.should.be.eql('abc456');
+
+            });
         });
 
         context("given a set of invalid advanced conditions", () => {
