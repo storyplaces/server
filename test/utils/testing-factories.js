@@ -11,6 +11,10 @@ exports.advancedCheckCondition = advancedCheckCondition;
 exports.advancedLocationCondition = advancedLocationCondition;
 exports.advancedLogicalCondition = advancedLogicalCondition;
 exports.advancedTimePassedCondition = advancedTimePassedCondition;
+exports.advancedSetFunction = advancedSetFunction;
+exports.advancedSetTimeStampFunction = advancedSetTimeStampFunction;
+exports.advancedIncrementFunction = advancedIncrementFunction;
+exports.advancedChainFunction = advancedChainFunction;
 
 function basicChapter(id, name) {
     return {
@@ -152,3 +156,40 @@ function advancedTimePassedCondition(id, variableId, minutes) {
 }
 
 
+function advancedSetFunction(id, variableId, value, conditionIds) {
+    return {
+        id: id,
+        variableId: variableId,
+        value: value,
+        conditionIds: conditionIds,
+        type: "set"
+    };
+}
+
+function advancedSetTimeStampFunction(id, variableId, conditionIds) {
+    return {
+        id: id,
+        variableId: variableId,
+        conditionIds: conditionIds,
+        type: "settimestamp"
+    };
+}
+
+function advancedIncrementFunction(id, variableId, value, conditionIds) {
+    return {
+        id: id,
+        variableId: variableId,
+        value: value,
+        conditionIds: conditionIds,
+        type: "increment"
+    };
+}
+
+function advancedChainFunction(id, chainFunctionIds, conditionIds) {
+    return {
+        id: id,
+        chainFunctionIds: chainFunctionIds,
+        conditionIds: conditionIds,
+        type: "chain"
+    };
+}
