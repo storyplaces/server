@@ -20,7 +20,7 @@
 * If you wish to use HTTPS you will need to generate a set of certs for the server to use.  Again, this is outside of the scope of this document.
 
 ### graphicsmagick
-To resize images uploaded by authors graphicsmagick is required.  Please isntall this using your distribution.
+To resize images uploaded by authors graphicsmagick is required.  Please install this using your distribution.
 
 ### Directory structure
 * We suggest creating one directory to hold all the components.

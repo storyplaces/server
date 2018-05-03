@@ -4,6 +4,17 @@ exports.basicReadingStory = basicReadingStory;
 exports.basicAuthoringStory = basicAuthoringStory;
 exports.basicAuthoringLocation = basicAuthoringLocation;
 exports.basicReadingLocation = basicReadingLocation;
+exports.advancedLocation = advancedLocation;
+exports.advancedTimeRangeCondition = advancedTimeRangeCondition;
+exports.advancedComparisonCondition = advancedComparisonCondition;
+exports.advancedCheckCondition = advancedCheckCondition;
+exports.advancedLocationCondition = advancedLocationCondition;
+exports.advancedLogicalCondition = advancedLogicalCondition;
+exports.advancedTimePassedCondition = advancedTimePassedCondition;
+exports.advancedSetFunction = advancedSetFunction;
+exports.advancedSetTimeStampFunction = advancedSetTimeStampFunction;
+exports.advancedIncrementFunction = advancedIncrementFunction;
+exports.advancedChainFunction = advancedChainFunction;
 
 function basicChapter(id, name) {
     return {
@@ -76,4 +87,109 @@ function basicReadingLocation(id, lat, long, radius) {
         radius: radius,
         type: 'circle'
     }
+}
+
+function advancedLocation(id, lat, long,radius) {
+    return {
+        id: id,
+        lat: lat,
+        long: long,
+        radius: radius,
+        type: 'circle'
+    }
+}
+
+function advancedTimeRangeCondition(id, variableId, start, end) {
+    return {
+        id: id,
+        variableId: variableId,
+        start: start,
+        end: end,
+        type: 'timerange'
+    }
+}
+
+function advancedComparisonCondition(id, variableA, variableB, variableAType, variableBType, operand) {
+    return {
+        id: id,
+        variableA: variableA,
+        variableB: variableB,
+        variableAType: variableAType,
+        variableBType: variableBType,
+        operand: operand,
+        type: 'comparison'
+    }
+}
+
+function advancedCheckCondition(id, variableId) {
+    return {
+        id: id,
+        variableId: variableId,
+        type: 'check'
+    }
+}
+
+function advancedLocationCondition(id, locationId) {
+    return {
+        id: id,
+        locationId: locationId,
+        type: 'location'
+    }
+}
+
+function advancedLogicalCondition(id, operand, conditionIds) {
+    return {
+        id: id,
+        operand: operand,
+        conditionIds: conditionIds,
+        type: 'logical'
+    }
+}
+
+function advancedTimePassedCondition(id, variableId, minutes) {
+    return {
+        id: id,
+        variableId: variableId,
+        minutes: minutes,
+        type: 'timepassed'
+    }
+}
+
+
+function advancedSetFunction(id, variableId, value, conditionIds) {
+    return {
+        id: id,
+        variableId: variableId,
+        value: value,
+        conditionIds: conditionIds,
+        type: "set"
+    };
+}
+
+function advancedSetTimeStampFunction(id, variableId, conditionIds) {
+    return {
+        id: id,
+        variableId: variableId,
+        conditionIds: conditionIds,
+        type: "settimestamp"
+    };
+}
+
+function advancedIncrementFunction(id, variableId, value, conditionIds) {
+    return {
+        id: id,
+        variableId: variableId,
+        value: value,
+        conditionIds: conditionIds,
+        type: "increment"
+    };
+}
+
+function advancedChainFunction(id, chainFunctionIds, conditionIds) {
+    return {
+        id: id,
+        chainFunctionIds: chainFunctionIds,
+        conditionIds: conditionIds,
+        type: "chain"
+    };
 }

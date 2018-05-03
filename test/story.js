@@ -12,6 +12,8 @@ var chai = require('chai');
 var chaiHttp = require('chai-http');
 var server = require('../server');
 var should = chai.should();
+var expect = chai.expect;
+
 
 chai.use(chaiHttp);
 
@@ -74,8 +76,8 @@ describe('Stories', function () {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
                     res.body.should.have.property('message').eql('Story created!');
-                    CoreSchema.Story.findOne({'_id': '579b8de189ed4ed46600005f'}, function (err, res) {
-                        res.should.not.be.null;
+                    CoreSchema.Story.findOne({'name': 'The Destitute and The Alien'}, function (err, res) {
+                        expect(res).to.not.null;
                         done();
                     });
                 });
@@ -95,15 +97,21 @@ describe('Stories', function () {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
                     res.body.should.have.property('message').eql('Story created!');
+
+                    CoreSchema.Story.findOne({'name': 'The Destitute and The Alien'}, function (err, res) {
+                        let id = res._id;
+
+                        chai.request(server)
+                            .get('/storyplaces/story/' + id)
+                            .end(function (err, res) {
+                                res.should.have.status(200);
+                                res.body.should.be.a('object');
+                                res.body.name.should.eql('The Destitute and The Alien');
+                                done();
+                            });
+                    });
                 });
-            chai.request(server)
-                .get('/storyplaces/story/579b8de189ed4ed46600005f')
-                .end(function (err, res) {
-                    res.should.have.status(200);
-                    res.body.should.be.a('object');
-                    res.body.should.eql(story);
-                    done();
-                });
+
         });
 
     });

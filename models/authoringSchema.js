@@ -86,7 +86,9 @@ var AuthoringPage = new Schema({
         enum: ['and', 'or'],
         required: true
     },
-    imageId: {type: String}
+    imageId: {type: String},
+    advancedConditionIds: [{type: String}],
+    advancedFunctionIds: [{type: String}]
 });
 
 
@@ -129,7 +131,7 @@ var AuthoringChapter = new Schema({
 
 // AuthoringCircleLocation -------------------------------------------------------------------
 
-var AuthoringCircleLocation = new Schema({
+let AuthoringCircleLocation = new Schema({
     id: {type: String, required: true},
     lat: {type: Number, required: true},
     long: {type: Number, required: true},
@@ -137,6 +139,48 @@ var AuthoringCircleLocation = new Schema({
     type: {type: String, required: true, enum: ['circle']}
 });
 
+// Advanced items -------------------------------------------------------------------
+
+let AdvancedLocation = new Schema({
+    id: {type: String, required: true},
+    name: {type: String, required: true},
+    lat: {type: Number, required: true},
+    long: {type: Number, required: true},
+    radius: {type: Number, required: true},
+    type: {type: String, required: true, enum: ['circle']}
+});
+
+let AdvancedFunction = new Schema({
+    id: {type: String, required: true},
+    name: {type: String, required: true},
+    variableId: {type: String, required: true},
+    value: {type: String, required: true},
+    chainFunctionIds: [{type: String, required: true}],
+    conditionIds: [{type: String, required: true}],
+    type: {type: String, required: true, enum: ['set', 'settimestamp', 'increment', 'chain']}
+});
+
+let AdvancedVariable = new Schema({
+    id: {type: String, required: true},
+    name: {type: String, required: true},
+});
+
+let AdvancedCondition = new Schema({
+    id: {type: String, required: true},
+    name: {type: String, required: true},
+    variableId: {type: String},
+    type: {type: String, required: true, enum: ['comparison', 'check', 'logical', 'timepassed', 'timerange', 'location']},
+    start: {type: String},
+    end: {type: String,},
+    minutes: {type: Number},
+    operand: {type: String, enum: ['AND', 'OR', '==', '!=', '<', '>', '<=', '>=', '>=']},
+    conditionIds: [{type: String, required: true}],
+    locationId: {type: String},
+    variableA: {type: String},
+    variableB: {type: String},
+    variableAType: {type: String, enum: ['Integer', 'String', 'Variable']},
+    variableBType: {type: String, enum: ['Integer', 'String', 'Variable']},
+});
 
 // AuthoringStory ----------------------------------------------------------------------
 
@@ -173,7 +217,20 @@ var AuthoringStory = new Schema({
     },
     imageIds: {
         type: [String]
+    },
+    advancedLocations: {
+        type: [AdvancedLocation]
+    },
+    advancedFunctions: {
+        type: [AdvancedFunction]
+    },
+    advancedConditions: {
+        type: [AdvancedCondition]
+    },
+    advancedVariables: {
+        type: [AdvancedVariable]
     }
+
 });
 
 AuthoringStory.virtual('id').get(function () {
@@ -183,7 +240,6 @@ AuthoringStory.virtual('id').get(function () {
 AuthoringStory.set('toJSON', {
     virtuals: true
 });
-
 
 
 // Exports --------------------------------------------------------------------
