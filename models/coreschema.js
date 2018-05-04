@@ -230,8 +230,8 @@ var CheckCondition = new Schema({
 var StoryCollection = new Schema({
     name: {type: String, required: true},
     description: {type: String, require: true},
-    storyIds: [{type: String, ref: 'Story', required: true}]
-
+    storyIds: [{type: String, ref: 'Story', required: true}],
+    slug: {type: String, required: true}
 });
 
 StoryCollection.virtual('id').get(function () {

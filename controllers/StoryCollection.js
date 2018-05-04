@@ -116,7 +116,8 @@ function update(req, res, next) {
     CoreSchema.StoryCollection.findByIdAndUpdate(storyCollectionId, {
         name: req.body.name,
         description: req.body.description,
-        storyIds: req.body.storyIds
+        storyIds: req.body.storyIds,
+        slug: req.body.slug
     }, {new: true, runValidators: true}, function (err, storyCollection) {
         if (err) {
             return next(err);
