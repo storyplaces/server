@@ -115,10 +115,10 @@ Router.route('/auth/publicJwtKey')
     .get(SocialAuthentication.getPublicKey);
 
 Router.route('/collection')
-    .get(StoryCollection.index);
+    .get(StoryCollection.indexReadingTool);
 
 Router.route('/collection/:collectionId')
-    .get(StoryCollection.fetch);
+    .get(StoryCollection.fetchReadingTool);
 
 Router.use('/authoring', authoringRouter());
 

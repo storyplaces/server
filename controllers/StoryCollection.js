@@ -42,11 +42,14 @@
 
 var CoreSchema = require('../models/coreschema');
 var helpers = require('./helpers.js');
+let markdown = require('../conversion/Markdown');
 
 exports.create = create;
 exports.index = index;
 exports.update = update;
 exports.fetch = fetch;
+exports.indexReadingTool = indexReadingTool;
+exports.fetchReadingTool = fetchReadingTool;
 exports.remove = remove;
 
 function create(req, res, next) {
@@ -104,6 +107,53 @@ function fetch(req, res, next) {
 
         res.json(toSend);
     });
+}
+
+function indexReadingTool(req, res, next) {
+    CoreSchema.StoryCollection.find(function (err, storyCollections) {
+        if (err) {
+            return next(err);
+        }
+
+        let toSend = storyCollections
+            .map(storyCollection => {
+                storyCollection = convertForReadingTool(storyCollection);
+                return helpers.sanitizeOutboundObject(storyCollection)
+            });
+
+        res.json(toSend);
+    });
+}
+
+function fetchReadingTool(req, res, next) {
+    try {
+        var storyCollectionId = helpers.validateId(req.params.story_collection_id);
+    } catch (error) {
+        return next(error);
+    }
+
+    CoreSchema.StoryCollection.findById(storyCollectionId, function (err, storyCollection) {
+        if (err) {
+            return next(err);
+        }
+
+        if (!storyCollection) {
+            var error = new Error();
+            error.status = 404;
+            error.clientMessage = error.message = "Story Collection not found";
+            return next(error);
+        }
+
+        storyCollection = convertForReadingTool(storyCollection);
+        let toSend = helpers.sanitizeOutboundObject(storyCollection);
+
+        res.json(toSend);
+    });
+}
+
+function convertForReadingTool(storyCollection) {
+    storyCollection.description = markdown.render(storyCollection.description);
+    return storyCollection;
 }
 
 function update(req, res, next) {
