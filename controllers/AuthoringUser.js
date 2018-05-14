@@ -75,6 +75,14 @@ function index(req, res, next) {
             return next(err);
         }
 
+        authoringUsers = authoringUsers.map(authoringUser => {
+            authoringUser = helpers.sanitizeOutboundObject(authoringUser);
+
+            delete authoringUser.googleID;
+            return authoringUser;
+        });
+
+
         res.json(authoringUsers);
     });
 }
@@ -169,7 +177,7 @@ function update(req, res, next) {
     });
 }
 
-function assignRoles(req, res, next){
+function assignRoles(req, res, next) {
     let userId;
 
     try {

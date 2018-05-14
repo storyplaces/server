@@ -43,9 +43,9 @@ process.env.NODE_ENV = 'test';
 var mongoose = require("mongoose");
 var mongoDb = require('mongodb');
 var ObjectId = mongoDb.ObjectID;
-var AuthoringSchema = require('../models/authoringSchema');
+var AuthoringSchema = require('../../models/authoringSchema');
 
-let jwt = require('../auth/JwtAuthentication');
+let jwt = require('../../auth/JwtAuthentication');
 
 // Misc requires
 var fs = require('fs');
@@ -53,7 +53,7 @@ var fs = require('fs');
 //Require the dev-dependencies
 var chai = require('chai');
 var chaiHttp = require('chai-http');
-var server = require('../server');
+var server = require('../../server');
 var should = chai.should();
 
 chai.use(chaiHttp);
@@ -64,21 +64,22 @@ describe('AuthoringStories', function () {
 
     beforeEach(() => {
         return AuthoringSchema.AuthoringStory.remove({})
-            .then(()=>{
+            .then(() => {
                 return AuthoringSchema.AuthoringUser.remove({});
             })
             .then(() => {
                 return new AuthoringSchema.AuthoringUser({
                     email: "test.user@example.local",
-                    name:"Test user",
-                    bio:"Bio",
+                    name: "Test user",
+                    bio: "Bio",
                     roles: ["author", "admin"],
                     googleID: "abc123",
                     enabled: true
-                }).save();
-            })
-            .then(user => {
-                authHeader = "Basic " + jwt.createJWTFromUser(user);
+                })
+                    .save()
+                    .then(user => {
+                        authHeader = "Basic " + jwt.createJWTFromUser(user);
+                    });
             });
     });
 
@@ -153,7 +154,7 @@ describe('AuthoringStories', function () {
                 .set("Authorization", authHeader)
                 .send(story)
                 .end(function (err, res) {
-                    if(err) {
+                    if (err) {
                         throw new Error(err)
                     }
 

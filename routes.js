@@ -175,12 +175,6 @@ function authoringRouter() {
     AuthoringRouter.route('/story/:story_id/downloadJson')
         .post([HasPrivilege(['requestPublicationOfOwnStory', 'requestPublicationOfAnyStory']), AuthoringStory.downloadJson]);
 
-    // Create AuthoringUser
-    // Get list of AuthoringUsers
-    // AuthoringRouter.route('/user')
-    //     .post([HasPrivilege(['createAuthoringUser'])], AuthoringUser.create)
-    //     .get([HasPrivilege(['listAllUsers'])], AuthoringUser.index);
-
     // Get AuthoringUser
     // Update AuthoringUser
     AuthoringRouter.route('/user/:user_id')
