@@ -40,8 +40,8 @@
 
 "use strict";
 
-var CoreSchema = require('../models/coreschema');
-var helpers = require('./helpers.js');
+let CoreSchema = require('../models/coreschema');
+let helpers = require('./helpers.js');
 let markdown = require('../conversion/Markdown');
 
 exports.create = create;
@@ -56,7 +56,7 @@ function create(req, res, next) {
 
     let requestBody = helpers.sanitizeAndValidateInboundIds(undefined, req.body);
 
-    var storyCollection = new CoreSchema.StoryCollection(requestBody);
+    let storyCollection = new CoreSchema.StoryCollection(requestBody);
 
     storyCollection.save(function (err) {
         if (err) {
@@ -66,7 +66,7 @@ function create(req, res, next) {
         }
 
         let toSend = helpers.sanitizeOutboundJson(storyCollection);
-        console.log(toSend);
+        res.statusCode = 201;
 
         res.json(toSend);
     });
@@ -85,8 +85,10 @@ function index(req, res, next) {
 }
 
 function fetch(req, res, next) {
+    let storyCollectionId;
+
     try {
-        var storyCollectionId = helpers.validateId(req.params.story_collection_id);
+        storyCollectionId = helpers.validateId(req.params.story_collection_id);
     } catch (error) {
         return next(error);
     }
@@ -97,7 +99,7 @@ function fetch(req, res, next) {
         }
 
         if (!storyCollection) {
-            var error = new Error();
+            let error = new Error();
             error.status = 404;
             error.clientMessage = error.message = "Story Collection not found";
             return next(error);
@@ -126,8 +128,10 @@ function indexReadingTool(req, res, next) {
 }
 
 function fetchReadingTool(req, res, next) {
+    let storyCollectionId;
+
     try {
-        var storyCollectionId = helpers.validateId(req.params.story_collection_id);
+        storyCollectionId = helpers.validateId(req.params.collectionId);
     } catch (error) {
         return next(error);
     }
@@ -138,7 +142,7 @@ function fetchReadingTool(req, res, next) {
         }
 
         if (!storyCollection) {
-            var error = new Error();
+            let error = new Error();
             error.status = 404;
             error.clientMessage = error.message = "Story Collection not found";
             return next(error);
@@ -157,8 +161,9 @@ function convertForReadingTool(storyCollection) {
 }
 
 function update(req, res, next) {
+    let storyCollectionId;
     try {
-        var storyCollectionId = helpers.validateId(req.params.collectionId);
+        storyCollectionId = helpers.validateId(req.params.collectionId);
     } catch (error) {
         return next(error);
     }
@@ -174,7 +179,7 @@ function update(req, res, next) {
         }
 
         if (!storyCollection) {
-            var error = new Error();
+            let error = new Error();
             error.status = 400;
             error.clientMessage = error.message = "Unable To update Story Collection";
             return next(error);
@@ -187,8 +192,9 @@ function update(req, res, next) {
 }
 
 function remove(req, res, next) {
+    let collectionId;
     try {
-        var collectionId = helpers.validateId(req.params.collectionId);
+         collectionId = helpers.validateId(req.params.collectionId);
     } catch (error) {
         return next(error);
     }
@@ -199,7 +205,7 @@ function remove(req, res, next) {
         }
 
         if (!collection) {
-            var error = new Error();
+            let error = new Error();
             error.status = 400;
             error.clientMessage = error.message = "Unable to delete collection";
             return next(error);
