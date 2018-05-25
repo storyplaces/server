@@ -70,6 +70,14 @@ let AuthoringImage = new Schema({
     mimeType: {type: String, required: true},
 });
 
+// AuthoringAudio ----------------------------------------------------------------------
+
+let AuthoringAudio = new Schema({
+    id: {type: String, required: true},
+    storyId: {type: String, required: true},
+    mimeType: {type: String, required: true},
+});
+
 // AuthoringPage -----------------------------------------------------------------------
 
 var AuthoringPage = new Schema({
@@ -87,6 +95,7 @@ var AuthoringPage = new Schema({
         required: true
     },
     imageId: {type: String},
+    audioId: {type: String},
     advancedConditionIds: [{type: String}],
     advancedFunctionIds: [{type: String}]
 });
@@ -218,6 +227,9 @@ var AuthoringStory = new Schema({
     imageIds: {
         type: [String]
     },
+    audioIds: {
+        type: [String]
+    },
     advancedLocations: {
         type: [AdvancedLocation]
     },
@@ -250,6 +262,7 @@ module.exports = {
     AuthoringChapter: mongoose.model('AuthoringChapter', AuthoringChapter),
     AuthoringCircleLocation: mongoose.model('AuthoringCircleLocation', AuthoringCircleLocation),
     AuthoringStory: mongoose.model('AuthoringStory', AuthoringStory),
-    AuthoringImage: mongoose.model('AuthoringImage', AuthoringImage)
+    AuthoringImage: mongoose.model('AuthoringImage', AuthoringImage),
+    AuthoringAudio: mongoose.model('AuthoringAudio', AuthoringAudio)
 };
 

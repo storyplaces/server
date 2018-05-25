@@ -50,6 +50,7 @@ function processPage(page, authoringStory, readingStory) {
     utils.addCondition(pageUnlockedByConditionId, conditions);
 
     handleImage(page, authoringStory, readingStory);
+    handleAudio(page, authoringStory, readingStory);
 
     readingStory.pages.push({
         id: page.id,
@@ -80,19 +81,42 @@ function addImageToStory(imageId, authoringStory, readingStory) {
     return imageId;
 }
 
+function handleAudio(page, authoringStory, readingStory) {
+
+    if (page.audioId && authoringStory.audioIds.indexOf(page.audioId) !== -1) {
+        addAudioToStory(page.audioId, authoringStory, readingStory);
+    }
+    return page.audioId;
+}
+
+function addAudioToStory(audioId, authoringStory, readingStory) {
+    readingStory.cachedMediaIds.push(audioId);
+    return audioId;
+}
+
 function buildPageContent(page) {
 
     let html = markdown.render(page.content);
 
-    if (!page.imageId) {
-        return html;
+    if (page.imageId) {
+        html = addImageTagsToPageContent(page.imageId, html);
     }
-    return addImageTagsToPageContent(page.imageId, html);
+
+    if (page.audioId) {
+        html = addAudioTagsToPageContent(page.audioId, html);
+    }
+
+    return html;
+
 }
 
 function addImageTagsToPageContent(imageId, pageContent) {
     var imageBlock = "<img style='max-width: 100%; display: block; margin: auto;' data-media-id='" + imageId + "'/><br/><br/>";
     return imageBlock + pageContent;
+}
+function addAudioTagsToPageContent(audioId, pageContent) {
+    var audioBlock = "<img style='max-width: 100%; display: block; margin: auto;' data-media-id='" + imageId + "'/><br/><br/>";
+    return audioBlock + pageContent;
 }
 
 function makeUnlockedByPagesConditionId(pageId) {

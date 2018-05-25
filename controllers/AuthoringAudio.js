@@ -53,22 +53,20 @@ let gm = require('gm');
 
 exports.create = create;
 exports.fetch = fetch;
-exports.fetchThumbnail = fetchThumbnail;
-exports.pruneImages = pruneImages;
 
 function create(req, res, next) {
 
     if (!req.file) {
-        let error = new Error("Unable to create image");
+        let error = new Error("Unable to create audio file");
         error.status = 400;
         error.clientMessage = error.message;
         return next(error);
     }
 
     let storyId = helpers.validateId(req.params.story_id);
-    let canUploadAnyImage = Authorisation.hasPrivileges(['uploadAnyImage'], req.internal.privileges);
+    let canUploadAnyAudio = Authorisation.hasPrivileges(['uploadAnyAudio'], req.internal.privileges);
 
-    checkStoryOwnership(storyId, canUploadAnyImage, req.internal.userId, (ownershipError) => {
+    checkStoryOwnership(storyId, canUploadAnyAudio, req.internal.userId, (ownershipError) => {
 
         if (ownershipError) {
             return next(ownershipError);
@@ -79,70 +77,38 @@ function create(req, res, next) {
         let mimeType = req.file.mimetype;
 
         if (!req.file || !filename || !filePath || !mimeType) {
-            let error = new Error("Bad image uploaded");
+            let error = new Error("Bad audio file uploaded");
             error.response = 400;
-            error.clientMessage = "Bad image";
+            error.clientMessage = "Bad audio file";
             return next(error);
         }
 
-        resizeImage(filePath, (resizeError) => {
-            if (resizeError) {
-                let error = new Error("Error resizing image");
-                return next(error);
+        let id = filename.substr(0, filename.lastIndexOf('.'));
+
+        let authoringImage = new AuthoringSchema.AuthoringImage({
+            id: id,
+            storyId: storyId,
+            mimeType: mimeType
+        });
+
+        authoringImage.save(err => {
+            if (err) {
+                err.status = 400;
+                err.message = "Unable to create image";
+                return next(err);
             }
 
-            let id = filename.substr(0, filename.lastIndexOf('.'));
+            createJSONFile(filePath, mimeType);
 
-            let authoringImage = new AuthoringSchema.AuthoringImage({
-                id: id,
-                storyId: storyId,
-                mimeType: mimeType
-            });
+            Logger.log(`Audio file ${id} uploaded for story ${storyId}`);
 
-            authoringImage.save(err => {
-                if (err) {
-                    err.status = 400;
-                    err.message = "Unable to create image";
-                    return next(err);
-                }
-
-                createJSONFile(filePath, mimeType);
-
-                let thumbnailPath = makeThumbnailPath(filePath);
-
-                makeThumbnail(req.file.path, thumbnailPath, (thumbnailError) => {
-                    if (thumbnailError) {
-                        let error = new Error("Error creating thumbnail image");
-                        return next(error);
-                    }
-
-                    createJSONFile(thumbnailPath, mimeType);
-
-                    Logger.log(`Image ${id} uploaded for story ${storyId}`);
-
-                    res.json({
-                        message: "Image created",
-                        imageId: id
-                    });
-                });
+            res.json({
+                message: "Audio File created",
+                audioId: id
             });
         });
+
     });
-}
-
-function resizeImage(filePath, callback) {
-    gm(filePath).noProfile().resize(800, 600).write(filePath, callback);
-}
-
-function makeThumbnail(filePath, thumbnailPath, callback) {
-    gm(filePath).noProfile().thumb(94, 94, thumbnailPath, 100, callback);
-}
-
-function makeThumbnailPath(filePath) {
-    let extn = filePath.substr(filePath.lastIndexOf('.') + 1);
-    let baseName = filePath.substr(0, filePath.lastIndexOf('.'));
-
-    return `${baseName}-thumb.${extn}`;
 }
 
 function createJSONFile(filePath, mimetype) {
@@ -162,20 +128,20 @@ function makePath(storyId) {
     return File.authoringMediaFolder() + '/' + storyId + '/';
 }
 
-function processFetch(req, res, next, thumbnail) {
+function processFetch(req, res, next) {
     let storyId;
-    let imageId;
+    let audioId;
 
     try {
         storyId = helpers.validateId(req.params.story_id);
-        imageId = helpers.validateId(req.params.image_id);
+        audioId = helpers.validateId(req.params.audio_id);
     } catch (error) {
         return next(error);
     }
 
-    let canFetchAnyImage = Authorisation.hasPrivileges(['getAnyImage'], req.internal.privileges);
+    let canFetchAnyAudio = Authorisation.hasPrivileges(['getAnyAudio'], req.internal.privileges);
 
-    checkStoryOwnership(storyId, canFetchAnyImage, req.internal.userId, (ownershipError) => {
+    checkStoryOwnership(storyId, canFetchAnyAudio, req.internal.userId, (ownershipError) => {
 
         if (ownershipError) {
             return next(ownershipError);
@@ -187,24 +153,18 @@ function processFetch(req, res, next, thumbnail) {
             maxAge: 60 * 24 * 1000
         };
 
-        AuthoringSchema.AuthoringImage.find({id: imageId, storyId: storyId}, (err, authoringImage) => {
+        AuthoringSchema.AuthoringAudio.find({id: audioId, storyId: storyId}, (err, authoringAudio) => {
             let filename;
 
             if (err) {
                 return next(err);
             }
 
-            if (!authoringImage) {
-                let error = new Error("Authoring Image id " + imageId + " for story " + storyId + " not found");
+            if (!authoringAudio) {
+                let error = new Error("Authoring Audio id " + audioId + " for story " + storyId + " not found");
                 error.status = 404;
-                error.clientMessage = "Image not found";
+                error.clientMessage = "Audio File not found";
                 return next(error);
-            }
-
-            if (thumbnail) {
-                filename = imageId + '-thumb.json';
-            } else {
-                filename = imageId + '.json';
             }
 
             res.sendFile(filename, fileOptions, err => {
@@ -220,17 +180,13 @@ function processFetch(req, res, next, thumbnail) {
     });
 }
 
-function fetchThumbnail(req, res, next) {
-    processFetch(req, res, next, true);
-}
-
 function fetch(req, res, next) {
     processFetch(req, res, next, false);
 }
 
-function checkStoryOwnership(storyId, canUploadAnyImage, userId, callback) {
+function checkStoryOwnership(storyId, canUploadAnyAudio, userId, callback) {
 
-    if (canUploadAnyImage) {
+    if (canUploadAnyAudio) {
         return callback(undefined);
     }
 
@@ -257,34 +213,32 @@ function checkStoryOwnership(storyId, canUploadAnyImage, userId, callback) {
     });
 }
 
-function pruneImages(storyId, imageIds) {
+function pruneAudio(storyId, audioIds) {
 
-    AuthoringSchema.AuthoringImage.find({storyId: storyId}, (err, authoringImages) => {
+    AuthoringSchema.AuthoringAudio.find({storyId: storyId}, (err, authoringAudioFiles) => {
         if (err) {
             throw err;
         }
 
-        authoringImages.forEach(image => {
-            if (imageIds.indexOf(image.id) === -1) {
-                Logger.log(`Cleaning up image ${image.id}`);
-                deleteImage(storyId, image.id, image.mimeType);
-                image.remove();
+        authoringAudioFiles.forEach(audioFile => {
+            if (audioIds.indexOf(audioFile.id) === -1) {
+                Logger.log(`Cleaning up audio file ${audioFile.id}`);
+                deleteAudio(storyId, audioFile.id, audioFile.mimeType);
+                audioFile.remove();
             }
         });
 
     });
 }
 
-function deleteImage(storyId, imageId, mimeType) {
-    let base = makePath(storyId) + '/' + imageId;
+function deleteAudio(storyId, audioId, mimeType) {
+    let base = makePath(storyId) + '/' + audioId;
     let extension = mimeType.split('/')[1];
 
     try {
         fs.unlinkSync(`${base}.${extension}`);
         fs.unlinkSync(`${base}.json`);
-        fs.unlinkSync(`${base}-thumb.${extension}`);
-        fs.unlinkSync(`${base}-thumb.json`);
     } catch (error) {
-        Logger.error(`Unable to delete image files for image id ${imageId} at base path ${base}`);
+        Logger.error(`Unable to delete audio files for audio id ${audioId} at base path ${base}`);
     }
 }
