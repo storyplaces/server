@@ -7,8 +7,8 @@ exports.hasPrivileges = hasPrivileges;
 exports.doesNotHavePrivileges = doesNotHavePrivileges;
 
 var rolesToPrivileges = {
-    "author": ["createStory", "deleteOwnStory", "editOwnStory", "requestPublicationOfOwnStory", "previewOwnStory", "listOwnStories", "updateOwnUser", "fetchOwnUser", "getOwnImage", "uploadOwnImage", "deleteOwnImage"],
-    "admin": ["getReviewStories", "updateReadingStoryPublishStatus", "deleteReadingStory", "previewAnyStory", "adminMenu", "fetchAnyStory", "requestPublicationOfAnyStory", "requestPreviewOfAnyStory", "editAnyStory", "getAnyImage", "uploadAnyImage", "getUserList", "assignUserRoles", "readLogs", "addReadingStory"]
+    "author": ["createStory", "deleteOwnStory", "editOwnStory", "requestPublicationOfOwnStory", "previewOwnStory", "listOwnStories", "updateOwnUser", "fetchOwnUser", "getOwnImage", "uploadOwnImage", "deleteOwnImage", "getOwnAudio", "uploadOwnAudio", "deleteOwnAudio"],
+    "admin": ["getReviewStories", "updateReadingStoryPublishStatus", "deleteReadingStory", "previewAnyStory", "adminMenu", "fetchAnyStory", "requestPublicationOfAnyStory", "requestPreviewOfAnyStory", "editAnyStory", "getAnyImage", "uploadAnyImage", "getAnyAudio", "uploadAnyAudio", "getUserList", "assignUserRoles", "readLogs", "addReadingStory"]
 };
 
 

@@ -1,1 +1,1109 @@
-{"name":"The Destitute and The Alien","author":"Tory.L.Dawson","description":"<p>It is 1895 and Jack the Ripper now lives in the City of Southampton. Newly promoted to caretaker of John Doling's Emigrants' Home in Albert Road, he spends his days fumigating the new arrivals and nights servicing prostitutes in nearby Simnel Street. For seven years he's kept his knife sheathed and his predilection for murder and dissection supressed. But with the arrival of Golda - a beautiful Russian Jewish girl fleeing from persecution in the Russian Pale – comes the reawakening of Jack's psychotic compulsions. Will Golda survive her stay at the Emigrants' Home to board the ship to take her to the New World? Or will her final destination be the cold mortuary slab? To find out, charge your smartphone, don your walking shoes and head for the City of Southampton. In ‘The Destitute and The Alien', streets you never knew existed, and likewise histories, await your exploration…</p><p>Story &copy; 2016 Tory.L.Dawson, All Rights Reserved.<br/><br/>Editors Charlie Hargood and Verity Hunt<br/><br/>Images of Canute Chambers and Simnel Street courtesy of Southampton City Council Arts and Heritage</p>","publishState":"published","_id":"579b8de189ed4ed46600005f","__v":0,"tags":["Southampton"],"cachedMediaIds":["1","2","3","5","6"],"functions":[{"type":"set","conditions":[],"variable":"seenA","value":"true","id":"seenA"},{"type":"set","conditions":[],"variable":"seenB","value":"true","id":"seenB"},{"type":"set","conditions":[],"variable":"seenC","value":"true","id":"seenC"},{"type":"set","conditions":[],"variable":"seenD","value":"true","id":"seenD"},{"type":"set","conditions":[],"variable":"seenE","value":"true","id":"seenE"},{"type":"set","conditions":[],"variable":"seenF","value":"true","id":"seenF"},{"type":"set","conditions":[],"variable":"seenG","value":"true","id":"seenG"},{"type":"set","conditions":[],"variable":"seenH","value":"true","id":"seenH"},{"type":"set","conditions":[],"variable":"seenI","value":"true","id":"seenI"},{"type":"set","conditions":[],"variable":"seenJ","value":"true","id":"seenJ"},{"type":"set","conditions":[],"variable":"seenK","value":"true","id":"seenK"},{"type":"set","conditions":[],"variable":"seenL","value":"true","id":"seenL"},{"type":"set","conditions":[],"variable":"seenM","value":"true","id":"seenM"},{"type":"set","conditions":[],"variable":"seenN","value":"true","id":"seenN"},{"type":"set","conditions":[],"variable":"seenO","value":"true","id":"seenO"},{"type":"set","conditions":[],"variable":"seenP","value":"true","id":"seenP"},{"type":"set","conditions":[],"variable":"seenQ","value":"true","id":"seenQ"},{"type":"set","conditions":[],"variable":"seenR","value":"true","id":"seenR"},{"type":"set","conditions":[],"variable":"seenS","value":"true","id":"seenS"},{"type":"set","conditions":[],"variable":"seenT","value":"true","id":"seenT"}],"conditions":[{"type":"location","bool":"true","location":"45d5e41959a56865ef13eb56","id":"canute_chambers"},{"type":"location","bool":"true","location":"ab4bec78dd659431a65d0167","id":"simnel_street"},{"type":"location","bool":"true","location":"cc57d4c549b3a984658aed2a","id":"the_undercroft"},{"type":"location","bool":"true","location":"32753b47a0c76b36377ca379","id":"french_garden"},{"type":"location","bool":"true","location":"7ac6b19265aa86f2aa8de335","id":"frog_and_frigate"},{"type":"location","bool":"true","location":"252a546ebaae6ceaea261273","id":"queens_park"},{"type":"location","bool":"true","location":"c46aa1a69738ec4bce3e2988","id":"Terminus_Terrace"},{"type":"location","bool":"true","location":"9a376ab822734e3f4cab321d","id":"emigrants_home"},{"type":"location","bool":"true","location":"463a56211192558b995eb3c6","id":"royalcrescent_albertroad"},{"type":"location","bool":"true","location":"8871e93a03f8552316113536","id":"cafe"},{"type":"location","bool":"true","location":"60d8d65b5eaad59c958284a6","id":"dockgate4"},{"type":"comparison","operand":"!=","a":"seenA","aType":"Variable","b":"true","bType":"String","id":"notSeenA"},{"type":"comparison","operand":"!=","a":"seenB","aType":"Variable","b":"true","bType":"String","id":"notSeenB"},{"type":"comparison","operand":"!=","a":"seenC","aType":"Variable","b":"true","bType":"String","id":"notSeenC"},{"type":"comparison","operand":"!=","a":"seenD","aType":"Variable","b":"true","bType":"String","id":"notSeenD"},{"type":"comparison","operand":"!=","a":"seenE","aType":"Variable","b":"true","bType":"String","id":"notSeenE"},{"type":"comparison","operand":"!=","a":"seenF","aType":"Variable","b":"true","bType":"String","id":"notSeenF"},{"type":"comparison","operand":"!=","a":"seenG","aType":"Variable","b":"true","bType":"String","id":"notSeenG"},{"type":"comparison","operand":"!=","a":"seenH","aType":"Variable","b":"true","bType":"String","id":"notSeenH"},{"type":"comparison","operand":"!=","a":"seenI","aType":"Variable","b":"true","bType":"String","id":"notSeenI"},{"type":"comparison","operand":"!=","a":"seenJ","aType":"Variable","b":"true","bType":"String","id":"notSeenJ"},{"type":"comparison","operand":"!=","a":"seenK","aType":"Variable","b":"true","bType":"String","id":"notSeenK"},{"type":"comparison","operand":"!=","a":"seenL","aType":"Variable","b":"true","bType":"String","id":"notSeenL"},{"type":"comparison","operand":"!=","a":"seenM","aType":"Variable","b":"true","bType":"String","id":"notSeenM"},{"type":"comparison","operand":"!=","a":"seenN","aType":"Variable","b":"true","bType":"String","id":"notSeenN"},{"type":"comparison","operand":"!=","a":"seenO","aType":"Variable","b":"true","bType":"String","id":"notSeenO"},{"type":"comparison","operand":"!=","a":"seenP","aType":"Variable","b":"true","bType":"String","id":"notSeenP"},{"type":"comparison","operand":"!=","a":"seenQ","aType":"Variable","b":"true","bType":"String","id":"notSeenQ"},{"type":"comparison","operand":"!=","a":"seenR","aType":"Variable","b":"true","bType":"String","id":"notSeenR"},{"type":"comparison","operand":"!=","a":"seenS","aType":"Variable","b":"true","bType":"String","id":"notSeenS"},{"type":"comparison","operand":"!=","a":"seenT","aType":"Variable","b":"true","bType":"String","id":"notSeenT"},{"type":"comparison","operand":"==","a":"seenA","aType":"Variable","b":"true","bType":"String","id":"seenA"},{"type":"comparison","operand":"==","a":"seenB","aType":"Variable","b":"true","bType":"String","id":"seenB"},{"type":"comparison","operand":"==","a":"seenC","aType":"Variable","b":"true","bType":"String","id":"seenC"},{"type":"comparison","operand":"==","a":"seenD","aType":"Variable","b":"true","bType":"String","id":"seenD"},{"type":"comparison","operand":"==","a":"seenE","aType":"Variable","b":"true","bType":"String","id":"seenE"},{"type":"comparison","operand":"==","a":"seenF","aType":"Variable","b":"true","bType":"String","id":"seenF"},{"type":"comparison","operand":"==","a":"seenG","aType":"Variable","b":"true","bType":"String","id":"seenG"},{"type":"comparison","operand":"==","a":"seenH","aType":"Variable","b":"true","bType":"String","id":"seenH"},{"type":"comparison","operand":"==","a":"seenI","aType":"Variable","b":"true","bType":"String","id":"seenI"},{"type":"comparison","operand":"==","a":"seenJ","aType":"Variable","b":"true","bType":"String","id":"seenJ"},{"type":"comparison","operand":"==","a":"seenK","aType":"Variable","b":"true","bType":"String","id":"seenK"},{"type":"comparison","operand":"==","a":"seenL","aType":"Variable","b":"true","bType":"String","id":"seenL"},{"type":"comparison","operand":"==","a":"seenM","aType":"Variable","b":"true","bType":"String","id":"seenM"},{"type":"comparison","operand":"==","a":"seenN","aType":"Variable","b":"true","bType":"String","id":"seenN"},{"type":"comparison","operand":"==","a":"seenO","aType":"Variable","b":"true","bType":"String","id":"seenO"},{"type":"comparison","operand":"==","a":"seenP","aType":"Variable","b":"true","bType":"String","id":"seenP"},{"type":"comparison","operand":"==","a":"seenQ","aType":"Variable","b":"true","bType":"String","id":"seenQ"},{"type":"comparison","operand":"==","a":"seenR","aType":"Variable","b":"true","bType":"String","id":"seenR"},{"type":"comparison","operand":"==","a":"seenS","aType":"Variable","b":"true","bType":"String","id":"seenS"},{"type":"comparison","operand":"==","a":"seenT","aType":"Variable","b":"true","bType":"String","id":"seenT"}],"id":"579b8de189ed4ed46600005f","pages":[{"content":"Well, yes, I have granted you, dear reader/flaneur/voyeur (you are free to choose which best describes you),what I must insist is an expeditious visit to Canute Chambers. But you must understand that it is with the proviso that, once I have moved you on from this place - for move you on I will, by force of compelling narrative rather than by any other force you may envisage – you can neither return here (for it will mean stepping outside the bounds of my story) nor continue to believe that the city of Southampton is noteworthy only for the sinking of The Titanic. Forgive me, perhaps I should have made this point altogether more pellucid when first we met at The Tudor House in Bugle Street, but I hoped our initial meeting place might have curtailed this somewhat predictable, if you do not mind my saying so, expectation of yours. And so now I find myself in the detestable position of having to warn you that, once you leave the bus-stop where now you stand (beneath its shelter if it is raining and you continue to possess the sense you were born with), you will be journeying back in time, from the year 1912 to the year 1895. However, you are not yet there. Look down at your right hand; it has been grasped by a young girl named Emily, who is a pupil at the nearby Northam Girls' School and who has just mistaken you for a relative.","_id":"579b915f89ed4ed466000099","hint":{"direction":"Canute Chambers","locations":["45d5e41959a56865ef13eb56"]},"functions":["seenA"],"conditions":["canute_chambers","notSeenA"],"id":"579b915f89ed4ed466000099","name":"Page A","pageTransition":"next"},{"content":"<img data-media-id='1'/><br/><br/>‘Canute Chambers? What are they and what is their connection to the sinking of The Titanic?' you ask. Read the plaque on the wall. It will answer your questions far more precisely than I can. Meanwhile, I shall return to Emily as I feel sure you will once you've understood that she, together with her beloved mother and five younger siblings, are awaiting news of her father, a fireman on RMS Titanic. Perhaps, dear reader, you may be a gentleman in your thirties, with sandy-coloured hair and an impressive moustache, sporting a navy blue jacket and pale grey trousers. If so, I suspect Emily sought your hand because you reminded her of her father - a consequence of wishful thinking rather than mistaken identity. You may scan the thousand-strong crowd assembled on Canute Road to look for her. You wish you had not let go of her hand because you want to assure her, as your natural instinct dictates, that all may still be well. But of the 724 crew members from Southampton, only 175 survived the sinking to return home. I wish I could assure you that Emily's father is among them, but I cannot construct that happy ending just to please you. You may in the end come to regard me as an unreliable narrator, but you certainly shall not consider me a dishonest one. Somewhere in the North Atlantic a crew member of CS Mackay-Bennett has already pulled the lifeless body of Emily's father from the sea.","_id":"579b915f89ed4ed466000098","hint":{"direction":"Canute Chambers","locations":["45d5e41959a56865ef13eb56"]},"functions":["seenB"],"conditions":["canute_chambers","seenA","notSeenB"],"id":"579b915f89ed4ed466000098","name":"Page B","pageTransition":"next"},{"content":"So, here you are about to leave Emily for what can only be described as a peculiar story. It encompasses at least one psychotic character with a penchant for anatomy, vivisection, dissection and also young women. Sound familiar? Trust me, you'll get to him later. Naturally, you hope this story has an altogether much rosier outcome (though I've already spoken about this and am not in the habit of repeating myself). I wholeheartedly comprehend your reluctance to abandon Canute Road.  You feel as if you should have done more than simply gawp at this tragic spectre of grief before turning your back on it and fiddling with your smartphone or tablet device. However, punishing yourself with one last glance at the notices tacked to the railings isn't going to improve your humour, nor alter the ending here: Emily's father has already been laid to rest in an unmarked grave in Fairview Cemetery, Halifax, Nova Scotia. Alas, a trip to the Canadian maritime province to pay your respects to the non-repatriated dead isn't on the cards. This is a story propelled by legs rather than by any other form of locomotion with which you might be familiar. But rest assured that to this day, the grave of Emily's father is unstintingly tended by the good people of Nova Scotia. So, chin-up, you are in the City of Southampton. Streets that you never knew existed are about to be explored, and likewise histories. Onwards - and backwards - to 1895 or thereabouts.","_id":"579b915f89ed4ed466000097","hint":{"direction":"Canute Chambers","locations":["45d5e41959a56865ef13eb56"]},"functions":["seenC"],"conditions":["canute_chambers","seenB","notSeenC"],"id":"579b915f89ed4ed466000097","name":"Page C","pageTransition":"next"},{"content":"<img data-media-id='3' /><br/><br/>Here you are in Simnel Street patently lusting after fruit cake and marzipan balls. You suppose this street was named thus because this is where the traditional Easter sweetmeat was first confected. You are picturing fine Victorian girls in high collars and bodices of mulberry-coloured silk, fashioning Jesus and his apostles in to spheres before toasting the tops of them in the flames of open fires in parlours up and down this attractive little street of bijou residences. (That is, if you have managed to stay on the historical trajectory upon which I cast you, and have avoided the allure of The Titanic public house on the corner, so named in 2012, not 1912.) I don't propose to lecture you on the etymology of the word ‘Simnel' here nor remind you that only the very rich possessed an oven in which to bake a cake, but suffice it to say that what you have imagined of this street is wholly inaccurate. You currently stand among ancient and ruined dwellings fortified by rotting timber beams. The walls ooze filth and urine issues from the windows. If I may say so, you are also up to your ankles in horse, cow, dog, cat, rat and human shit. I sincerely hope that the garment concealing your lower half is neither long nor flared in nature. I accept that I should have warned you to tread more carefully, but you must forgive me for this minor transgression. I was more concerned with preserving your life.","_id":"579b915f89ed4ed466000096","hint":{"direction":"Simnel Street","locations":["ab4bec78dd659431a65d0167"]},"functions":["seenD"],"conditions":["simnel_street","seenC","notSeenD"],"id":"579b915f89ed4ed466000096","name":"Page D","pageTransition":"next"},{"content":"I cannot deny that your life is in peril. The houses in this street are liable to collapse at any moment and strike you with a fatal blow. Look around you, how could you anticipate otherwise? Which reminds me, before the walls come crashing down, I advise you to secrete your valuables about your person, and where relevant, tuck your prized tresses inside your collar. For in Simnel Street your body will be robbed of valuables and your hair harvested and sold to the local wigmaker before the undertaker is called. (If it were not for your unorthodox clothing, you would be stripped naked too.) And now, your countenance is marred by outrage. Naturally, it is your right to demand the names of your would-be violators, but nobody in this street is going to furnish you with such information. Not unless you are prepared to pay handsomely for it. Money talks here; laws are ignored here; gin makes everything jollier here; children in patched rags scamper barefoot in the muck here; prostitutes in fourth-hand dresses loiter after dark here, and the man in the leather apron skulking at the entrance to that alleyway over there (to your left), is the man that every other living thing is afraid of here. (Incidentally, he goes by the name of Jack.) If you want to see the house in which he spends his … spare time (I doubt he will permit you entry to the lady's room), you're going to have to pass him in that alleyway first.","_id":"579b915f89ed4ed466000095","hint":{"direction":"Simnel Street","locations":["ab4bec78dd659431a65d0167"]},"functions":["seenE"],"conditions":["simnel_street","seenD","notSeenE"],"id":"579b915f89ed4ed466000095","name":"Page E","pageTransition":"next"},{"content":"You do well not to turn your back on Jack and Simnel Street. Treating this unknown entity and this labyrinthine place as you might a pride of starving lions you've blundered into, is commendable. Your tactic: face the danger and slowly retreat, is absolutely right. My only other suggestion would be to stop eyeballing Jack. I'm quite confident that you do not want to catch his eye. Good deep breaths, that's the ticket. You know, I actually considered bringing you here at night! Yes, at night. Only because I think that's when Jack's most likely to wield the knife he keeps in his pocket. ‘Well I wouldn't have come,' you mutter. Holy Jesus, do you know you said that without moving your lips? Let me try: ‘Well I'm afraid I would have insisted.' Any good? Fiddlesticks, I seemed to have piqued Jack's interest. I realise you're gripped by terror. I see you are about to lose control of yourself. Let me assure you that I'm averting my eyes with all the speed of Prince Albert's favourite greyhound bitch, Eos, chasing a rabbit. (And what meets my eyes but the most remarkable pile of dung. From the way you're also assessing it – its girth, its depth, its moistness – you're either a confirmed Scatologist or a keen gardener with a I should like to digress for a page, if you will permit me.  I know a man with a talent for rose bush or three.) You see, I've got a theory about ‘our' Jack. Do you remember the Whitechapel murders? I painting. I am about to digress I know a man with a talent for painting. Van Gogh. Does that shall whisper this bit: ‘I think our Jack is Jack the Ripper.'  make him  No, but it does mean he's been influenced","_id":"579b915f89ed4ed466000094","hint":{"direction":"The Undercroft on Simnel Street","locations":["cc57d4c549b3a984658aed2a"]},"functions":["seenF"],"conditions":["the_undercroft","seenE","notSeenF"],"id":"579b915f89ed4ed466000094","name":"Page F","pageTransition":"next"},{"content":"You remember our conversation about Jack? The one where I confided my theory about his true identity. And you thought, Poppycock, or some such thing. Alright, had fear not silenced you at the time, your response might have differed somewhat in terms of word choice, but I never said mind-reading was a perfect science. As we've travelled from location to location growing ever more intimate with Victorian Southampton, the characters of this story and, dare I say, one another, I've begun to feel somewhat beleaguered by your perpetual doubts as to Jack's criminal history. The man carries a very sharp knife in his pocket and if you'd only look more closely at the blade, you'd find a streak of dried human (female) blood there! It's so obviously the blood of his last poor victim, Mary Jane Kelly, whom he murdered in 1888. There you go again with your, Poppycock and, sorry, what else was that, Purely circumstantial? Be vigilant, dear reader: next time you observe Jack in conversation with a young and vulnerable woman, watch how he fixates on her slender neck. He isn't imagining himself placing an elaborate gold necklace of flowers and foliage there (as if he could afford such a thing), but drawing his sharp blade across her throat to sever her carotid artery and afterwards, emptying her abdomen of its uterus and whatever other organs within it take his fancy. Fear not, we'll get to the hows and the whys he fetched up in Southampton, soon.","_id":"579b915f89ed4ed466000093","hint":{"direction":"","locations":[]},"functions":["seenG"],"conditions":["seenF","notSeenG"],"id":"579b915f89ed4ed466000093","name":"Page G","pageTransition":"next"},{"content":"I daresay you are wondering why I chose to reveal Jack's murderous past to you here in this courtyard. This place with its thirteenth-century vault and medieval walls probably gives you the willies. I agree it is very easy to imagine an atrocity being perpetrated here. I for one have a feeling that this is where Jack will bring Golda to slit her throat. (Have you noticed how secluded this place is? You can't see a single soul over those walls. Imagine it at night.) If you could read Jack's thoughts as well as I can then I wouldn't have to tell you that he's already murdered Golda countless times in his mind. This is precisely how he comported himself seven years earlier. For weeks, he watched Mary Ann Nichols, Annie Chapman, Elizabeth Stride, Catherine Eddowes and Mary Jane Kelly go about their ‘immoral' business in the dark alleyways of Whitechapel. And from his room on Lamb street, he pictured himself ridding the streets of their filthy ways by mutilating and then murdering them before he actually got round to doing it. The ensuing man-hunt led by Detective Inspector Edmund Reid of the Metropolitan Police caused Jack to flee to Southampton. ‘Why Southampton?' you ask. I am tempted to reply, ‘Why not?' As this story relates, many people who live in Southampton don't hail from the town. But the truth is, when Jack arrived at Waterloo breathless and desperate to avoid capture, the first train to depart was for Southampton.","_id":"579b915f89ed4ed466000092","hint":{"direction":"The French Garden between the high street and french street","locations":["32753b47a0c76b36377ca379"]},"functions":["seenH"],"conditions":["french_garden","seenG","notSeenH"],"id":"579b915f89ed4ed466000092","name":"Page H","pageTransition":"next"},{"content":"You want to return to the subject of Jack murdering Golda but we've moved on from the location where Goldamight die. We're now at The Frog and Frigate public house, which was formerly John Doling's Workman's Home to accommodate dock workers. Jack responded to John Doling's advertisement for a ‘trustworthy and temperate' man to become its Caretaker. Jack got the job and since the job came with a room, somewhere to live too. (Becoming caretaker at the Emigrants' Home a few years later was what you might term ‘promotion' for Jack.) ‘But Golda isn't a prostitute,' you rudely interrupt. ‘So why would Jack want to kill her? And why would Jack have it in for prostitutes when he himself visits that one in Simnel Street?' You're as sound as a sovereign regarding Golda's virtue: she isn't a woman of loose character. As for doubting that Jack hates prostitutes, are you really going to insist that a man capable of murder isn't also capable of hypocrisy? Returning to Golda, you've forgotten that she's a Jew. I forgot to tell you that Jack in addition to being a hypocrite and murdering misogynist is also a secret anti-Semite. He doesn't know the exact duration of Golda's stay at the Emigrants' Home. Ships are vulnerable to delay. The SS Paris might be subject to unfavourable weather conditions or metallurgical failure and have to dock elsewhere. I have to tell you though that Jack's urge to kill Golda grows stronger with each new day.","_id":"579b915f89ed4ed466000091","hint":{"direction":"The Frog and Frigate pub on Canute Road","locations":["7ac6b19265aa86f2aa8de335"]},"functions":["seenI"],"conditions":["frog_and_frigate","seenH","notSeenI"],"id":"579b915f89ed4ed466000091","name":"Page I","pageTransition":"next"},{"content":"I don't mean to ruffle you, dear reader, but I must insist that we retrogress to a Wednesday afternoon when John Doling's Emigrants' Home is a tad shy of completion. Your demand for a hard hat is unwarranted – you're in Albert Road, not Simnel Street; the Emigrants' Home, though incomplete, is sound, and even if it wasn't and you were somehow maimed or struck dead by it, you're hardly going to be desecrated by the likes of Jack et al. in the presence of Mr. Doling and all these dignitaries. (How the mighty minds gathered on that platform in front of you would boggle at a hard hat! When I think of it thus, I wish I'd made the provision.)  Upon the platform - tastefully decorated by Jack I'll have you know, with flags lent by the American Line – are, first and foremost, the Hon. Mrs Eliot Yorke (that's Annie, daughter of Sir Anthony de Rothschild, to you and me), Mr Doling (obviously), the Mayor of Southampton, a handful of representatives from the American Line, an American surgeon, a Consul for the United States, a couple of brass from the Docs Police, the hon. Secretary of the Southampton Chamber of Commerce, a Captain from the Union Company and a fair-sized smattering of other local bigwigs. (The air is thick with the pong of Macassar oil, cigar smoke and self-satisfaction.) These fine people (yourselves included), have gathered to witness Annie lay the much anticipated memorial stone. Hush now, proceedings are about to begin.","_id":"579b915f89ed4ed466000090","hint":{"direction":"The Emigrants' Home on Albert Road","locations":["9a376ab822734e3f4cab321d"]},"functions":["seenJ"],"conditions":["emigrants_home","seenI","notSeenJ"],"id":"579b915f89ed4ed466000090","name":"Page J","pageTransition":"next"},{"content":"I am terribly sorry, I should have foreseen that from this inferior vantage point you would have trouble hearing the verbal exchange between Annie and the Mayor of Southampton. I'd hoped to get you closer to the platform but the only spot available for the likes of you, dear reader, was the spot right beside Jack. I didn't think you'd like to stand there, even if it is just a boulder's throw from Annie.  But, alas, not only can you not hear, but your view is now impeded by a black silky sea of extraordinarily tall top hats. The height of the one directly in front of you is 20 centimetres! (I agree, the wearer's either a colossal show-off or a complete and utter short-arse.) But don't leave now, dear reader, you have yet to meet Golda, a young Jewish girl fleeing from persecution in the Russian Pale. Soon she will arrive in Hull and from there take the train to Southampton. By then, she will have heard of the Emigrants' home and will board there until such time as the SS Paris reaches Southampton to transport her to her distant cousin's abode in New York. Golda's beauty is nonpareil and her story is worth both the wait and the walk, I assure you. ‘Poor Planning and Preparation Produces Piss Poor Performance,' you exclaim. You forget that I hear and see everything. I'll act as commentator for the duration of this local historic event and you'll not miss another thing.","_id":"579b915f89ed4ed46600008f","hint":{"direction":"The Emigrants' Home on Albert Road","locations":["9a376ab822734e3f4cab321d"]},"functions":["seenK"],"conditions":["emigrants_home","seenJ","notSeenK"],"id":"579b915f89ed4ed46600008f","name":"Page K","pageTransition":"next"},{"content":"I'll tell you who's talking and what they say and do.  I cannot do more than that, don't you agree? <br/><br/>The Mayor: ‘We deeply regret that Mrs Eliot Yorke has been unable to attend this fine building prior to its proceeding thus far towards completion. Accordingly, this stone will be regarded as a memorial stone rather than a foundation stone. (Ahem.) It gives me great pleasure to announce that the heretofore absence of a home for emigrants is a defect that will soon be remedied by the kind efforts of Mrs Eliot Yorke, Mr. Doling, and all the other ladies and gentlemen who have assisted in the undertaking.' <br/><br/>(Someone hear, hears, Jack hawks up a great glob of phlegm, and the Mayor hands Annie a silver trowel. I wonder if she'll get to keep it?) <br/><br/>Annie: ‘My sincerest wish is that the Emigrants' Home provides comfort and sanctuary to all those awaiting transportation to a better life in far flung lands.'<br/><br/>(Annie wields the silver trowel and prepares the mortar with no less skill than a navvy. Jack, spurred into action with a nudge from John Doling, now hefts the memorial stone into place.) <br/><br/>Annie: ‘It is with great pleasure that I declare this memorial stone well and truly laid.' <br/><br/>(Everybody claps and Jack suffers a coughing fit. Could he have consumption?) <br/><br/>John Doling: ‘Three Cheers for Mrs Yorke.' <br/><br/>(Hip, hip, hooray etc. etc.) <br/><br/> John Doling: ‘Three Cheers for his…' <br/><br/> (I think we'll leave them at this juncture, dear reader, don't you?)","_id":"579b915f89ed4ed46600008e","hint":{"direction":"The Emigrants' Home on Albert Road","locations":["9a376ab822734e3f4cab321d"]},"functions":["seenL"],"conditions":["emigrants_home","seenK","notSeenL"],"id":"579b915f89ed4ed46600008e","name":"Page L","pageTransition":"next"},{"content":"The Emigrants' Home has four floors plus a basement. The basement is Jack's domain and houses the fumigation and drying rooms. The ground floor comprises dining hall, kitchen and reading room. You'll find the dormitories (and washrooms) on the first, second and third floors. Each dormitory provides beds for seventy potential emigrants. Each emigrant has a cubic space of 350 feet. (Should you wish to reproduce this degree of confinement the equivalent space can be found in the rear of a Ford Transit Van). Assuming mathematics is not your forte, 3 dormitories, multiplied by 70 emigrants, equals 210 emigrants. However, if you count the ones with long beards snoozing in their dirty coats on the concrete floor of the basement, the total number of emigrants seeking shelter here at any one time totals a good deal more. The system of inlet and outlet ventilation is second to none and if you continue to doubt it, I shall not hesitate to prove it to you with the requisite facts and figures. The Sanitary arrangements are rather novel, not to mention popular, since they flush all excreta away, (Jack for one always takes care to leave his crap at work and I don't blame him. In a different context, I do too). In short, dear reader, what more could an emigrant desire? ‘Warmth and security while they await the ship to take them to the new world,' you say. Hmm, the boiler in the basement and the steam pipes elsewhere, keep all animal life here warm.","_id":"579b915f89ed4ed46600008d","hint":{"direction":"The Emigrants' Home on Albert Road","locations":["9a376ab822734e3f4cab321d"]},"functions":["seenM"],"conditions":["emigrants_home","seenL","notSeenM"],"id":"579b915f89ed4ed46600008d","name":"Page M","pageTransition":"next"},{"content":"Let us leave John Doling to the business of running the Emigrants' Home, Jack to the business of disinfecting the twenty-five newly arrived ‘inmates' (Jack's word for them, not mine; I prefer ‘paying guest') and Golda to her joy of discovering the collection of books written in Russian and bought by Annie for the reading room. (Annie's generosity has also provided for the shelves to be stocked with titles written in English, French, German and Italian, and for each ‘paying guest' to be given the opportunity to sign the pledge of the Temperance Society. I'm sure you'll agree, dear reader, that promising to give up booze for the rest of your natural born life would top your ‘to do' list if you were in the shoes of the fleeing or the persecuted…) And now here you are in Queen's Park. Your question, ‘Why was the absence of a home for emigrants in Victorian Southampton considered to be a defect?' has occasioned this visit. I suggest you rest your weary legs on any one of the park benches available to you while I work on my answer. Perhaps take a moment to consider the Corinthian columns of the grade two listed memorial to Major-General Charles Gordon (aka Chinese Gordon for his service in the Far East); or the blackbirds hopping on the grass; or that squirrel circumnavigating the canopy of that nearby tree; or the seagulls above doing their upmost to remind you just how close you are to the sea.","_id":"579b915f89ed4ed46600008c","hint":{"direction":"Queens Park","locations":["252a546ebaae6ceaea261273"]},"functions":["seenN"],"conditions":["seenM","notSeenN","queens_park"],"id":"579b915f89ed4ed46600008c","name":"Page N","pageTransition":"next"},{"content":"It's been necessary to walk back to 1893. I know you're sick and tired of the flashbacks but we must go  back to this year in order to answer your question regarding the emergence of the Emigrants' Home. So many times I've wanted to take you to a place at night but my better judgement has intervened to keep you safe. Well, no more, dear reader. You must grace Queen's Park after hours to understand why the city of Southampton needed an Emigrants' Home. Furthermore, you must summon your imagination and view this park, not as you know it (i.e. as a beautiful and tranquil place that facilitates lazy endeavours), but as the countless number of homeless emigrants who slept here in 1893, knew it. (If you find this difficult, I suggest you briefly return to 2016 and google the migrant camp in Calais nicknamed, ‘The Jungle.') In 1893, this park is barren except for the memorial to Chinese Gordon which has served for months as a reliable centre pole in that makeshift tent you see yonder, but the roof does let in the rain. If you ask that man over there - the one trying to get that meagre pile of wood aflame to warm his wife and frostbitten children - the name by which this park is known, he'll tell you it's, ‘The Number One Open Air Hotel' and not ‘Queen's Park.' Here, disease is rife, crime is too, and children witness things no child should. That's why John Doling built the Emigrants' Home.","_id":"579b915f89ed4ed46600008b","hint":{"direction":"Queens Park","locations":["252a546ebaae6ceaea261273"]},"functions":["seenO"],"conditions":["seenN","notSeenO","queens_park"],"id":"579b915f89ed4ed46600008b","name":"Page O","pageTransition":"next"},{"content":"It's time you met Golda. She's just one of a group of twenty-eight emigrants travelling to the Emigrants' Home today. Pity, but you missed her arrival at Southampton Docks Station. For the spotty baggage porter at least, it was quite the event. The beauty of her particular otherworldliness touched him most intimately and rendered him speechless. His inability to offer any baggage-carrying assistance to the great and the good elsewhere on the platform caused the station master's peptic ulcer to flare up. It didn't help that Golda and the other emigrants  seemed incapable of locating the exit. (Of course neither the station master nor the porter had any Russian or Yiddish, and neither Golda nor any of the others spoke a word of English. Lucky for you, dear reader, I read  thoughts as well as speaking English, police-speak and rubbish, so will be able to transcribe all that transpires in Golda's mind perfectly well.) It required a series of explicit gestures (and if you press me for further details, not all of them polite) for the station master to rid his kingdom of these emigrants. And this is where you meet Golda now, outside the station on Terminus Terrace, just after a gang of vagabonds has swaggered past her roaring, ‘Down with the Jews! Down with the Jews!' - which, incidentally, reminds me of the words Jack daubed on a Whitechapel wall minutes after he'd murdered Catherine Eddowes, ‘The Jewes are the men that will not be blamed for nothing.' Deuced peculiar.","_id":"579b915f89ed4ed46600008a","hint":{"direction":"Terminus Terrace near South Western House","locations":["c46aa1a69738ec4bce3e2988"]},"functions":["seenP"],"conditions":["Terminus_Terrace","seenO","notSeenP"],"id":"579b915f89ed4ed46600008a","name":"Page P","pageTransition":"next"},{"content":"You desire to be enlightened about Golda's first impressions of Southampton. But as you can observe, she is not looking about her but staring at her feet. They are hurting something dreadful. The soles of her shoes are worn through. She may as well be trudging across the cobbles in her bare feet. And now she is bent double with a stomach cramp. Weeks of scarcely any food since fleeing her homeland followed by platefuls of alien, inedible food forced on her at Hull, has knocked her gut for six. Judging by the frequency and intensity of the spasms Golda is experiencing, I would guess she will be staring at her feet for some time. Perhaps you should take the opportunity to consider your own impressions of Southampton. (Fear not, just as soon as Golda can stand up straight she will resume her journey to the Emigrants' Home and we shall follow.) ‘Victorian Southampton or twenty-first century Southampton?' you ask.  You can see how hard it's been to keep you in Victorian Southampton when contemporary structures such as the one before you on the corner of Albert Road, intrude. (Betwixt you and I, dear reader, these ugly modern architectural excretions have caused me more than one attack of the vapours.) I have often had to consider how best to proceed. Have you ever been present when an upright elderly relative has loudly let one fly in company? Consider what might be one's reaction? The unpleasant eructation is generally ignored.","_id":"579b915f89ed4ed466000089","hint":{"direction":"Corner of Royal Crescent and Albert Road","locations":["463a56211192558b995eb3c6"]},"functions":["seenQ"],"conditions":["royalcrescent_albertroad","seenP","notSeenQ"],"id":"579b915f89ed4ed466000089","name":"Page Q","pageTransition":"next"},{"content":"I've furnished you with a copy of Southampton's leading tabloid, the Southern Echo. It's dated 29th August 1895 (several days before Golda's arrival in Southampton). I draw your attention to the headline, ‘More Comfort,' and the text thereunder: ‘In thus giving a passing glance at the numerous emigrants to Mr Doling's Emigrants' Home we cannot but remark upon the splendid improvement in the accommodation for them. The home is a very fine one. Here, men, women and children can restore themselves while they await their ship. In the reading room, we noticed that beside a few books, newspapers were also available. This is good. If the inhabitants of the home have to wait a day or two, what better occupation than posting themselves in the current events of the day. Doubtless those in authority would be glad if readers would take the hint and spare their old papers, magazines and books for the use of these emigrants. It would certainly be a kindly act, and one which would be highly appreciated.' Fast forward to the days following Golda's arrival, and here is Jack delivering a box of donated reading material to the reading room, wherein sits Golda, fragrant from a bath, reading Mirgorod, a collection of short stories by Nikolai Gogol (donated by Annie). While Jack pretends to arrange the donated books, Golda giggles at ‘The Tale of How Ivan Ivanovich Quarreled with Ivan Nikiforovich' and idly strokes her slender neck. Seconds later and hey presto, Jack the Ripper is reborn.","_id":"579b915f89ed4ed466000088","hint":{"direction":"The Grand Cafe at South Western House","locations":["8871e93a03f8552316113536"]},"functions":["seenR"],"conditions":["cafe","seenQ","notSeenR"],"id":"579b915f89ed4ed466000088","name":"Page R","pageTransition":"next"},{"content":"<audio data-media-id='7'></audio><br/><br/>You think that Jack has emptied the Emigrants' Home of all the emigrants except for Golda because he knows the SS Paris is expected tomorrow and this will be Golda's last night in Southampton. (I see you've imagined one of those now or never situations.) You see Golda alone in her dormitory on the second floor humming Tumbalalaika to herself as she pulls a brush through her thick black hair and frets slightly about the cost of that new white nightdress she's wearing. You see Jack climbing the wooden stairs to the second floor – stairs he's not long finished scrubbing - gripping that hideous knife of his in a manner reminiscent of the shower scene in the film Psycho (God Almighty, what an imagination you have!) You imagine that Golda's completely unaware of the danger she's in, but acknowledge (at last) that, if she knew she was home alone with Jack, she would fear for her life, sprint to the sash window, summon every ounce of her strength to throw the damn thing open, gather up the skirt of her nightdress so as not to trip on it and knock herself out (it's clearly a floor-length affair), climb onto the window ledge, step out onto the fire escape ladder that John Doling had bolted to the external wall, and shimmy down the bloody thing like a fire-fighter on a ladder test. Oh, why can't Golda hear Jack's boots upon the floor, dear reader? Why can't Jack have one of his coughing fits?  I think Golda has made it on-board the SS Paris.","_id":"579b915f89ed4ed466000087","hint":{"direction":"Emigrants Home","locations":["9a376ab822734e3f4cab321d"]},"functions":["seenS"],"conditions":["emigrants_home","notSeenS","notSeenT","seenR"],"id":"579b915f89ed4ed466000087","name":"Page S","pageTransition":"next"},{"content":"<img data-media-id='5' /><br/><br/><img data-media-id='6' /><br/><br/>Yes, I've brought you to dock gate 4 to wave off the SS Paris. It's a beautiful September morning. Sunlight glints off the English Channel and the prevailing breeze isn't disagreeable provided you're wearing a decent hat. Close your eyes and listen to the noises of the dockyard: the honk of a ship, the shouted dialogue of the dockworkers, the thunderous clank of a heavy chain as a vessel is released of its moorings, a constable of the dock police swinging his hand rattle and bellowing for assistance – I don't know if this officer's in the process of apprehending Jack, so please don't ask - a seagull chick crying for a titbit, and a derrick loading coal. How the pervading smell of tar prevents us from smelling the sea! (I know we've smelt worse when Jack's been disinfecting the newly arrived ‘inmates' but I still feel compelled to smother my nose with your handkerchief.) Let us return to Golda. You see her butchered corpse laid out upon a cold mortuary slab awaiting further surgical interference. I, on the other hand, see her quartered with 900 others on board the SS Paris. Since the facilities in steerage are deplorable and the air positively pestilential, I can't pretend that Golda is now free of danger (she might contract cholera.) But before you and I sadly part ways, let's imagine Golda arriving in New York and being welcomed by the ‘Mother of Exiles', the Statue of Liberty. (Rest assured, dear reader, it could happen.)","_id":"579b915f89ed4ed466000086","hint":{"direction":"The entrance to the dock near the Ferry Terminal","locations":["60d8d65b5eaad59c958284a6"]},"functions":["seenT"],"conditions":["dockgate4","notSeenT","seenR"],"id":"579b915f89ed4ed466000086","name":"Page T","pageTransition":"next"},{"content":"<h3>Thank you for reading one of our stories ...</h3><p>We hope you enjoyed this StoryPlaces story. We would greatly appreciate your opinions on this new approach to story telling. if you have time, filling out the short survey linked below will help us to understand how to improve our application and design new location-aware story experiences. If you would like to do another of our stories please click the StoryPlaces logo in the top left corner and select another story.</p><p><b><a href='https://www.isurvey.soton.ac.uk/20629'>Click Here to take our reader experience survey</a></b></p>","_id":"579b915f89ed4ed466000085","hint":{"direction":"","locations":[]},"functions":[],"conditions":["seenT"],"id":"579b915f89ed4ed466000085","name":"Finish","pageTransition":"end"}],"pagesMapViewSettings":{"map":true,"pageArrows":true,"pageDistance":true},"locations":[{"id":"45d5e41959a56865ef13eb56","type":"circle","lat":50.896933,"lon":-1.394094,"radius":20},{"id":"ab4bec78dd659431a65d0167","type":"circle","lat":50.900078,"lon":-1.405502,"radius":40},{"id":"cc57d4c549b3a984658aed2a","type":"circle","lat":50.900069,"lon":-1.405799,"radius":20},{"id":"32753b47a0c76b36377ca379","type":"circle","lat":50.897006,"lon":-1.404603,"radius":20},{"id":"7ac6b19265aa86f2aa8de335","type":"circle","lat":50.897545,"lon":-1.39204,"radius":20},{"id":"252a546ebaae6ceaea261273","type":"circle","lat":50.897302,"lon":-1.400381,"radius":50},{"id":"c46aa1a69738ec4bce3e2988","type":"circle","lat":50.897799,"lon":-1.396787,"radius":30},{"id":"9a376ab822734e3f4cab321d","type":"circle","lat":50.89796,"lon":-1.392375,"radius":30},{"id":"463a56211192558b995eb3c6","type":"circle","lat":50.897479,"lon":-1.393536,"radius":30},{"id":"8871e93a03f8552316113536","type":"circle","lat":50.897613,"lon":-1.396878,"radius":30},{"id":"60d8d65b5eaad59c958284a6","type":"circle","lat":50.896239,"lon":-1.404544,"radius":30}],"audience":"general","schemaVersion":"https://storyplaces.soton.ac.uk/schema/02-draft"}
+{
+  "name": "The Destitute and The Alien",
+  "author": "Tory.L.Dawson",
+  "description": "<p>It is 1895 and Jack the Ripper now lives in the City of Southampton. Newly promoted to caretaker of John Doling's Emigrants' Home in Albert Road, he spends his days fumigating the new arrivals and nights servicing prostitutes in nearby Simnel Street. For seven years he's kept his knife sheathed and his predilection for murder and dissection supressed. But with the arrival of Golda - a beautiful Russian Jewish girl fleeing from persecution in the Russian Pale – comes the reawakening of Jack's psychotic compulsions. Will Golda survive her stay at the Emigrants' Home to board the ship to take her to the New World? Or will her final destination be the cold mortuary slab? To find out, charge your smartphone, don your walking shoes and head for the City of Southampton. In ‘The Destitute and The Alien', streets you never knew existed, and likewise histories, await your exploration…</p><p>Story &copy; 2016 Tory.L.Dawson, All Rights Reserved.<br/><br/>Editors Charlie Hargood and Verity Hunt<br/><br/>Images of Canute Chambers and Simnel Street courtesy of Southampton City Council Arts and Heritage</p>",
+  "publishState": "published",
+  "_id": "579b8de189ed4ed46600005f",
+  "__v": 0,
+  "tags": [
+    "Southampton"
+  ],
+  "cachedMediaIds": [
+    "1",
+    "2",
+    "3",
+    "5",
+    "6"
+  ],
+  "functions": [
+    {
+      "type": "set",
+      "conditions": [],
+      "variable": "seenA",
+      "value": "true",
+      "id": "seenA"
+    },
+    {
+      "type": "set",
+      "conditions": [],
+      "variable": "seenB",
+      "value": "true",
+      "id": "seenB"
+    },
+    {
+      "type": "set",
+      "conditions": [],
+      "variable": "seenC",
+      "value": "true",
+      "id": "seenC"
+    },
+    {
+      "type": "set",
+      "conditions": [],
+      "variable": "seenD",
+      "value": "true",
+      "id": "seenD"
+    },
+    {
+      "type": "set",
+      "conditions": [],
+      "variable": "seenE",
+      "value": "true",
+      "id": "seenE"
+    },
+    {
+      "type": "set",
+      "conditions": [],
+      "variable": "seenF",
+      "value": "true",
+      "id": "seenF"
+    },
+    {
+      "type": "set",
+      "conditions": [],
+      "variable": "seenG",
+      "value": "true",
+      "id": "seenG"
+    },
+    {
+      "type": "set",
+      "conditions": [],
+      "variable": "seenH",
+      "value": "true",
+      "id": "seenH"
+    },
+    {
+      "type": "set",
+      "conditions": [],
+      "variable": "seenI",
+      "value": "true",
+      "id": "seenI"
+    },
+    {
+      "type": "set",
+      "conditions": [],
+      "variable": "seenJ",
+      "value": "true",
+      "id": "seenJ"
+    },
+    {
+      "type": "set",
+      "conditions": [],
+      "variable": "seenK",
+      "value": "true",
+      "id": "seenK"
+    },
+    {
+      "type": "set",
+      "conditions": [],
+      "variable": "seenL",
+      "value": "true",
+      "id": "seenL"
+    },
+    {
+      "type": "set",
+      "conditions": [],
+      "variable": "seenM",
+      "value": "true",
+      "id": "seenM"
+    },
+    {
+      "type": "set",
+      "conditions": [],
+      "variable": "seenN",
+      "value": "true",
+      "id": "seenN"
+    },
+    {
+      "type": "set",
+      "conditions": [],
+      "variable": "seenO",
+      "value": "true",
+      "id": "seenO"
+    },
+    {
+      "type": "set",
+      "conditions": [],
+      "variable": "seenP",
+      "value": "true",
+      "id": "seenP"
+    },
+    {
+      "type": "set",
+      "conditions": [],
+      "variable": "seenQ",
+      "value": "true",
+      "id": "seenQ"
+    },
+    {
+      "type": "set",
+      "conditions": [],
+      "variable": "seenR",
+      "value": "true",
+      "id": "seenR"
+    },
+    {
+      "type": "set",
+      "conditions": [],
+      "variable": "seenS",
+      "value": "true",
+      "id": "seenS"
+    },
+    {
+      "type": "set",
+      "conditions": [],
+      "variable": "seenT",
+      "value": "true",
+      "id": "seenT"
+    }
+  ],
+  "conditions": [
+    {
+      "type": "location",
+      "bool": "true",
+      "location": "45d5e41959a56865ef13eb56",
+      "id": "canute_chambers"
+    },
+    {
+      "type": "location",
+      "bool": "true",
+      "location": "ab4bec78dd659431a65d0167",
+      "id": "simnel_street"
+    },
+    {
+      "type": "location",
+      "bool": "true",
+      "location": "cc57d4c549b3a984658aed2a",
+      "id": "the_undercroft"
+    },
+    {
+      "type": "location",
+      "bool": "true",
+      "location": "32753b47a0c76b36377ca379",
+      "id": "french_garden"
+    },
+    {
+      "type": "location",
+      "bool": "true",
+      "location": "7ac6b19265aa86f2aa8de335",
+      "id": "frog_and_frigate"
+    },
+    {
+      "type": "location",
+      "bool": "true",
+      "location": "252a546ebaae6ceaea261273",
+      "id": "queens_park"
+    },
+    {
+      "type": "location",
+      "bool": "true",
+      "location": "c46aa1a69738ec4bce3e2988",
+      "id": "Terminus_Terrace"
+    },
+    {
+      "type": "location",
+      "bool": "true",
+      "location": "9a376ab822734e3f4cab321d",
+      "id": "emigrants_home"
+    },
+    {
+      "type": "location",
+      "bool": "true",
+      "location": "463a56211192558b995eb3c6",
+      "id": "royalcrescent_albertroad"
+    },
+    {
+      "type": "location",
+      "bool": "true",
+      "location": "8871e93a03f8552316113536",
+      "id": "cafe"
+    },
+    {
+      "type": "location",
+      "bool": "true",
+      "location": "60d8d65b5eaad59c958284a6",
+      "id": "dockgate4"
+    },
+    {
+      "type": "comparison",
+      "operand": "!=",
+      "a": "seenA",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "notSeenA"
+    },
+    {
+      "type": "comparison",
+      "operand": "!=",
+      "a": "seenB",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "notSeenB"
+    },
+    {
+      "type": "comparison",
+      "operand": "!=",
+      "a": "seenC",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "notSeenC"
+    },
+    {
+      "type": "comparison",
+      "operand": "!=",
+      "a": "seenD",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "notSeenD"
+    },
+    {
+      "type": "comparison",
+      "operand": "!=",
+      "a": "seenE",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "notSeenE"
+    },
+    {
+      "type": "comparison",
+      "operand": "!=",
+      "a": "seenF",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "notSeenF"
+    },
+    {
+      "type": "comparison",
+      "operand": "!=",
+      "a": "seenG",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "notSeenG"
+    },
+    {
+      "type": "comparison",
+      "operand": "!=",
+      "a": "seenH",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "notSeenH"
+    },
+    {
+      "type": "comparison",
+      "operand": "!=",
+      "a": "seenI",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "notSeenI"
+    },
+    {
+      "type": "comparison",
+      "operand": "!=",
+      "a": "seenJ",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "notSeenJ"
+    },
+    {
+      "type": "comparison",
+      "operand": "!=",
+      "a": "seenK",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "notSeenK"
+    },
+    {
+      "type": "comparison",
+      "operand": "!=",
+      "a": "seenL",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "notSeenL"
+    },
+    {
+      "type": "comparison",
+      "operand": "!=",
+      "a": "seenM",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "notSeenM"
+    },
+    {
+      "type": "comparison",
+      "operand": "!=",
+      "a": "seenN",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "notSeenN"
+    },
+    {
+      "type": "comparison",
+      "operand": "!=",
+      "a": "seenO",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "notSeenO"
+    },
+    {
+      "type": "comparison",
+      "operand": "!=",
+      "a": "seenP",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "notSeenP"
+    },
+    {
+      "type": "comparison",
+      "operand": "!=",
+      "a": "seenQ",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "notSeenQ"
+    },
+    {
+      "type": "comparison",
+      "operand": "!=",
+      "a": "seenR",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "notSeenR"
+    },
+    {
+      "type": "comparison",
+      "operand": "!=",
+      "a": "seenS",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "notSeenS"
+    },
+    {
+      "type": "comparison",
+      "operand": "!=",
+      "a": "seenT",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "notSeenT"
+    },
+    {
+      "type": "comparison",
+      "operand": "==",
+      "a": "seenA",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "seenA"
+    },
+    {
+      "type": "comparison",
+      "operand": "==",
+      "a": "seenB",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "seenB"
+    },
+    {
+      "type": "comparison",
+      "operand": "==",
+      "a": "seenC",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "seenC"
+    },
+    {
+      "type": "comparison",
+      "operand": "==",
+      "a": "seenD",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "seenD"
+    },
+    {
+      "type": "comparison",
+      "operand": "==",
+      "a": "seenE",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "seenE"
+    },
+    {
+      "type": "comparison",
+      "operand": "==",
+      "a": "seenF",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "seenF"
+    },
+    {
+      "type": "comparison",
+      "operand": "==",
+      "a": "seenG",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "seenG"
+    },
+    {
+      "type": "comparison",
+      "operand": "==",
+      "a": "seenH",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "seenH"
+    },
+    {
+      "type": "comparison",
+      "operand": "==",
+      "a": "seenI",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "seenI"
+    },
+    {
+      "type": "comparison",
+      "operand": "==",
+      "a": "seenJ",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "seenJ"
+    },
+    {
+      "type": "comparison",
+      "operand": "==",
+      "a": "seenK",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "seenK"
+    },
+    {
+      "type": "comparison",
+      "operand": "==",
+      "a": "seenL",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "seenL"
+    },
+    {
+      "type": "comparison",
+      "operand": "==",
+      "a": "seenM",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "seenM"
+    },
+    {
+      "type": "comparison",
+      "operand": "==",
+      "a": "seenN",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "seenN"
+    },
+    {
+      "type": "comparison",
+      "operand": "==",
+      "a": "seenO",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "seenO"
+    },
+    {
+      "type": "comparison",
+      "operand": "==",
+      "a": "seenP",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "seenP"
+    },
+    {
+      "type": "comparison",
+      "operand": "==",
+      "a": "seenQ",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "seenQ"
+    },
+    {
+      "type": "comparison",
+      "operand": "==",
+      "a": "seenR",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "seenR"
+    },
+    {
+      "type": "comparison",
+      "operand": "==",
+      "a": "seenS",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "seenS"
+    },
+    {
+      "type": "comparison",
+      "operand": "==",
+      "a": "seenT",
+      "aType": "Variable",
+      "b": "true",
+      "bType": "String",
+      "id": "seenT"
+    }
+  ],
+  "id": "579b8de189ed4ed46600005f",
+  "pages": [
+    {
+      "content": "Well, yes, I have granted you, dear reader/flaneur/voyeur (you are free to choose which best describes you),what I must insist is an expeditious visit to Canute Chambers. But you must understand that it is with the proviso that, once I have moved you on from this place - for move you on I will, by force of compelling narrative rather than by any other force you may envisage – you can neither return here (for it will mean stepping outside the bounds of my story) nor continue to believe that the city of Southampton is noteworthy only for the sinking of The Titanic. Forgive me, perhaps I should have made this point altogether more pellucid when first we met at The Tudor House in Bugle Street, but I hoped our initial meeting place might have curtailed this somewhat predictable, if you do not mind my saying so, expectation of yours. And so now I find myself in the detestable position of having to warn you that, once you leave the bus-stop where now you stand (beneath its shelter if it is raining and you continue to possess the sense you were born with), you will be journeying back in time, from the year 1912 to the year 1895. However, you are not yet there. Look down at your right hand; it has been grasped by a young girl named Emily, who is a pupil at the nearby Northam Girls' School and who has just mistaken you for a relative.",
+      "_id": "579b915f89ed4ed466000099",
+      "hint": {
+        "direction": "Canute Chambers",
+        "locations": [
+          "45d5e41959a56865ef13eb56"
+        ]
+      },
+      "functions": [
+        "seenA"
+      ],
+      "conditions": [
+        "canute_chambers",
+        "notSeenA"
+      ],
+      "id": "579b915f89ed4ed466000099",
+      "name": "Page A",
+      "pageTransition": "next"
+    },
+    {
+      "content": "<img data-media-id='1'/><br/><br/>‘Canute Chambers? What are they and what is their connection to the sinking of The Titanic?' you ask. Read the plaque on the wall. It will answer your questions far more precisely than I can. Meanwhile, I shall return to Emily as I feel sure you will once you've understood that she, together with her beloved mother and five younger siblings, are awaiting news of her father, a fireman on RMS Titanic. Perhaps, dear reader, you may be a gentleman in your thirties, with sandy-coloured hair and an impressive moustache, sporting a navy blue jacket and pale grey trousers. If so, I suspect Emily sought your hand because you reminded her of her father - a consequence of wishful thinking rather than mistaken identity. You may scan the thousand-strong crowd assembled on Canute Road to look for her. You wish you had not let go of her hand because you want to assure her, as your natural instinct dictates, that all may still be well. But of the 724 crew members from Southampton, only 175 survived the sinking to return home. I wish I could assure you that Emily's father is among them, but I cannot construct that happy ending just to please you. You may in the end come to regard me as an unreliable narrator, but you certainly shall not consider me a dishonest one. Somewhere in the North Atlantic a crew member of CS Mackay-Bennett has already pulled the lifeless body of Emily's father from the sea.",
+      "_id": "579b915f89ed4ed466000098",
+      "hint": {
+        "direction": "Canute Chambers",
+        "locations": [
+          "45d5e41959a56865ef13eb56"
+        ]
+      },
+      "functions": [
+        "seenB"
+      ],
+      "conditions": [
+        "canute_chambers",
+        "seenA",
+        "notSeenB"
+      ],
+      "id": "579b915f89ed4ed466000098",
+      "name": "Page B",
+      "pageTransition": "next"
+    },
+    {
+      "content": "So, here you are about to leave Emily for what can only be described as a peculiar story. It encompasses at least one psychotic character with a penchant for anatomy, vivisection, dissection and also young women. Sound familiar? Trust me, you'll get to him later. Naturally, you hope this story has an altogether much rosier outcome (though I've already spoken about this and am not in the habit of repeating myself). I wholeheartedly comprehend your reluctance to abandon Canute Road.  You feel as if you should have done more than simply gawp at this tragic spectre of grief before turning your back on it and fiddling with your smartphone or tablet device. However, punishing yourself with one last glance at the notices tacked to the railings isn't going to improve your humour, nor alter the ending here: Emily's father has already been laid to rest in an unmarked grave in Fairview Cemetery, Halifax, Nova Scotia. Alas, a trip to the Canadian maritime province to pay your respects to the non-repatriated dead isn't on the cards. This is a story propelled by legs rather than by any other form of locomotion with which you might be familiar. But rest assured that to this day, the grave of Emily's father is unstintingly tended by the good people of Nova Scotia. So, chin-up, you are in the City of Southampton. Streets that you never knew existed are about to be explored, and likewise histories. Onwards - and backwards - to 1895 or thereabouts.",
+      "_id": "579b915f89ed4ed466000097",
+      "hint": {
+        "direction": "Canute Chambers",
+        "locations": [
+          "45d5e41959a56865ef13eb56"
+        ]
+      },
+      "functions": [
+        "seenC"
+      ],
+      "conditions": [
+        "canute_chambers",
+        "seenB",
+        "notSeenC"
+      ],
+      "id": "579b915f89ed4ed466000097",
+      "name": "Page C",
+      "pageTransition": "next"
+    },
+    {
+      "content": "<img data-media-id='3' /><br/><br/>Here you are in Simnel Street patently lusting after fruit cake and marzipan balls. You suppose this street was named thus because this is where the traditional Easter sweetmeat was first confected. You are picturing fine Victorian girls in high collars and bodices of mulberry-coloured silk, fashioning Jesus and his apostles in to spheres before toasting the tops of them in the flames of open fires in parlours up and down this attractive little street of bijou residences. (That is, if you have managed to stay on the historical trajectory upon which I cast you, and have avoided the allure of The Titanic public house on the corner, so named in 2012, not 1912.) I don't propose to lecture you on the etymology of the word ‘Simnel' here nor remind you that only the very rich possessed an oven in which to bake a cake, but suffice it to say that what you have imagined of this street is wholly inaccurate. You currently stand among ancient and ruined dwellings fortified by rotting timber beams. The walls ooze filth and urine issues from the windows. If I may say so, you are also up to your ankles in horse, cow, dog, cat, rat and human shit. I sincerely hope that the garment concealing your lower half is neither long nor flared in nature. I accept that I should have warned you to tread more carefully, but you must forgive me for this minor transgression. I was more concerned with preserving your life.",
+      "_id": "579b915f89ed4ed466000096",
+      "hint": {
+        "direction": "Simnel Street",
+        "locations": [
+          "ab4bec78dd659431a65d0167"
+        ]
+      },
+      "functions": [
+        "seenD"
+      ],
+      "conditions": [
+        "simnel_street",
+        "seenC",
+        "notSeenD"
+      ],
+      "id": "579b915f89ed4ed466000096",
+      "name": "Page D",
+      "pageTransition": "next"
+    },
+    {
+      "content": "I cannot deny that your life is in peril. The houses in this street are liable to collapse at any moment and strike you with a fatal blow. Look around you, how could you anticipate otherwise? Which reminds me, before the walls come crashing down, I advise you to secrete your valuables about your person, and where relevant, tuck your prized tresses inside your collar. For in Simnel Street your body will be robbed of valuables and your hair harvested and sold to the local wigmaker before the undertaker is called. (If it were not for your unorthodox clothing, you would be stripped naked too.) And now, your countenance is marred by outrage. Naturally, it is your right to demand the names of your would-be violators, but nobody in this street is going to furnish you with such information. Not unless you are prepared to pay handsomely for it. Money talks here; laws are ignored here; gin makes everything jollier here; children in patched rags scamper barefoot in the muck here; prostitutes in fourth-hand dresses loiter after dark here, and the man in the leather apron skulking at the entrance to that alleyway over there (to your left), is the man that every other living thing is afraid of here. (Incidentally, he goes by the name of Jack.) If you want to see the house in which he spends his … spare time (I doubt he will permit you entry to the lady's room), you're going to have to pass him in that alleyway first.",
+      "_id": "579b915f89ed4ed466000095",
+      "hint": {
+        "direction": "Simnel Street",
+        "locations": [
+          "ab4bec78dd659431a65d0167"
+        ]
+      },
+      "functions": [
+        "seenE"
+      ],
+      "conditions": [
+        "simnel_street",
+        "seenD",
+        "notSeenE"
+      ],
+      "id": "579b915f89ed4ed466000095",
+      "name": "Page E",
+      "pageTransition": "next"
+    },
+    {
+      "content": "You do well not to turn your back on Jack and Simnel Street. Treating this unknown entity and this labyrinthine place as you might a pride of starving lions you've blundered into, is commendable. Your tactic: face the danger and slowly retreat, is absolutely right. My only other suggestion would be to stop eyeballing Jack. I'm quite confident that you do not want to catch his eye. Good deep breaths, that's the ticket. You know, I actually considered bringing you here at night! Yes, at night. Only because I think that's when Jack's most likely to wield the knife he keeps in his pocket. ‘Well I wouldn't have come,' you mutter. Holy Jesus, do you know you said that without moving your lips? Let me try: ‘Well I'm afraid I would have insisted.' Any good? Fiddlesticks, I seemed to have piqued Jack's interest. I realise you're gripped by terror. I see you are about to lose control of yourself. Let me assure you that I'm averting my eyes with all the speed of Prince Albert's favourite greyhound bitch, Eos, chasing a rabbit. (And what meets my eyes but the most remarkable pile of dung. From the way you're also assessing it – its girth, its depth, its moistness – you're either a confirmed Scatologist or a keen gardener with a I should like to digress for a page, if you will permit me.  I know a man with a talent for rose bush or three.) You see, I've got a theory about ‘our' Jack. Do you remember the Whitechapel murders? I painting. I am about to digress I know a man with a talent for painting. Van Gogh. Does that shall whisper this bit: ‘I think our Jack is Jack the Ripper.'  make him  No, but it does mean he's been influenced",
+      "_id": "579b915f89ed4ed466000094",
+      "hint": {
+        "direction": "The Undercroft on Simnel Street",
+        "locations": [
+          "cc57d4c549b3a984658aed2a"
+        ]
+      },
+      "functions": [
+        "seenF"
+      ],
+      "conditions": [
+        "the_undercroft",
+        "seenE",
+        "notSeenF"
+      ],
+      "id": "579b915f89ed4ed466000094",
+      "name": "Page F",
+      "pageTransition": "next"
+    },
+    {
+      "content": "You remember our conversation about Jack? The one where I confided my theory about his true identity. And you thought, Poppycock, or some such thing. Alright, had fear not silenced you at the time, your response might have differed somewhat in terms of word choice, but I never said mind-reading was a perfect science. As we've travelled from location to location growing ever more intimate with Victorian Southampton, the characters of this story and, dare I say, one another, I've begun to feel somewhat beleaguered by your perpetual doubts as to Jack's criminal history. The man carries a very sharp knife in his pocket and if you'd only look more closely at the blade, you'd find a streak of dried human (female) blood there! It's so obviously the blood of his last poor victim, Mary Jane Kelly, whom he murdered in 1888. There you go again with your, Poppycock and, sorry, what else was that, Purely circumstantial? Be vigilant, dear reader: next time you observe Jack in conversation with a young and vulnerable woman, watch how he fixates on her slender neck. He isn't imagining himself placing an elaborate gold necklace of flowers and foliage there (as if he could afford such a thing), but drawing his sharp blade across her throat to sever her carotid artery and afterwards, emptying her abdomen of its uterus and whatever other organs within it take his fancy. Fear not, we'll get to the hows and the whys he fetched up in Southampton, soon.",
+      "_id": "579b915f89ed4ed466000093",
+      "hint": {
+        "direction": "",
+        "locations": []
+      },
+      "functions": [
+        "seenG"
+      ],
+      "conditions": [
+        "seenF",
+        "notSeenG"
+      ],
+      "id": "579b915f89ed4ed466000093",
+      "name": "Page G",
+      "pageTransition": "next"
+    },
+    {
+      "content": "I daresay you are wondering why I chose to reveal Jack's murderous past to you here in this courtyard. This place with its thirteenth-century vault and medieval walls probably gives you the willies. I agree it is very easy to imagine an atrocity being perpetrated here. I for one have a feeling that this is where Jack will bring Golda to slit her throat. (Have you noticed how secluded this place is? You can't see a single soul over those walls. Imagine it at night.) If you could read Jack's thoughts as well as I can then I wouldn't have to tell you that he's already murdered Golda countless times in his mind. This is precisely how he comported himself seven years earlier. For weeks, he watched Mary Ann Nichols, Annie Chapman, Elizabeth Stride, Catherine Eddowes and Mary Jane Kelly go about their ‘immoral' business in the dark alleyways of Whitechapel. And from his room on Lamb street, he pictured himself ridding the streets of their filthy ways by mutilating and then murdering them before he actually got round to doing it. The ensuing man-hunt led by Detective Inspector Edmund Reid of the Metropolitan Police caused Jack to flee to Southampton. ‘Why Southampton?' you ask. I am tempted to reply, ‘Why not?' As this story relates, many people who live in Southampton don't hail from the town. But the truth is, when Jack arrived at Waterloo breathless and desperate to avoid capture, the first train to depart was for Southampton.",
+      "_id": "579b915f89ed4ed466000092",
+      "hint": {
+        "direction": "The French Garden between the high street and french street",
+        "locations": [
+          "32753b47a0c76b36377ca379"
+        ]
+      },
+      "functions": [
+        "seenH"
+      ],
+      "conditions": [
+        "french_garden",
+        "seenG",
+        "notSeenH"
+      ],
+      "id": "579b915f89ed4ed466000092",
+      "name": "Page H",
+      "pageTransition": "next"
+    },
+    {
+      "content": "You want to return to the subject of Jack murdering Golda but we've moved on from the location where Goldamight die. We're now at The Frog and Frigate public house, which was formerly John Doling's Workman's Home to accommodate dock workers. Jack responded to John Doling's advertisement for a ‘trustworthy and temperate' man to become its Caretaker. Jack got the job and since the job came with a room, somewhere to live too. (Becoming caretaker at the Emigrants' Home a few years later was what you might term ‘promotion' for Jack.) ‘But Golda isn't a prostitute,' you rudely interrupt. ‘So why would Jack want to kill her? And why would Jack have it in for prostitutes when he himself visits that one in Simnel Street?' You're as sound as a sovereign regarding Golda's virtue: she isn't a woman of loose character. As for doubting that Jack hates prostitutes, are you really going to insist that a man capable of murder isn't also capable of hypocrisy? Returning to Golda, you've forgotten that she's a Jew. I forgot to tell you that Jack in addition to being a hypocrite and murdering misogynist is also a secret anti-Semite. He doesn't know the exact duration of Golda's stay at the Emigrants' Home. Ships are vulnerable to delay. The SS Paris might be subject to unfavourable weather conditions or metallurgical failure and have to dock elsewhere. I have to tell you though that Jack's urge to kill Golda grows stronger with each new day.",
+      "_id": "579b915f89ed4ed466000091",
+      "hint": {
+        "direction": "The Frog and Frigate pub on Canute Road",
+        "locations": [
+          "7ac6b19265aa86f2aa8de335"
+        ]
+      },
+      "functions": [
+        "seenI"
+      ],
+      "conditions": [
+        "frog_and_frigate",
+        "seenH",
+        "notSeenI"
+      ],
+      "id": "579b915f89ed4ed466000091",
+      "name": "Page I",
+      "pageTransition": "next"
+    },
+    {
+      "content": "I don't mean to ruffle you, dear reader, but I must insist that we retrogress to a Wednesday afternoon when John Doling's Emigrants' Home is a tad shy of completion. Your demand for a hard hat is unwarranted – you're in Albert Road, not Simnel Street; the Emigrants' Home, though incomplete, is sound, and even if it wasn't and you were somehow maimed or struck dead by it, you're hardly going to be desecrated by the likes of Jack et al. in the presence of Mr. Doling and all these dignitaries. (How the mighty minds gathered on that platform in front of you would boggle at a hard hat! When I think of it thus, I wish I'd made the provision.)  Upon the platform - tastefully decorated by Jack I'll have you know, with flags lent by the American Line – are, first and foremost, the Hon. Mrs Eliot Yorke (that's Annie, daughter of Sir Anthony de Rothschild, to you and me), Mr Doling (obviously), the Mayor of Southampton, a handful of representatives from the American Line, an American surgeon, a Consul for the United States, a couple of brass from the Docs Police, the hon. Secretary of the Southampton Chamber of Commerce, a Captain from the Union Company and a fair-sized smattering of other local bigwigs. (The air is thick with the pong of Macassar oil, cigar smoke and self-satisfaction.) These fine people (yourselves included), have gathered to witness Annie lay the much anticipated memorial stone. Hush now, proceedings are about to begin.",
+      "_id": "579b915f89ed4ed466000090",
+      "hint": {
+        "direction": "The Emigrants' Home on Albert Road",
+        "locations": [
+          "9a376ab822734e3f4cab321d"
+        ]
+      },
+      "functions": [
+        "seenJ"
+      ],
+      "conditions": [
+        "emigrants_home",
+        "seenI",
+        "notSeenJ"
+      ],
+      "id": "579b915f89ed4ed466000090",
+      "name": "Page J",
+      "pageTransition": "next"
+    },
+    {
+      "content": "I am terribly sorry, I should have foreseen that from this inferior vantage point you would have trouble hearing the verbal exchange between Annie and the Mayor of Southampton. I'd hoped to get you closer to the platform but the only spot available for the likes of you, dear reader, was the spot right beside Jack. I didn't think you'd like to stand there, even if it is just a boulder's throw from Annie.  But, alas, not only can you not hear, but your view is now impeded by a black silky sea of extraordinarily tall top hats. The height of the one directly in front of you is 20 centimetres! (I agree, the wearer's either a colossal show-off or a complete and utter short-arse.) But don't leave now, dear reader, you have yet to meet Golda, a young Jewish girl fleeing from persecution in the Russian Pale. Soon she will arrive in Hull and from there take the train to Southampton. By then, she will have heard of the Emigrants' home and will board there until such time as the SS Paris reaches Southampton to transport her to her distant cousin's abode in New York. Golda's beauty is nonpareil and her story is worth both the wait and the walk, I assure you. ‘Poor Planning and Preparation Produces Piss Poor Performance,' you exclaim. You forget that I hear and see everything. I'll act as commentator for the duration of this local historic event and you'll not miss another thing.",
+      "_id": "579b915f89ed4ed46600008f",
+      "hint": {
+        "direction": "The Emigrants' Home on Albert Road",
+        "locations": [
+          "9a376ab822734e3f4cab321d"
+        ]
+      },
+      "functions": [
+        "seenK"
+      ],
+      "conditions": [
+        "emigrants_home",
+        "seenJ",
+        "notSeenK"
+      ],
+      "id": "579b915f89ed4ed46600008f",
+      "name": "Page K",
+      "pageTransition": "next"
+    },
+    {
+      "content": "I'll tell you who's talking and what they say and do.  I cannot do more than that, don't you agree? <br/><br/>The Mayor: ‘We deeply regret that Mrs Eliot Yorke has been unable to attend this fine building prior to its proceeding thus far towards completion. Accordingly, this stone will be regarded as a memorial stone rather than a foundation stone. (Ahem.) It gives me great pleasure to announce that the heretofore absence of a home for emigrants is a defect that will soon be remedied by the kind efforts of Mrs Eliot Yorke, Mr. Doling, and all the other ladies and gentlemen who have assisted in the undertaking.' <br/><br/>(Someone hear, hears, Jack hawks up a great glob of phlegm, and the Mayor hands Annie a silver trowel. I wonder if she'll get to keep it?) <br/><br/>Annie: ‘My sincerest wish is that the Emigrants' Home provides comfort and sanctuary to all those awaiting transportation to a better life in far flung lands.'<br/><br/>(Annie wields the silver trowel and prepares the mortar with no less skill than a navvy. Jack, spurred into action with a nudge from John Doling, now hefts the memorial stone into place.) <br/><br/>Annie: ‘It is with great pleasure that I declare this memorial stone well and truly laid.' <br/><br/>(Everybody claps and Jack suffers a coughing fit. Could he have consumption?) <br/><br/>John Doling: ‘Three Cheers for Mrs Yorke.' <br/><br/>(Hip, hip, hooray etc. etc.) <br/><br/> John Doling: ‘Three Cheers for his…' <br/><br/> (I think we'll leave them at this juncture, dear reader, don't you?)",
+      "_id": "579b915f89ed4ed46600008e",
+      "hint": {
+        "direction": "The Emigrants' Home on Albert Road",
+        "locations": [
+          "9a376ab822734e3f4cab321d"
+        ]
+      },
+      "functions": [
+        "seenL"
+      ],
+      "conditions": [
+        "emigrants_home",
+        "seenK",
+        "notSeenL"
+      ],
+      "id": "579b915f89ed4ed46600008e",
+      "name": "Page L",
+      "pageTransition": "next"
+    },
+    {
+      "content": "The Emigrants' Home has four floors plus a basement. The basement is Jack's domain and houses the fumigation and drying rooms. The ground floor comprises dining hall, kitchen and reading room. You'll find the dormitories (and washrooms) on the first, second and third floors. Each dormitory provides beds for seventy potential emigrants. Each emigrant has a cubic space of 350 feet. (Should you wish to reproduce this degree of confinement the equivalent space can be found in the rear of a Ford Transit Van). Assuming mathematics is not your forte, 3 dormitories, multiplied by 70 emigrants, equals 210 emigrants. However, if you count the ones with long beards snoozing in their dirty coats on the concrete floor of the basement, the total number of emigrants seeking shelter here at any one time totals a good deal more. The system of inlet and outlet ventilation is second to none and if you continue to doubt it, I shall not hesitate to prove it to you with the requisite facts and figures. The Sanitary arrangements are rather novel, not to mention popular, since they flush all excreta away, (Jack for one always takes care to leave his crap at work and I don't blame him. In a different context, I do too). In short, dear reader, what more could an emigrant desire? ‘Warmth and security while they await the ship to take them to the new world,' you say. Hmm, the boiler in the basement and the steam pipes elsewhere, keep all animal life here warm.",
+      "_id": "579b915f89ed4ed46600008d",
+      "hint": {
+        "direction": "The Emigrants' Home on Albert Road",
+        "locations": [
+          "9a376ab822734e3f4cab321d"
+        ]
+      },
+      "functions": [
+        "seenM"
+      ],
+      "conditions": [
+        "emigrants_home",
+        "seenL",
+        "notSeenM"
+      ],
+      "id": "579b915f89ed4ed46600008d",
+      "name": "Page M",
+      "pageTransition": "next"
+    },
+    {
+      "content": "Let us leave John Doling to the business of running the Emigrants' Home, Jack to the business of disinfecting the twenty-five newly arrived ‘inmates' (Jack's word for them, not mine; I prefer ‘paying guest') and Golda to her joy of discovering the collection of books written in Russian and bought by Annie for the reading room. (Annie's generosity has also provided for the shelves to be stocked with titles written in English, French, German and Italian, and for each ‘paying guest' to be given the opportunity to sign the pledge of the Temperance Society. I'm sure you'll agree, dear reader, that promising to give up booze for the rest of your natural born life would top your ‘to do' list if you were in the shoes of the fleeing or the persecuted…) And now here you are in Queen's Park. Your question, ‘Why was the absence of a home for emigrants in Victorian Southampton considered to be a defect?' has occasioned this visit. I suggest you rest your weary legs on any one of the park benches available to you while I work on my answer. Perhaps take a moment to consider the Corinthian columns of the grade two listed memorial to Major-General Charles Gordon (aka Chinese Gordon for his service in the Far East); or the blackbirds hopping on the grass; or that squirrel circumnavigating the canopy of that nearby tree; or the seagulls above doing their upmost to remind you just how close you are to the sea.",
+      "_id": "579b915f89ed4ed46600008c",
+      "hint": {
+        "direction": "Queens Park",
+        "locations": [
+          "252a546ebaae6ceaea261273"
+        ]
+      },
+      "functions": [
+        "seenN"
+      ],
+      "conditions": [
+        "seenM",
+        "notSeenN",
+        "queens_park"
+      ],
+      "id": "579b915f89ed4ed46600008c",
+      "name": "Page N",
+      "pageTransition": "next"
+    },
+    {
+      "content": "It's been necessary to walk back to 1893. I know you're sick and tired of the flashbacks but we must go  back to this year in order to answer your question regarding the emergence of the Emigrants' Home. So many times I've wanted to take you to a place at night but my better judgement has intervened to keep you safe. Well, no more, dear reader. You must grace Queen's Park after hours to understand why the city of Southampton needed an Emigrants' Home. Furthermore, you must summon your imagination and view this park, not as you know it (i.e. as a beautiful and tranquil place that facilitates lazy endeavours), but as the countless number of homeless emigrants who slept here in 1893, knew it. (If you find this difficult, I suggest you briefly return to 2016 and google the migrant camp in Calais nicknamed, ‘The Jungle.') In 1893, this park is barren except for the memorial to Chinese Gordon which has served for months as a reliable centre pole in that makeshift tent you see yonder, but the roof does let in the rain. If you ask that man over there - the one trying to get that meagre pile of wood aflame to warm his wife and frostbitten children - the name by which this park is known, he'll tell you it's, ‘The Number One Open Air Hotel' and not ‘Queen's Park.' Here, disease is rife, crime is too, and children witness things no child should. That's why John Doling built the Emigrants' Home.",
+      "_id": "579b915f89ed4ed46600008b",
+      "hint": {
+        "direction": "Queens Park",
+        "locations": [
+          "252a546ebaae6ceaea261273"
+        ]
+      },
+      "functions": [
+        "seenO"
+      ],
+      "conditions": [
+        "seenN",
+        "notSeenO",
+        "queens_park"
+      ],
+      "id": "579b915f89ed4ed46600008b",
+      "name": "Page O",
+      "pageTransition": "next"
+    },
+    {
+      "content": "It's time you met Golda. She's just one of a group of twenty-eight emigrants travelling to the Emigrants' Home today. Pity, but you missed her arrival at Southampton Docks Station. For the spotty baggage porter at least, it was quite the event. The beauty of her particular otherworldliness touched him most intimately and rendered him speechless. His inability to offer any baggage-carrying assistance to the great and the good elsewhere on the platform caused the station master's peptic ulcer to flare up. It didn't help that Golda and the other emigrants  seemed incapable of locating the exit. (Of course neither the station master nor the porter had any Russian or Yiddish, and neither Golda nor any of the others spoke a word of English. Lucky for you, dear reader, I read  thoughts as well as speaking English, police-speak and rubbish, so will be able to transcribe all that transpires in Golda's mind perfectly well.) It required a series of explicit gestures (and if you press me for further details, not all of them polite) for the station master to rid his kingdom of these emigrants. And this is where you meet Golda now, outside the station on Terminus Terrace, just after a gang of vagabonds has swaggered past her roaring, ‘Down with the Jews! Down with the Jews!' - which, incidentally, reminds me of the words Jack daubed on a Whitechapel wall minutes after he'd murdered Catherine Eddowes, ‘The Jewes are the men that will not be blamed for nothing.' Deuced peculiar.",
+      "_id": "579b915f89ed4ed46600008a",
+      "hint": {
+        "direction": "Terminus Terrace near South Western House",
+        "locations": [
+          "c46aa1a69738ec4bce3e2988"
+        ]
+      },
+      "functions": [
+        "seenP"
+      ],
+      "conditions": [
+        "Terminus_Terrace",
+        "seenO",
+        "notSeenP"
+      ],
+      "id": "579b915f89ed4ed46600008a",
+      "name": "Page P",
+      "pageTransition": "next"
+    },
+    {
+      "content": "You desire to be enlightened about Golda's first impressions of Southampton. But as you can observe, she is not looking about her but staring at her feet. They are hurting something dreadful. The soles of her shoes are worn through. She may as well be trudging across the cobbles in her bare feet. And now she is bent double with a stomach cramp. Weeks of scarcely any food since fleeing her homeland followed by platefuls of alien, inedible food forced on her at Hull, has knocked her gut for six. Judging by the frequency and intensity of the spasms Golda is experiencing, I would guess she will be staring at her feet for some time. Perhaps you should take the opportunity to consider your own impressions of Southampton. (Fear not, just as soon as Golda can stand up straight she will resume her journey to the Emigrants' Home and we shall follow.) ‘Victorian Southampton or twenty-first century Southampton?' you ask.  You can see how hard it's been to keep you in Victorian Southampton when contemporary structures such as the one before you on the corner of Albert Road, intrude. (Betwixt you and I, dear reader, these ugly modern architectural excretions have caused me more than one attack of the vapours.) I have often had to consider how best to proceed. Have you ever been present when an upright elderly relative has loudly let one fly in company? Consider what might be one's reaction? The unpleasant eructation is generally ignored.",
+      "_id": "579b915f89ed4ed466000089",
+      "hint": {
+        "direction": "Corner of Royal Crescent and Albert Road",
+        "locations": [
+          "463a56211192558b995eb3c6"
+        ]
+      },
+      "functions": [
+        "seenQ"
+      ],
+      "conditions": [
+        "royalcrescent_albertroad",
+        "seenP",
+        "notSeenQ"
+      ],
+      "id": "579b915f89ed4ed466000089",
+      "name": "Page Q",
+      "pageTransition": "next"
+    },
+    {
+      "content": "I've furnished you with a copy of Southampton's leading tabloid, the Southern Echo. It's dated 29th August 1895 (several days before Golda's arrival in Southampton). I draw your attention to the headline, ‘More Comfort,' and the text thereunder: ‘In thus giving a passing glance at the numerous emigrants to Mr Doling's Emigrants' Home we cannot but remark upon the splendid improvement in the accommodation for them. The home is a very fine one. Here, men, women and children can restore themselves while they await their ship. In the reading room, we noticed that beside a few books, newspapers were also available. This is good. If the inhabitants of the home have to wait a day or two, what better occupation than posting themselves in the current events of the day. Doubtless those in authority would be glad if readers would take the hint and spare their old papers, magazines and books for the use of these emigrants. It would certainly be a kindly act, and one which would be highly appreciated.' Fast forward to the days following Golda's arrival, and here is Jack delivering a box of donated reading material to the reading room, wherein sits Golda, fragrant from a bath, reading Mirgorod, a collection of short stories by Nikolai Gogol (donated by Annie). While Jack pretends to arrange the donated books, Golda giggles at ‘The Tale of How Ivan Ivanovich Quarreled with Ivan Nikiforovich' and idly strokes her slender neck. Seconds later and hey presto, Jack the Ripper is reborn.",
+      "_id": "579b915f89ed4ed466000088",
+      "hint": {
+        "direction": "The Grand Cafe at South Western House",
+        "locations": [
+          "8871e93a03f8552316113536"
+        ]
+      },
+      "functions": [
+        "seenR"
+      ],
+      "conditions": [
+        "cafe",
+        "seenQ",
+        "notSeenR"
+      ],
+      "id": "579b915f89ed4ed466000088",
+      "name": "Page R",
+      "pageTransition": "next"
+    },
+    {
+      "content": "<audio data-media-id='7'></audio><br/><br/>You think that Jack has emptied the Emigrants' Home of all the emigrants except for Golda because he knows the SS Paris is expected tomorrow and this will be Golda's last night in Southampton. (I see you've imagined one of those now or never situations.) You see Golda alone in her dormitory on the second floor humming Tumbalalaika to herself as she pulls a brush through her thick black hair and frets slightly about the cost of that new white nightdress she's wearing. You see Jack climbing the wooden stairs to the second floor – stairs he's not long finished scrubbing - gripping that hideous knife of his in a manner reminiscent of the shower scene in the film Psycho (God Almighty, what an imagination you have!) You imagine that Golda's completely unaware of the danger she's in, but acknowledge (at last) that, if she knew she was home alone with Jack, she would fear for her life, sprint to the sash window, summon every ounce of her strength to throw the damn thing open, gather up the skirt of her nightdress so as not to trip on it and knock herself out (it's clearly a floor-length affair), climb onto the window ledge, step out onto the fire escape ladder that John Doling had bolted to the external wall, and shimmy down the bloody thing like a fire-fighter on a ladder test. Oh, why can't Golda hear Jack's boots upon the floor, dear reader? Why can't Jack have one of his coughing fits?  I think Golda has made it on-board the SS Paris.",
+      "_id": "579b915f89ed4ed466000087",
+      "hint": {
+        "direction": "Emigrants Home",
+        "locations": [
+          "9a376ab822734e3f4cab321d"
+        ]
+      },
+      "functions": [
+        "seenS"
+      ],
+      "conditions": [
+        "emigrants_home",
+        "notSeenS",
+        "notSeenT",
+        "seenR"
+      ],
+      "id": "579b915f89ed4ed466000087",
+      "name": "Page S",
+      "pageTransition": "next"
+    },
+    {
+      "content": "<img data-media-id='5' /><br/><br/><img data-media-id='6' /><br/><br/>Yes, I've brought you to dock gate 4 to wave off the SS Paris. It's a beautiful September morning. Sunlight glints off the English Channel and the prevailing breeze isn't disagreeable provided you're wearing a decent hat. Close your eyes and listen to the noises of the dockyard: the honk of a ship, the shouted dialogue of the dockworkers, the thunderous clank of a heavy chain as a vessel is released of its moorings, a constable of the dock police swinging his hand rattle and bellowing for assistance – I don't know if this officer's in the process of apprehending Jack, so please don't ask - a seagull chick crying for a titbit, and a derrick loading coal. How the pervading smell of tar prevents us from smelling the sea! (I know we've smelt worse when Jack's been disinfecting the newly arrived ‘inmates' but I still feel compelled to smother my nose with your handkerchief.) Let us return to Golda. You see her butchered corpse laid out upon a cold mortuary slab awaiting further surgical interference. I, on the other hand, see her quartered with 900 others on board the SS Paris. Since the facilities in steerage are deplorable and the air positively pestilential, I can't pretend that Golda is now free of danger (she might contract cholera.) But before you and I sadly part ways, let's imagine Golda arriving in New York and being welcomed by the ‘Mother of Exiles', the Statue of Liberty. (Rest assured, dear reader, it could happen.)",
+      "_id": "579b915f89ed4ed466000086",
+      "hint": {
+        "direction": "The entrance to the dock near the Ferry Terminal",
+        "locations": [
+          "60d8d65b5eaad59c958284a6"
+        ]
+      },
+      "functions": [
+        "seenT"
+      ],
+      "conditions": [
+        "dockgate4",
+        "notSeenT",
+        "seenR"
+      ],
+      "id": "579b915f89ed4ed466000086",
+      "name": "Page T",
+      "pageTransition": "next"
+    },
+    {
+      "content": "<h3>Thank you for reading one of our stories ...</h3><p>We hope you enjoyed this StoryPlaces story. We would greatly appreciate your opinions on this new approach to story telling. if you have time, filling out the short survey linked below will help us to understand how to improve our application and design new location-aware story experiences. If you would like to do another of our stories please click the StoryPlaces logo in the top left corner and select another story.</p><p><b><a href='https://www.isurvey.soton.ac.uk/20629'>Click Here to take our reader experience survey</a></b></p>",
+      "_id": "579b915f89ed4ed466000085",
+      "hint": {
+        "direction": "",
+        "locations": []
+      },
+      "functions": [],
+      "conditions": [
+        "seenT"
+      ],
+      "id": "579b915f89ed4ed466000085",
+      "name": "Finish",
+      "pageTransition": "end"
+    }
+  ],
+  "pagesMapViewSettings": {
+    "map": true,
+    "pageArrows": true,
+    "pageDistance": true
+  },
+  "locations": [
+    {
+      "id": "45d5e41959a56865ef13eb56",
+      "type": "circle",
+      "lat": 50.896933,
+      "lon": -1.394094,
+      "radius": 20
+    },
+    {
+      "id": "ab4bec78dd659431a65d0167",
+      "type": "circle",
+      "lat": 50.900078,
+      "lon": -1.405502,
+      "radius": 40
+    },
+    {
+      "id": "cc57d4c549b3a984658aed2a",
+      "type": "circle",
+      "lat": 50.900069,
+      "lon": -1.405799,
+      "radius": 20
+    },
+    {
+      "id": "32753b47a0c76b36377ca379",
+      "type": "circle",
+      "lat": 50.897006,
+      "lon": -1.404603,
+      "radius": 20
+    },
+    {
+      "id": "7ac6b19265aa86f2aa8de335",
+      "type": "circle",
+      "lat": 50.897545,
+      "lon": -1.39204,
+      "radius": 20
+    },
+    {
+      "id": "252a546ebaae6ceaea261273",
+      "type": "circle",
+      "lat": 50.897302,
+      "lon": -1.400381,
+      "radius": 50
+    },
+    {
+      "id": "c46aa1a69738ec4bce3e2988",
+      "type": "circle",
+      "lat": 50.897799,
+      "lon": -1.396787,
+      "radius": 30
+    },
+    {
+      "id": "9a376ab822734e3f4cab321d",
+      "type": "circle",
+      "lat": 50.89796,
+      "lon": -1.392375,
+      "radius": 30
+    },
+    {
+      "id": "463a56211192558b995eb3c6",
+      "type": "circle",
+      "lat": 50.897479,
+      "lon": -1.393536,
+      "radius": 30
+    },
+    {
+      "id": "8871e93a03f8552316113536",
+      "type": "circle",
+      "lat": 50.897613,
+      "lon": -1.396878,
+      "radius": 30
+    },
+    {
+      "id": "60d8d65b5eaad59c958284a6",
+      "type": "circle",
+      "lat": 50.896239,
+      "lon": -1.404544,
+      "radius": 30
+    }
+  ],
+  "audience": "general",
+  "schemaVersion": "https://storyplaces.soton.ac.uk/schema/02-draft"
+}

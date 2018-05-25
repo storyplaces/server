@@ -14,6 +14,7 @@ var Media = require('./controllers/Media.js');
 var AuthoringStory = require('./controllers/AuthoringStory.js');
 var AuthoringUser = require('./controllers/AuthoringUser.js');
 let AuthoringImage = require('./controllers/AuthoringImage');
+let AuthoringAudio = require('./controllers/AuthoringAudio');
 
 var SocialAuthentication = require('./controllers/SocialAuthentication');
 
@@ -187,6 +188,12 @@ function authoringRouter() {
 
     AuthoringRouter.route('/story/:story_id/image/:image_id/thumb')
         .get(HasPrivilege(['getOwnImage']), AuthoringImage.fetchThumbnail);
+
+    AuthoringRouter.route('/story/:story_id/audio')
+        .post(HasPrivilege(['uploadOwnAudio']), upload.single('audio'), AuthoringAudio.create);
+
+    AuthoringRouter.route('/story/:story_id/audio/:audio_id')
+        .get(HasPrivilege(['getOwnAudio']), AuthoringAudio.fetch);
 
     AuthoringRouter.route('/user/')
         .get(HasPrivilege(['getUserList']), AuthoringUser.index);
