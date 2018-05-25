@@ -108,7 +108,13 @@ function approve(req, res, next) {
         return next(error);
     }
 
-    CoreSchema.Story.findByIdAndUpdate(storyId, {$set: {publishState: req.body.publishState}}, {
+    let state = req.body.publishState;
+
+    if ( state !== "published" && state !== "pending" && state !=="preview") {
+        throw new Error("Bad story state");
+    }
+
+    CoreSchema.Story.findByIdAndUpdate(storyId, {$set: {publishState: state}}, {
         new: true,
         runValidators: true
     }, function (err, story) {

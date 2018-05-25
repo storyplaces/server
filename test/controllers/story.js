@@ -85,7 +85,7 @@ describe('Stories', function () {
 
     });
 
-    describe('/POST story then /GET/:id story', function () {
+    describe('/POST story approve then /GET/:id story', function () {
         it('it should retrieve a POSTed story', function (done) {
             var story = JSON.parse(fs.readFileSync('test/resources/the_destitute_and_the_alien.json'));
             chai.request(server)
@@ -98,17 +98,26 @@ describe('Stories', function () {
                     res.body.should.be.a('object');
                     res.body.should.have.property('message').eql('Story created!');
 
-                    CoreSchema.Story.findOne({'name': 'The Destitute and The Alien'}, function (err, res) {
+                    CoreSchema.Story.findOne({'name': 'The Destitute and The Alien'}, (err, res) => {
                         let id = res._id;
 
-                        chai.request(server)
-                            .get('/storyplaces/story/' + id)
-                            .end(function (err, res) {
-                                res.should.have.status(200);
-                                res.body.should.be.a('object');
-                                res.body.name.should.eql('The Destitute and The Alien');
-                                done();
+                        CoreSchema.Story.findByIdAndUpdate(id, {$set: {publishState: "published"}}, {
+                            new: true,
+                            runValidators: true
+                        }, function (err, story) {
+                            CoreSchema.Story.findOne({'name': 'The Destitute and The Alien'}, (err, res) => {
+                                let id = res._id;
+                                chai.request(server)
+                                    .get('/storyplaces/story/' + id)
+                                    .end(function (err, res) {
+                                        res.should.have.status(200);
+                                        res.body.should.be.a('object');
+                                        res.body.name.should.eql('The Destitute and The Alien');
+                                        done();
+                                    });
                             });
+                        });
+
                     });
                 });
 
