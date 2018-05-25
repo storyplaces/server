@@ -11,6 +11,8 @@ var LogEvent = require('./controllers/LogEvent.js');
 var StaticPages = require('./controllers/StaticPages.js');
 var Media = require('./controllers/Media.js');
 
+var StoryCollection = require('./controllers/StoryCollection.js');
+
 var AuthoringStory = require('./controllers/AuthoringStory.js');
 var AuthoringUser = require('./controllers/AuthoringUser.js');
 let AuthoringImage = require('./controllers/AuthoringImage');
@@ -113,6 +115,12 @@ Router.route('/auth/google')
 Router.route('/auth/publicJwtKey')
     .get(SocialAuthentication.getPublicKey);
 
+Router.route('/collection')
+    .get(StoryCollection.indexReadingTool);
+
+Router.route('/collection/:collectionId')
+    .get(StoryCollection.fetchReadingTool);
+
 Router.use('/authoring', authoringRouter());
 
 // Error logging
@@ -168,12 +176,6 @@ function authoringRouter() {
     AuthoringRouter.route('/story/:story_id/downloadJson')
         .post([HasPrivilege(['requestPublicationOfOwnStory', 'requestPublicationOfAnyStory']), AuthoringStory.downloadJson]);
 
-    // Create AuthoringUser
-    // Get list of AuthoringUsers
-    // AuthoringRouter.route('/user')
-    //     .post([HasPrivilege(['createAuthoringUser'])], AuthoringUser.create)
-    //     .get([HasPrivilege(['listAllUsers'])], AuthoringUser.index);
-
     // Get AuthoringUser
     // Update AuthoringUser
     AuthoringRouter.route('/user/:user_id')
@@ -203,6 +205,17 @@ function authoringRouter() {
 
     AuthoringRouter.route('/logevent/range/:start/:finish')
         .get([HasPrivilege(['readLogs']), LogEvent.fetchRange]);
+
+    AuthoringRouter.route('/admin/collection/:collectionId')
+        .put(HasPrivilege(['editCollections']), StoryCollection.update)
+        .get(HasPrivilege(['editCollections']), StoryCollection.fetch)
+        .delete([HasPrivilege(['editCollections']), StoryCollection.remove]);
+
+
+    AuthoringRouter.route('/admin/collection/')
+        .post(HasPrivilege(['editCollections']), StoryCollection.create)
+        .get(HasPrivilege(['editCollections']), StoryCollection.index);
+
 
     return AuthoringRouter;
 }

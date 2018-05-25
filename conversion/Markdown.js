@@ -9,16 +9,21 @@ exports.render = render;
 let marked = require('marked');
 let renderer = new marked.Renderer();
 
+let canEmbedYouTube;
+let canKeepScript;
+
 renderer.image = function (href, title, text) {
     return "";
 };
 
-renderer.link = function(href, title, text) {
-    if (href.startsWith('https://www.isurvey.soton.ac.uk')) {
-        return `<a href="${href}" title="${title}">${text}</a>`
+renderer.paragraph = function (text) {
+    if (text.match(/^@@(.+)$/)) {
+        let id = text.replace(/^@@/g, '');
+        let element = `<iframe src="https://www.youtube.com/embed/${id}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+        return `<div class="youtube-container">${element}</div>`;
     }
 
-    return "";
+    return '<p>' + text + '</p>\n';
 };
 
 marked.setOptions({

@@ -41,9 +41,9 @@
 process.env.NODE_ENV = 'test';
 
 var mongoose = require("mongoose");
-var CoreSchema = require('../models/coreschema');
-let AuthoringSchema = require('../models/authoringSchema');
-let jwt = require('../auth/JwtAuthentication');
+var AuthoringSchema = require('../../models/authoringSchema');
+
+let jwt = require('../../auth/JwtAuthentication');
 
 // Misc requires
 var fs = require('fs');
@@ -51,20 +51,17 @@ var fs = require('fs');
 //Require the dev-dependencies
 var chai = require('chai');
 var chaiHttp = require('chai-http');
-var server = require('../server');
+var server = require('../../server');
 var should = chai.should();
 
 chai.use(chaiHttp);
 
 // Setup - Empty the database before each test
-describe('LogEvent', function () {
+describe('AuthoringUser', function () {
     let authHeader;
 
     beforeEach(() => {
-        return CoreSchema.LogEvent.remove({})
-            .then(() => {
-                return AuthoringSchema.AuthoringUser.remove({})
-            })
+        return AuthoringSchema.AuthoringUser.remove({})
             .then(() => {
                 return new AuthoringSchema.AuthoringUser({
                     email: "test.user@example.local",
@@ -73,62 +70,28 @@ describe('LogEvent', function () {
                     roles: ["author", "admin"],
                     googleID: "abc123",
                     enabled: true
-                }).save();
-            })
-            .then(user => {
-                authHeader = "Basic " + jwt.createJWTFromUser(user);
-            });
-    });
-
-    /*
-     * Test the /POST route
-     */
-    describe('/POST valid log event', function () {
-        it('it should POST a valid log event', function (done) {
-            var logEvent = JSON.parse(fs.readFileSync('test/resources/valid_log_event.json'));
-            chai.request(server)
-                .post('/storyplaces/logevent')
-                .set("Content-Type", "application/json")
-                .set("X-Auth-Token", "thisisadefaultpass")
-                .send(logEvent)
-                .end(function (err, res) {
-                    res.should.have.status(200);
-                    res.body.should.be.a('object');
-                    CoreSchema.LogEvent.findOne({'user': 'testuser1'}, function (err, res) {
-                        res.should.not.be.null;
-                        res.should.have.property('user', 'testuser1');
-                        res.should.have.property('type', 'playreading');
-                        res.should.have.property('date');
-                        chai.expect(res.date.getTime()).to.equal(1478784684000);
-                        done();
+                })
+                    .save()
+                    .then(user => {
+                        authHeader = "Basic " + jwt.createJWTFromUser(user);
                     });
-                });
-        });
-
+            })
+            ;
     });
 
     /*
      * Test the /GET route
      */
-    describe('/GET logEvent with range', function () {
-        it('it should GET one logEvent', function (done) {
-            var eventlog = JSON.parse(fs.readFileSync('test/resources/valid_log_event.json'));
+    describe('/GET authoringUser', function () {
+        it('it should GET all the authoringUsers', function (done) {
             chai.request(server)
-                .post('/storyplaces/logevent')
-                .set("Content-Type", "application/json")
-                .set("X-Auth-Token", "thisisadefaultpass")
-                .send(eventlog)
-                .end(() => {
-                    chai.request(server)
-                        .get('/storyplaces/authoring/logevent/range/1478784683000/1478784685000')
-                        .set("Authorization", authHeader)
-                        .end(function (err, res) {
-                            console.log(err);
-                            res.should.have.status(200);
-                            res.body.should.be.a('array');
-                            res.body.length.should.be.eql(1);
-                            done();
-                        });
+                .get('/storyplaces/authoring/user')
+                .set("Authorization", authHeader)
+                .end(function (err, res) {
+                    res.should.have.status(200);
+                    res.body.should.be.a('array');
+                    res.body.length.should.be.eql(1);
+                    done();
                 });
         });
     });

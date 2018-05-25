@@ -24,10 +24,10 @@ describe("Markdown conversion", function () {
             html.should.equal("<p></p>\n");
         });
 
-        it("removes external links", () => {
-           let html = markdownFunctions.render("[link](http://news.bbc.co.uk)");
+        it("allows external links", () => {
+            let html = markdownFunctions.render("[link](http://news.bbc.co.uk)");
 
-           html.should.equal("<p></p>\n");
+            html.should.equal('<p><a href="http://news.bbc.co.uk">link</a></p>\n');
         });
 
         it("allows iSurvey links", () => {
@@ -36,5 +36,9 @@ describe("Markdown conversion", function () {
             html.should.equal('<p><a href="https://www.isurvey.soton.ac.uk/id" title="Title text">survey</a></p>\n');
         });
 
+        it("will allow embed YouTube", () => {
+            let html = markdownFunctions.render('@@123456');
+            html.should.contain('<div class="youtube-container"><iframe src="https://www.youtube.com/embed/123456" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>');
+        });
     });
 });

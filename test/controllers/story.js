@@ -2,7 +2,7 @@
 process.env.NODE_ENV = 'test';
 
 var mongoose = require("mongoose");
-var CoreSchema = require('../models/coreschema');
+var CoreSchema = require('../../models/coreschema');
 
 // Misc requires
 var fs = require('fs');
@@ -10,7 +10,7 @@ var fs = require('fs');
 //Require the dev-dependencies
 var chai = require('chai');
 var chaiHttp = require('chai-http');
-var server = require('../server');
+var server = require('../../server');
 var should = chai.should();
 var expect = chai.expect;
 

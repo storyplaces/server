@@ -64,6 +64,7 @@ function create(req, res, next) {
     let requestBody = helpers.sanitizeAndValidateInboundIds(undefined, req.body);
 
     var story = new CoreSchema.Story(requestBody);
+    story.publishState = "pending";
 
     story.save(function (err) {
         if (err) {
