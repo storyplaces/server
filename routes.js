@@ -34,7 +34,7 @@ var upload = require('./middleware/FileUpload');
 
 Router.use(function (req, res, next) {
 
-    if (req.path.startsWith('/authoring/story/') && req.path.endsWith('/image')) {
+    if (req.path.startsWith('/authoring/story/') && (req.path.endsWith('/image') || req.path.endsWith('/audio'))) {
         if (req.method.toUpperCase() === 'POST') {
             return next();
         }

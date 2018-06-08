@@ -98,12 +98,13 @@ function buildPageContent(page) {
 
     let html = markdown.render(page.content);
 
-    if (page.imageId) {
-        html = addImageTagsToPageContent(page.imageId, html);
-    }
-
     if (page.audioId) {
         html = addAudioTagsToPageContent(page.audioId, html);
+    }
+
+    if (page.imageId) {
+        html = addImageTagsToPageContent(page.imageId, html);
+
     }
 
     return html;
@@ -115,7 +116,7 @@ function addImageTagsToPageContent(imageId, pageContent) {
     return imageBlock + pageContent;
 }
 function addAudioTagsToPageContent(audioId, pageContent) {
-    var audioBlock = "<img style='max-width: 100%; display: block; margin: auto;' data-media-id='" + imageId + "'/><br/><br/>";
+    var audioBlock = "<audio data-media-id='" + audioId + "'></audio><br/><br/>";
     return audioBlock + pageContent;
 }
 

@@ -54,6 +54,8 @@ let gm = require('gm');
 exports.create = create;
 exports.fetch = fetch;
 
+exports.pruneAudio = pruneAudio;
+
 function create(req, res, next) {
 
     if (!req.file) {
@@ -85,13 +87,13 @@ function create(req, res, next) {
 
         let id = filename.substr(0, filename.lastIndexOf('.'));
 
-        let authoringImage = new AuthoringSchema.AuthoringImage({
+        let authoringAudio = new AuthoringSchema.AuthoringAudio({
             id: id,
             storyId: storyId,
             mimeType: mimeType
         });
 
-        authoringImage.save(err => {
+        authoringAudio.save(err => {
             if (err) {
                 err.status = 400;
                 err.message = "Unable to create image";
@@ -154,7 +156,6 @@ function processFetch(req, res, next) {
         };
 
         AuthoringSchema.AuthoringAudio.find({id: audioId, storyId: storyId}, (err, authoringAudio) => {
-            let filename;
 
             if (err) {
                 return next(err);
@@ -166,6 +167,8 @@ function processFetch(req, res, next) {
                 error.clientMessage = "Audio File not found";
                 return next(error);
             }
+
+            let filename = audioId + '.json';
 
             res.sendFile(filename, fileOptions, err => {
                 if (err) {

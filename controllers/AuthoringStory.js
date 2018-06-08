@@ -49,6 +49,7 @@ let Media = require('../models/Media.js');
 let File = require('../utilities/File');
 
 let AuthoringImage = require('./AuthoringImage');
+let AuthoringAudio = require('./AuthoringAudio');
 
 exports.create = create;
 exports.index = index;
@@ -205,6 +206,12 @@ function update(req, res, next) {
 
             }
 
+            try {
+                AuthoringAudio.pruneAudio(storyId, authoringStory.audioIds);
+            } catch (error) {
+
+            }
+
             let toSend = helpers.sanitizeOutboundObject(authoringStory);
 
             res.json({
@@ -333,6 +340,7 @@ function handleStoryProcessing(req, res, next, readingState, responseMessage) {
             try {
                 readingStory = converter.convert(authoringStory, readingState, authoringUser.name);
             } catch (e) {
+                console.log(e);
                 let error = new Error("Unable to convert story " + storyId);
                 error.status = 500;
                 error.clientMessage = "Unable to convert story";
@@ -377,7 +385,7 @@ function handleStoryProcessing(req, res, next, readingState, responseMessage) {
 
 function tryFileCopy(mediaId, destPath, sourcePath) {
     let count = 0;
-    ['.jpeg', '.png', '.json'].forEach(function (extension) {
+    ['.jpeg', '.png', '.json', '.mp3', '.mp4'].forEach(function (extension) {
         let fileName = mediaId.concat(extension);
         if (File.copyFile(fileName, sourcePath, destPath)) {
             count++;

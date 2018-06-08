@@ -37,7 +37,7 @@ let storage = Multer.diskStorage({
     filename: function (req, file, cb) {
         let fileExtension = file.mimetype.substr(file.mimetype.lastIndexOf('/') + 1);
 
-        if(fileExtension !== "png" && fileExtension !== "jpeg") {
+        if(fileExtension !== "png" && fileExtension !== "jpeg" && fileExtension !== "mp3" && fileExtension !== "mp4") {
             return cb(new Error("Bad file extension"));
         }
 
