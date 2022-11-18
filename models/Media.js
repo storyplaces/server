@@ -66,7 +66,7 @@ function getFileNameFromRequest(req) {
 }
 
 function buildMediaFilePath(base) {
-    return findFileWithPossibleExtension(base, ['jpg', 'jpeg', 'png', 'gif', 'mp3']);
+    return findFileWithPossibleExtension(base, ['jpg', 'jpeg', 'png', 'gif', 'mp3', 'mp4', 'mpeg']);
 }
 
 function buildJsonFilePath(base) {
