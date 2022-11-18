@@ -385,7 +385,7 @@ function handleStoryProcessing(req, res, next, readingState, responseMessage) {
 
 function tryFileCopy(mediaId, destPath, sourcePath) {
     let count = 0;
-    ['.jpeg', '.png', '.json', '.mp3', '.mp4'].forEach(function (extension) {
+    ['.jpeg', '.png', '.json', '.mp3', '.mp4', '.mpeg'].forEach(function (extension) {
         let fileName = mediaId.concat(extension);
         if (File.copyFile(fileName, sourcePath, destPath)) {
             count++;
